@@ -26,8 +26,6 @@
 
 # Collections Framework Overview
 
------
-
 Introduction
 
 The Java platform includes a collections framework. 
