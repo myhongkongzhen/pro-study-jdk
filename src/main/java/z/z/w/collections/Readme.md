@@ -1,7 +1,5 @@
 # JDK 1.7 API Collections Framework
 
------
-
 * The collections framework is a unified architecture for representing and manipulating collections
  - 集合框架是一個統一的描述和操作集合的架構,
  
