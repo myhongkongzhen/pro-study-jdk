@@ -30,10 +30,10 @@
 Introduction
 ```
 
-The Java platform includes a collections framework. 
+* The Java platform includes a collections framework. 
 
-A collection is an object that represents a group of objects (such as the classic Vector class). 
+* A collection is an object that represents a group of objects (such as the classic Vector class). 
 
-A collections framework is a unified architecture for representing and manipulating collections, 
+* A collections framework is a unified architecture for representing and manipulating collections, 
 
-enabling collections to be manipulated independently of implementation details. 
+* enabling collections to be manipulated independently of implementation details. 
