@@ -24,4 +24,4 @@
  - 這個框架以多餘十二個集合的接口為基礎. 
 
 * It includes implementations of these interfaces and algorithms to manipulate them.
- - 他包含了一些接口的實現和算法來錯做他們. 
+ - 他包含了一些接口的實現和算法來操作他們. 
