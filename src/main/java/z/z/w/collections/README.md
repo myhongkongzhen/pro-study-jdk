@@ -34,10 +34,13 @@ Introduction
  - JAVA平台包含一個集合框架.
 
 * A collection is an object that represents a group of objects (such as the classic Vector class). 
- - 集合是一個描述一組實例（例如Vector類）的一個實體.
+ - 集合是一個描述一組實例（例如類型Vector類）的一個實體.
 
 * A collections framework is a unified architecture for representing and manipulating collections, 
  - 集合框架是一個描述和操作集合的統一架構,
 
 * enabling collections to be manipulated independently of implementation details. 
  - 使得集合被不依賴實現細節的操作成為可能.
+                                                  
+   The primary advantages of a collections framework are that it:
+                                                  
