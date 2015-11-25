@@ -71,7 +71,7 @@ The collections framework consists of:<br>
 集合框架包含:
 
   - **Collection interfaces.** Represent different types of collections, such as sets, lists, and maps. 
-    - **集合接口.** 描述不同的集合類型,如sets,lists,與maps
+    - **集合接口.** 描述不同的集合類型,如sets,lists,與maps<br>
       These interfaces form the basis of the framework.<br>
       這些接口表單基於框架.<br>
   - **General-purpose implementations.** Primary implementations of the collection interfaces.
@@ -79,7 +79,7 @@ The collections framework consists of:<br>
   - **Legacy implementations.** The collection classes from earlier releases, Vector and Hashtable, were retrofitted to implement the collection interfaces.
     - **遺留實現.** 早期的releases版本的集合類,Vector,Hashtable被重新實現了集合接口.
   - **Special-purpose implementations.** Implementations designed for use in special situations. 
-    - **特定實現.** 被設計的實現用於特定的狀況.
+    - **特定實現.** 被設計的實現用於特定的狀況.<br>
       These implementations display nonstandard performance characteristics, usage restrictions, or behavior.<br>
       這些實現展示了非標準的執行字符,使用限制或行為.
   - **Concurrent implementations.** Implementations designed for highly concurrent use.
@@ -95,7 +95,7 @@ The collections framework consists of:<br>
   - **Infrastructure.** Interfaces that provide essential support for the collection interfaces.
     - **底層** 接口針對於集合接口的私有的必要支持.
   - **Array Utilities.** Utility functions for arrays of primitive types and reference objects. 
-    - **數組工具** 針對於原始類型的數組和引用實體的工具方法.
+    - **數組工具** 針對於原始類型的數組和引用實體的工具方法.<br>
       Not, strictly speaking, a part of the collections framework, <br>
       哦,不，嚴格的來說,集合框架的一部分,<br>
       this feature was added to the Java platform at the same time as the collections framework and relies on some of the same infrastructure.<br>
