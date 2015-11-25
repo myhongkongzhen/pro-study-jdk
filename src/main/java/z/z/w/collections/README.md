@@ -188,13 +188,120 @@ The collections framework consists of:<br>
   - Classes that implement the collection interfaces typically have names in the form of <Implementation-style><Interface>. 
     The general purpose implementations are summarized in the following table:
 
-    
+
     Interface 	Hash Table 	  Resizable Array 	Balanced Tree 	Linked List 	Hash Table + Linked List
     Set 	    HashSet 	  	                TreeSet 	  	                LinkedHashSet
     List 	  	              ArrayList 	  	                LinkedList 	 
     Deque 	  	              ArrayDeque 	  	                LinkedList 	 
     Map 	    HashMap 	  	                TreeMap 	  	                LinkedHashMap
     
+    <table>
+    	<tr>
+    		<td>
+    			    Interface 
+    		</td>
+    		<td>
+    			Hash Table 
+    		</td>
+    		<td>
+    			  Resizable Array 
+    		</td>
+    		<td>
+    			Balanced Tree 
+    		</td>
+    		<td>
+    			Linked List 
+    		</td>
+    		<td>
+    			Hash Table + Linked List
+    		</td>
+    	</tr>
+    	<tr>
+    		<td>
+    			    Set 
+    		</td>
+    		<td>
+    			        HashSet 
+    		</td>
+    		<td>
+    			  
+    		</td>
+    		<td>
+    			                                TreeSet 
+    		</td>
+    		<td>
+    			  
+    		</td>
+    		<td>
+    			                                LinkedHashSet
+    		</td>
+    	</tr>
+    	<tr>
+    		<td>
+    			    List 
+    		</td>
+    		<td>
+    			  
+    		</td>
+    		<td>
+    			                          ArrayList 
+    		</td>
+    		<td>
+    			  
+    		</td>
+    		<td>
+    			                                LinkedList 
+    		</td>
+    		<td>
+    			 
+    		</td>
+    	</tr>
+    	<tr>
+    		<td>
+    			    Deque 
+    		</td>
+    		<td>
+    			  
+    		</td>
+    		<td>
+    			                          ArrayDeque 
+    		</td>
+    		<td>
+    			  
+    		</td>
+    		<td>
+    			                                LinkedList 
+    		</td>
+    		<td>
+    			 
+    		</td>
+    	</tr>
+    	<tr>
+    		<td>
+    			    Map 
+    		</td>
+    		<td>
+    			        HashMap 
+    		</td>
+    		<td>
+    			  
+    		</td>
+    		<td>
+    			                                TreeMap 
+    		</td>
+    		<td>
+    			  
+    		</td>
+    		<td>
+    			                                LinkedHashMap
+    		</td>
+    	</tr>
+    	<tr>
+    		<td>
+    			    
+    		</td>
+    	</tr>
+    </table>
 
   - The general-purpose implementations support all of the optional operations in the collection interfaces and have no restrictions on the elements they may contain.
     They are unsynchronized,
