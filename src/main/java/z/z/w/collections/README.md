@@ -126,20 +126,34 @@ The collections framework consists of:<br>
     java.util.concurrent.ConcurrentMap
     java.util.concurrent.ConcurrentNavigableMap
 ```
-Many of the modification methods in the collection interfaces are labeled optional. Implementations are permitted to not perform one or more of these operations, throwing a runtime exception (UnsupportedOperationException) if they are attempted. The documentation for each implementation must specify which optional operations are supported. Several terms are introduced to aid in this specification:
+  - Many of the modification methods in the collection interfaces are labeled optional. 
+    Implementations are permitted to not perform one or more of these operations,
+    throwing a runtime exception (UnsupportedOperationException) if they are attempted.
+    The documentation for each implementation must specify which optional operations are supported.
+    Several terms are introduced to aid in this specification:
 
-    Collections that do not support modification operations (such as add, remove and clear) are referred to as unmodifiable. Collections that are not unmodifiable are modifiable.
-    Collections that additionally guarantee that no change in the Collection object will be visible are referred to as immutable. Collections that are not immutable are mutable.
-    Lists that guarantee that their size remains constant even though the elements can change are referred to as fixed-size. Lists that are not fixed-size are referred to as variable-size.
-    Lists that support fast (generally constant time) indexed element access are known as random access lists. Lists that do not support fast indexed element access are known as sequential access lists. The RandomAccess marker interface enables lists to advertise the fact that they support random access. This enables generic algorithms to change their behavior to provide good performance when applied to either random or sequential access lists.
+    * Collections that do not support modification operations (such as add, remove and clear) are referred to as unmodifiable.
+      Collections that are not unmodifiable are modifiable.
+    * Collections that additionally guarantee that no change in the Collection object will be visible are referred to as immutable.
+      Collections that are not immutable are mutable.
+    * Lists that guarantee that their size remains constant even though the elements can change are referred to as fixed-size.
+      Lists that are not fixed-size are referred to as variable-size.
+    * Lists that support fast (generally constant time) indexed element access are known as random access lists.
+      Lists that do not support fast indexed element access are known as sequential access lists.
+      The RandomAccess marker interface enables lists to advertise the fact that they support random access.
+      This enables generic algorithms to change their behavior to provide good performance when applied to either random or sequential access lists.
 
-Some implementations restrict what elements (or in the case of Maps, keys and values) can be stored. Possible restrictions include requiring elements to:
+  - Some implementations restrict what elements (or in the case of Maps, keys and values) can be stored.
+    Possible restrictions include requiring elements to:
 
     Be of a particular type.
     Be not null.
     Obey some arbitrary predicate.
 
-Attempting to add an element that violates an implementation's restrictions results in a runtime exception, typically a ClassCastException, an IllegalArgumentException, or a NullPointerException. Attempting to remove or test for the presence of an element that violates an implementation's restrictions can result in an exception. Some restricted collections permit this usage.
+  - Attempting to add an element that violates an implementation's restrictions results in a runtime exception,
+    typically a ClassCastException, an IllegalArgumentException, or a NullPointerException.
+    Attempting to remove or test for the presence of an element that violates an implementation's restrictions can result in an exception.
+    Some restricted collections permit this usage.
 
 
 
