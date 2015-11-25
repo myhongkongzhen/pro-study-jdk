@@ -141,25 +141,41 @@ The collections framework consists of:<br>
     Several terms are introduced to aid in this specification:<br>
     在這個說明中幾個術語有助於被介紹:
 
-    * Collections that do not support modification operations (such as add, remove and clear) are referred to as unmodifiable.<br>
+    * Collections that do not support modification operations (such as add, remove and clear) are referred to as unmodifiable.
+      不支持修改操作的集合(例如:add,remove,clear)作為不可修改的參考.
       Collections that are not unmodifiable are modifiable.<br>
-    * Collections that additionally guarantee that no change in the Collection object will be visible are referred to as immutable.<br>
+      可修改的集合是可修改的.<br>
+    * Collections that additionally guarantee that no change in the Collection object will be visible are referred to as immutable.
+      集合實體中無變化的額外保證可視化的集合是不可變的參考.<br>
       Collections that are not immutable are mutable.<br>
-    * Lists that guarantee that their size remains constant even though the elements can change are referred to as fixed-size.<br>
+      可變的集合是可改變的.<br>
+    * Lists that guarantee that their size remains constant even though the elements can change are referred to as fixed-size.
+      保證儘管元素能改變但是他們的大小是恆定的列表是固定大小的參考.<br>
       Lists that are not fixed-size are referred to as variable-size.<br>
-    * Lists that support fast (generally constant time) indexed element access are known as random access lists.<br>
+      不是固定大小的列表是可變大小的參考.<br>
+    * Lists that support fast (generally constant time) indexed element access are known as random access lists.
+      支持快速(恆定時間)索引元素訪問的列表作為一個隨機訪問的列表被了解.<br> 
       Lists that do not support fast indexed element access are known as sequential access lists.<br>
+      不支持快速索引元素訪問的列表做為一個連續訪問的列表被了解.<br>
       The RandomAccess marker interface enables lists to advertise the fact that they support random access.<br>
+      隨機訪問標籤接口能夠使得列表突出他們支持隨機訪問的事實.<br>
       This enables generic algorithms to change their behavior to provide good performance when applied to either random or sequential access lists.<br>
+      這使得通常的算法改變他們的習慣當申請隨機或序列的訪問列表時提供好的性能.
 
   - Some implementations restrict what elements (or in the case of Maps, keys and values) can be stored.<br>
+    一些實現限定元素(或者Maps的類型,鍵,值)別存儲.<br>
     Possible restrictions include requiring elements to:<br>
+    也許限定包含必須的元素:
 
     * Be of a particular type.
+      一個特殊的類型.
     * Be not null.
+      不能為空.
     * Obey some arbitrary predicate.
+      遵從一些特定的術語.
 
-  - Attempting to add an element that violates an implementation's restrictions results in a runtime exception,<br>
+  - Attempting to add an element that violates an implementation's restrictions results in a runtime exception,
+    
     typically a ClassCastException, an IllegalArgumentException, or a NullPointerException.<br>
     Attempting to remove or test for the presence of an element that violates an implementation's restrictions can result in an exception.<br>
     Some restricted collections permit this usage.<br>
