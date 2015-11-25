@@ -204,7 +204,7 @@ The collections framework consists of:<br>
     他們是非同步化的,<br>
     but the Collections class contains static factories called synchronization wrappers that can be used to add synchronization to many unsynchronized collections.<br> 
     但是集合類包含靜態的因子被同步封裝的能夠備用於添加同步化為許多非同步的集合.<br>
-    ***All of the new implementations have fail-fast iterators***,
+    ***All of the new implementations have fail-fast iterators***,<br>
     所有新的實現都包含fail-fast迭代器,<br>
     which detect invalid concurrent modification, and fail quickly and cleanly (rather than behaving erratically).<br>
     監視無效的並發修改,快速失敗以及清除(而不是不規律的表現)    
@@ -220,3 +220,48 @@ The collections framework consists of:<br>
     given the performance of the basic operations of a specific implementation.<br>
     給性能一個基本的的操作基於特定的實現.
 
+## Concurrent Collections
+
+  - Applications that use collections from more than one thread must be carefully programmed.<br> 
+    應用多餘一條線程的應用程序必須被小心的編寫.<br>
+    In general, this is known as concurrent programming.<br>
+    通常,這是被了解的作為並發編程.<br>
+    The Java platform includes extensive support for concurrent programming.<br>
+    JAVA平台包含應用於支持並發編程的擴展.<br>
+    See Java Concurrency Utilities for details.<br>
+    細節請查看JAVA並發工具.<br>
+
+  - Collections are so frequently used that various concurrent friendly interfaces and implementations of collections are included in the APIs.<br>
+    集合被如此頻繁的用於友好的接口及集合的實現包含其中的多變的並發中.<br>
+    These types go beyond the synchronization wrappers discussed previously to provide features that are frequently needed in concurrent programming.<br>
+    這些類型超出先前討論的提供給將來的頻繁應用於並發編程的同步封裝.<br>
+    These concurrent-aware interfaces are available:<br>
+    這些並發知識是可以獲取的:<br>
+
+     * BlockingQueue
+     * TransferQueue
+     * BlockingDeque
+     * ConcurrentMap
+     * ConcurrentNavigableMap
+
+  - The following concurrent-aware implementation classes are available.<br>
+    包含並發知識的實現類是可獲取的.<br>
+    See the API documentation for the correct usage of these implementations.<br>
+    針對於正確使用這些實現請查看API文檔.<br>
+
+     * LinkedBlockingQueue
+     * ArrayBlockingQueue
+     * PriorityBlockingQueue
+     * DelayQueue
+     * SynchronousQueue
+     * LinkedBlockingDeque
+     * LinkedTransferQueue
+     * CopyOnWriteArrayList
+     * CopyOnWriteArraySet
+     * ConcurrentSkipListSet
+     * ConcurrentHashMap
+     * ConcurrentSkipListMap
+     
+     
+     
+     
