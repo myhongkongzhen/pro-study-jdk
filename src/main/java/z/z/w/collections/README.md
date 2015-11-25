@@ -4,7 +4,7 @@
  - 集合框架是一個統一的描述和操作集合的架構,
  
 * enabling them to be manipulated independently of the details of their representation.
- - 使得他們能夠備獨立操作 他們所描述的細節.
+ - 使得他們能夠被獨立操作 他們所描述的細節.
 
 * It reduces programming effort while increasing performance.
  - 他降低編程工作力當越來越多的執行性能.
@@ -31,9 +31,13 @@ Introduction
 ```
 
 * The Java platform includes a collections framework. 
+ - JAVA平台包含一個集合框架.
 
 * A collection is an object that represents a group of objects (such as the classic Vector class). 
+ - 集合是一個描述一組實例（例如Vector類）的一個實體.
 
 * A collections framework is a unified architecture for representing and manipulating collections, 
+ - 集合框架是一個描述和操作集合的統一架構,
 
 * enabling collections to be manipulated independently of implementation details. 
+ - 使得集合被不依賴實現細節的操作成為可能.
