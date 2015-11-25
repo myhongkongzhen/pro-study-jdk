@@ -45,7 +45,7 @@ The primary advantages of a collections framework are that it:<br>
   - **Reduces programming effort** by providing data structures and algorithms so you don't have to write them yourself.
     - **降低程式開發精力** 以數據結構和算法為條件以至於你無需自己編寫他們.  
   - **Increases performance** by providing high-performance implementations of data structures and algorithms. 
-    - **提高性能** 以高性能的數據結構和算法實現為條件.<br>    
+    - **提高性能** 以高性能的數據結構和算法實現為條件.
       Because the various implementations of each interface are interchangeable,<br> 
       因為每一個接口多樣的實現是可交換的, <br>
       programs can be tuned by switching implementations.<br>
