@@ -1,8 +1,4 @@
 
-    簡介：Collections Framework. JDK1.7 集合框架系統學習 (一) 概覽
-    
-    集合框架API DOC簡介英文翻譯練習。
-    
     ※ 注：此翻譯僅僅為個人學習JDK文檔及補習英文所做，如果您希望看到更加準確的翻譯，請自行搜尋中文文檔
           因翻譯水平不足為您帶來的不便請諒解.
 <!--more-->  
@@ -102,10 +98,10 @@ The collections framework consists of:<br>
 
 ## Collection Interfaces
 
-The collection interfaces are divided into two groups. 
-集合接口被分為兩組.
-The most basic interface, java.util.Collection, has the following descendants:
-最基礎的接口,java.util.Collection,包含了以下子節點:
+  - The collection interfaces are divided into two groups.<br> 
+    集合接口被分為兩組.<br>
+    The most basic interface, java.util.Collection, has the following descendants:<br>
+    最基礎的接口,java.util.Collection,包含了以下子節點:<br>
 
     java.util.Set
     java.util.SortedSet
@@ -116,7 +112,14 @@ The most basic interface, java.util.Collection, has the following descendants:
     java.util.Deque
     java.util.concurrent.BlockingDeque
 
-The other collection interfaces are based on java.util.Map and are not true collections. However, these interfaces contain collection-view operations, which enable them to be manipulated as collections. Map has the following offspring:
+  - The other collection interfaces are based on java.util.Map and are not true collections.<br>
+    另外的集合接口以 java.util.Map 為基礎並不是一個真實的集合.<br>
+    However, these interfaces contain collection-view operations,<br> 
+    儘管如此,這些接口包含了集合視圖操作,<br>
+    which enable them to be manipulated as collections.<br>
+    能夠使得他們像集合一樣備操作.
+    Map has the following offspring:<br>
+    Map有以下子節點:
 
     java.util.SortedMap
     java.util.NavigableMap
