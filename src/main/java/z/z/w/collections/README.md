@@ -4,10 +4,10 @@
  - 集合框架是一個統一的描述和操作集合的架構,
  
 * enabling them to be manipulated independently of the details of their representation.
- - 使得他們能夠被獨立操作 他們所描述的細節.
+ - 使得他們能夠被獨立操作他們所描述的細節.
 
 * It reduces programming effort while increasing performance.
- - 他降低編程工作力當越來越多的執行性能.
+ - 他降低編程精力當越來越多的執行性能.
  
 * It enables interoperability among unrelated APIs, 
  - 他使得無關的API相互操作成為可能,
@@ -16,7 +16,7 @@
  - 降低設計和學習新API的精力,
 
 * and fosters software reuse. 
- - 促進軟體的複用.
+ - 并促進軟體的複用.
  
 * The framework is based on more than a dozen collection interfaces.
  - 這個框架以多餘十二個集合的接口為基礎. 
@@ -26,9 +26,7 @@
 
 # Collections Framework Overview
 
-```
-Introduction
-```
+### Introduction
 
 * The Java platform includes a collections framework. 
  - JAVA平台包含一個集合框架.
@@ -92,4 +90,45 @@ The collections framework consists of:<br>
       哦,不，嚴格的來說,是集合框架的一部分,<br>
       this feature was added to the Java platform at the same time as the collections framework and relies on some of the same infrastructure.<br>
       這些特色是在同一時間作為集合框架和可信賴的一些相同的底層被添加於JAVA平台的.
+
+---------------
+
+Collection Interfaces
+
+The collection interfaces are divided into two groups. The most basic interface, java.util.Collection, has the following descendants:
+
+    java.util.Set
+    java.util.SortedSet
+    java.util.NavigableSet
+    java.util.Queue
+    java.util.concurrent.BlockingQueue
+    java.util.concurrent.TransferQueue
+    java.util.Deque
+    java.util.concurrent.BlockingDeque
+
+The other collection interfaces are based on java.util.Map and are not true collections. However, these interfaces contain collection-view operations, which enable them to be manipulated as collections. Map has the following offspring:
+
+    java.util.SortedMap
+    java.util.NavigableMap
+    java.util.concurrent.ConcurrentMap
+    java.util.concurrent.ConcurrentNavigableMap
+
+Many of the modification methods in the collection interfaces are labeled optional. Implementations are permitted to not perform one or more of these operations, throwing a runtime exception (UnsupportedOperationException) if they are attempted. The documentation for each implementation must specify which optional operations are supported. Several terms are introduced to aid in this specification:
+
+    Collections that do not support modification operations (such as add, remove and clear) are referred to as unmodifiable. Collections that are not unmodifiable are modifiable.
+    Collections that additionally guarantee that no change in the Collection object will be visible are referred to as immutable. Collections that are not immutable are mutable.
+    Lists that guarantee that their size remains constant even though the elements can change are referred to as fixed-size. Lists that are not fixed-size are referred to as variable-size.
+    Lists that support fast (generally constant time) indexed element access are known as random access lists. Lists that do not support fast indexed element access are known as sequential access lists. The RandomAccess marker interface enables lists to advertise the fact that they support random access. This enables generic algorithms to change their behavior to provide good performance when applied to either random or sequential access lists.
+
+Some implementations restrict what elements (or in the case of Maps, keys and values) can be stored. Possible restrictions include requiring elements to:
+
+    Be of a particular type.
+    Be not null.
+    Obey some arbitrary predicate.
+
+Attempting to add an element that violates an implementation's restrictions results in a runtime exception, typically a ClassCastException, an IllegalArgumentException, or a NullPointerException. Attempting to remove or test for the presence of an element that violates an implementation's restrictions can result in an exception. Some restricted collections permit this usage.
+
+
+
+
 
