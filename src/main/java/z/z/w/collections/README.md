@@ -183,7 +183,13 @@ The collections framework consists of:<br>
     Some restricted collections permit this usage.<br>
     一些受限的集合允許這樣的使用.
 
+## Collection Implementations
 
+| Tables        | Are           | Cool  |
+| ------------- |:-------------:| -----:|
+| col 3 is      | right-aligned | $1600 |
+| col 2 is      | centered      |   $12 |
+| zebra stripes | are neat      |    $1 |
 
 
 
