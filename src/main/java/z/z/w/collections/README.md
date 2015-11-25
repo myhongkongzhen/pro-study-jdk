@@ -102,6 +102,7 @@ The collections framework consists of:<br>
     集合接口被分為兩組.<br>
     The most basic interface, java.util.Collection, has the following descendants:<br>
     最基礎的接口,java.util.Collection,包含了以下子節點:<br>
+    
 ```java
     java.util.Set
     java.util.SortedSet
@@ -112,6 +113,7 @@ The collections framework consists of:<br>
     java.util.Deque
     java.util.concurrent.BlockingDeque
 ```
+
   - The other collection interfaces are based on java.util.Map and are not true collections.<br>
     另外的集合接口以 java.util.Map 為基礎並不是一個真實的集合.<br>
     However, these interfaces contain collection-view operations,<br> 
@@ -120,40 +122,47 @@ The collections framework consists of:<br>
     能夠使得他們像集合一樣備操作.
     Map has the following offspring:<br>
     Map有以下子節點:
+    
 ```java
     java.util.SortedMap
     java.util.NavigableMap
     java.util.concurrent.ConcurrentMap
     java.util.concurrent.ConcurrentNavigableMap
 ```
-  - Many of the modification methods in the collection interfaces are labeled optional. 
-    Implementations are permitted to not perform one or more of these operations,
-    throwing a runtime exception (UnsupportedOperationException) if they are attempted.
-    The documentation for each implementation must specify which optional operations are supported.
-    Several terms are introduced to aid in this specification:
 
-    * Collections that do not support modification operations (such as add, remove and clear) are referred to as unmodifiable.
-      Collections that are not unmodifiable are modifiable.
-    * Collections that additionally guarantee that no change in the Collection object will be visible are referred to as immutable.
-      Collections that are not immutable are mutable.
-    * Lists that guarantee that their size remains constant even though the elements can change are referred to as fixed-size.
-      Lists that are not fixed-size are referred to as variable-size.
-    * Lists that support fast (generally constant time) indexed element access are known as random access lists.
-      Lists that do not support fast indexed element access are known as sequential access lists.
-      The RandomAccess marker interface enables lists to advertise the fact that they support random access.
-      This enables generic algorithms to change their behavior to provide good performance when applied to either random or sequential access lists.
+  - Many of the modification methods in the collection interfaces are labeled optional. <br>
+    在集合接口中許多修改的方法被標記為可選的.<br>
+    Implementations are permitted to not perform one or more of these operations,<br>
+    實現是被准許不執行這些操作中的一個或更多,<br>
+    throwing a runtime exception (UnsupportedOperationException) if they are attempted.<br>
+    如果他們被企圖則會拋出一個運行時異常(不被支持的操作異常).<br>
+    The documentation for each implementation must specify which optional operations are supported.<br>
+    每一個實現文檔必須制定哪一個可選的操作是被支持的.<br>
+    Several terms are introduced to aid in this specification:<br>
+    在這個說明中幾個術語有助於被介紹:
 
-  - Some implementations restrict what elements (or in the case of Maps, keys and values) can be stored.
-    Possible restrictions include requiring elements to:
+    * Collections that do not support modification operations (such as add, remove and clear) are referred to as unmodifiable.<br>
+      Collections that are not unmodifiable are modifiable.<br>
+    * Collections that additionally guarantee that no change in the Collection object will be visible are referred to as immutable.<br>
+      Collections that are not immutable are mutable.<br>
+    * Lists that guarantee that their size remains constant even though the elements can change are referred to as fixed-size.<br>
+      Lists that are not fixed-size are referred to as variable-size.<br>
+    * Lists that support fast (generally constant time) indexed element access are known as random access lists.<br>
+      Lists that do not support fast indexed element access are known as sequential access lists.<br>
+      The RandomAccess marker interface enables lists to advertise the fact that they support random access.<br>
+      This enables generic algorithms to change their behavior to provide good performance when applied to either random or sequential access lists.<br>
 
-    Be of a particular type.
-    Be not null.
-    Obey some arbitrary predicate.
+  - Some implementations restrict what elements (or in the case of Maps, keys and values) can be stored.<br>
+    Possible restrictions include requiring elements to:<br>
 
-  - Attempting to add an element that violates an implementation's restrictions results in a runtime exception,
-    typically a ClassCastException, an IllegalArgumentException, or a NullPointerException.
-    Attempting to remove or test for the presence of an element that violates an implementation's restrictions can result in an exception.
-    Some restricted collections permit this usage.
+    * Be of a particular type.
+    * Be not null.
+    * Obey some arbitrary predicate.
+
+  - Attempting to add an element that violates an implementation's restrictions results in a runtime exception,<br>
+    typically a ClassCastException, an IllegalArgumentException, or a NullPointerException.<br>
+    Attempting to remove or test for the presence of an element that violates an implementation's restrictions can result in an exception.<br>
+    Some restricted collections permit this usage.<br>
 
 
 
