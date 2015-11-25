@@ -91,9 +91,7 @@ The collections framework consists of:<br>
       this feature was added to the Java platform at the same time as the collections framework and relies on some of the same infrastructure.<br>
       這些特色是在同一時間作為集合框架和可信賴的一些相同的底層被添加於JAVA平台的.
 
----------------
-
-Collection Interfaces
+## Collection Interfaces
 
 The collection interfaces are divided into two groups. The most basic interface, java.util.Collection, has the following descendants:
 
