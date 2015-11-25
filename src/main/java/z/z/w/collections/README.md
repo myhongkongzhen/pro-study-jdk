@@ -89,7 +89,7 @@ The collections framework consists of:<br>
   - **Array Utilities.** Utility functions for arrays of primitive types and reference objects. 
     - **數組工具** 針對於原始類型的數組和引用實體的工具方法.<br>
       Not, strictly speaking, a part of the collections framework, <br>
-      哦,不，嚴格的來說,集合框架的一部分,<br>
+      哦,不，嚴格的來說,是集合框架的一部分,<br>
       this feature was added to the Java platform at the same time as the collections framework and relies on some of the same infrastructure.<br>
-      
+      這些特色是在同一時間作為集合框架和可信賴的一些相同的底層被添加於JAVA平台的.
 
