@@ -1,3 +1,12 @@
+
+    簡介：Collections Framework. JDK1.7 集合框架系統學習 (一) 概覽
+    
+    集合框架API DOC簡介英文翻譯練習。
+    
+    ※ 注：此翻譯僅僅為個人學習JDK文檔及補習英文所做，如果您希望看到更加準確的翻譯，請自行搜尋中文文檔
+          因翻譯水平不足為您帶來的不便請諒解.
+<!--more-->  
+
 # JDK 1.7 API Collections Framework
 
 * The collections framework is a unified architecture for representing and manipulating***[mə'nɪpjulet]*** collections
@@ -93,7 +102,10 @@ The collections framework consists of:<br>
 
 ## Collection Interfaces
 
-The collection interfaces are divided into two groups. The most basic interface, java.util.Collection, has the following descendants:
+The collection interfaces are divided into two groups. 
+集合接口被分為兩組.
+The most basic interface, java.util.Collection, has the following descendants:
+最基礎的接口,java.util.Collection,包含了以下子節點:
 
     java.util.Set
     java.util.SortedSet
