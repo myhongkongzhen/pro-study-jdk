@@ -50,10 +50,10 @@ Introduction
   
   - **Increases performance** by providing high-performance implementations of data structures and algorithms. 
     - **提高性能** 以高性能的數據結構和算法實現為條件.<br>
-    Because the various implementations of each interface are interchangeable, 
-     - 因為每一個接口多樣的實現是可交換的, <br>
-    programs can be tuned by switching implementations.
-     - 程序能夠備調整由可轉換的實現.
+    Because the various implementations of each interface are interchangeable,<br> 
+    因為每一個接口多樣的實現是可交換的, <br>
+    programs can be tuned by switching implementations.<br>
+    程序能夠備調整由可轉換的實現.
        
   - **Provides interoperability between unrelated APIs** by establishing***[ɪˈstæblɪʃ]*** a common language to pass collections back and forth.
     - **提供無關API之間的相互操作** 建立一個通用的可環繞操作集合的語言
