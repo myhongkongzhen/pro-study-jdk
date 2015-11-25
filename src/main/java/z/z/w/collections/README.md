@@ -49,10 +49,10 @@ Introduction
     - **降低程式開發精力** 以數據結構和算法為條件以至於你無需自己編寫他們.
   
   - **Increases performance** by providing high-performance implementations of data structures and algorithms. 
-    - **提高性能** 以高性能的數據結構和算法實現為條件.
-    * Because the various implementations of each interface are interchangeable, 
-     - 因為每一個接口多樣的實現是可交換的, 
-    * programs can be tuned by switching implementations.
+    - **提高性能** 以高性能的數據結構和算法實現為條件.<br>
+    Because the various implementations of each interface are interchangeable, 
+     - 因為每一個接口多樣的實現是可交換的, <br>
+    programs can be tuned by switching implementations.
      - 程序能夠備調整由可轉換的實現.
        
   - **Provides interoperability between unrelated APIs** by establishing***[ɪˈstæblɪʃ]*** a common language to pass collections back and forth.
@@ -66,4 +66,23 @@ Introduction
   
   - **Fosters software reuse** by providing a standard interface for collections and algorithms with which to manipulate them.
     - **促進軟體的複用** 為集合提供一個基本的接口和操作他們的算法
+
+The collections framework consists of:
+
+  - **Collection interfaces.** Represent different types of collections, such as sets, lists, and maps. 
+  These interfaces form the basis of the framework.
+  - **General-purpose implementations.** Primary implementations of the collection interfaces.
+  - **Legacy implementations.** The collection classes from earlier releases, Vector and Hashtable, 
+  were retrofitted to implement the collection interfaces.
+  - **Special-purpose implementations.** Implementations designed for use in special situations. 
+  These implementations display nonstandard performance characteristics, usage restrictions, or behavior.
+  - **Concurrent implementations.** Implementations designed for highly concurrent use.
+  - **Wrapper implementations.** Add functionality, such as synchronization, to other implementations.
+  - **Convenience implementations.** High-performance "mini-implementations" of the collection interfaces.
+  - **Abstract implementations.** Partial implementations of the collection interfaces to facilitate custom implementations.
+  - **Algorithms.** Static methods that perform useful functions on collections, such as sorting a list.
+  - **Infrastructure.** Interfaces that provide essential support for the collection interfaces.
+  - **Array Utilities.** Utility functions for arrays of primitive types and reference objects. 
+  Not, strictly speaking, a part of the collections framework, 
+  this feature was added to the Java platform at the same time as the collections framework and relies on some of the same infrastructure.
 
