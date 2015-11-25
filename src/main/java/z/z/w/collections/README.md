@@ -39,17 +39,17 @@ Introduction
 * enabling collections to be manipulated independently of implementation details. 
  - 使得集合被不依賴實現細節的操作成為可能.
  
-  The primary advantages of a collections framework are that it:<br>
-  集合框架最主要的特點如下:
-  
+The primary advantages of a collections framework are that it:<br>
+集合框架最主要的特點如下:
+
   - **Reduces programming effort** by providing data structures and algorithms so you don't have to write them yourself.
     - **降低程式開發精力** 以數據結構和算法為條件以至於你無需自己編寫他們.  
   - **Increases performance** by providing high-performance implementations of data structures and algorithms. 
     - **提高性能** 以高性能的數據結構和算法實現為條件.<br>    
-    Because the various implementations of each interface are interchangeable,<br> 
-    因為每一個接口多樣的實現是可交換的, <br>
-    programs can be tuned by switching implementations.<br>
-    程序能夠備調整由可轉換的實現.       
+      Because the various implementations of each interface are interchangeable,<br> 
+      因為每一個接口多樣的實現是可交換的, <br>
+      programs can be tuned by switching implementations.<br>
+      程序能夠備調整由可轉換的實現.       
   - **Provides interoperability between unrelated APIs** by establishing***[ɪˈstæblɪʃ]*** a common language to pass collections back and forth.
     - **提供無關API之間的相互操作** 建立一個通用的可環繞操作集合的語言  
   - **Reduces the effort required to learn APIs** by requiring you to learn multiple ad hoc collection APIs.
