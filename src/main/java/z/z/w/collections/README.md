@@ -102,7 +102,7 @@ The collections framework consists of:<br>
     集合接口被分為兩組.<br>
     The most basic interface, java.util.Collection, has the following descendants:<br>
     最基礎的接口,java.util.Collection,包含了以下子節點:<br>
-
+```java
     java.util.Set
     java.util.SortedSet
     java.util.NavigableSet
@@ -111,7 +111,7 @@ The collections framework consists of:<br>
     java.util.concurrent.TransferQueue
     java.util.Deque
     java.util.concurrent.BlockingDeque
-
+```
   - The other collection interfaces are based on java.util.Map and are not true collections.<br>
     另外的集合接口以 java.util.Map 為基礎並不是一個真實的集合.<br>
     However, these interfaces contain collection-view operations,<br> 
@@ -120,12 +120,12 @@ The collections framework consists of:<br>
     能夠使得他們像集合一樣備操作.
     Map has the following offspring:<br>
     Map有以下子節點:
-
+```java
     java.util.SortedMap
     java.util.NavigableMap
     java.util.concurrent.ConcurrentMap
     java.util.concurrent.ConcurrentNavigableMap
-
+```
 Many of the modification methods in the collection interfaces are labeled optional. Implementations are permitted to not perform one or more of these operations, throwing a runtime exception (UnsupportedOperationException) if they are attempted. The documentation for each implementation must specify which optional operations are supported. Several terms are introduced to aid in this specification:
 
     Collections that do not support modification operations (such as add, remove and clear) are referred to as unmodifiable. Collections that are not unmodifiable are modifiable.
