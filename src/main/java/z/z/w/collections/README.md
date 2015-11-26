@@ -225,7 +225,27 @@
      * ConcurrentSkipListSet
      * ConcurrentHashMap
      * ConcurrentSkipListMap
-     
+## Design Goals
+- The main design goal was to produce an API that was small in size and,more importantly,
+  in "conceptual weight." It was critical that the new functionality not seem too different to current Java programmers;
+  it had to augment current facilities, rather than replace them. At the same time,
+  the new API had to be powerful enough to provide all the advantages described previously.
+    
+- To keep the number of core interfaces small,
+  the interfaces do not attempt to capture such subtle distinctions as mutability, modifiability, and resizability.
+  Instead, certain calls in the core interfaces are optional,
+  enabling implementations to throw an UnsupportedOperationException to indicate that they do not support a specified optional operation.
+  Collection implementers must clearly document which optional operations are supported by an implementation.
+    
+- To keep the number of methods in each core interface small, an interface contains a method only if either:
+    
+  * It is a truly fundamental operation: a basic operations in terms of which others could be reasonably defined,
+  * There is a compelling performance reason why an important implementation would want to override it.
+    
+- It was critical that all reasonable representations of collections interoperate well.
+  This included arrays, which cannot be made to implement the Collection interface directly without changing the language.
+  Thus, the framework includes methods to enable collections to be moved into arrays,
+  arrays to be viewed as collections, and maps to be viewed as collections. 
      
      
      
