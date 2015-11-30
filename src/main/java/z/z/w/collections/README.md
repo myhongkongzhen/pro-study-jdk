@@ -53,7 +53,7 @@
   - **Collection interfaces.** Represent different types of collections, such as sets, lists, and maps. 
     - **集合接口.** 描述不同的集合類型,如sets,lists,與maps
       These interfaces form the basis of the framework.
-      這些接口表單基於框架.
+      這些接口形成了框架的基礎.
   - **General-purpose implementations.** Primary implementations of the collection interfaces.
     - **通用實現.** 主要的集合接口實現
   - **Legacy implementations.** The collection classes from earlier releases, Vector and Hashtable, were retrofitted to implement the collection interfaces.
