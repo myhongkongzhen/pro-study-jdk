@@ -567,13 +567,17 @@ public interface Collection<E> extends Iterable<E>
 	 * Compares the specified object with this collection for equality. <p>
 	 * 將指定obj與當前集合比較相等.
 	 * While the <tt>Collection</tt> interface adds no stipulations to the
-	 *
+	 * 集合接口由Object.equals()方法添加未規定的通用的方法.
 	 * general contract for the <tt>Object.equals</tt>, programmers who
 	 * implement the <tt>Collection</tt> interface "directly" (in other words,
+	 * 實現集合接口的程序員分派
 	 * create a class that is a <tt>Collection</tt> but is not a <tt>Set</tt>
+	 * (換句話說,這是一個Collection而不是一個Set或者List)
 	 * or a <tt>List</tt>) must exercise care if they choose to override the
+	 * 如果選擇複寫Object.equals必須小心使用.
 	 * <tt>Object.equals</tt>.  It is not necessary to do so, and the simplest
 	 * course of action is to rely on <tt>Object</tt>'s implementation, but
+	 *
 	 * the implementor may wish to implement a "value comparison" in place of
 	 * the default "reference comparison."  (The <tt>List</tt> and
 	 * <tt>Set</tt> interfaces mandate such value comparisons.)<p>
