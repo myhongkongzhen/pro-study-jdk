@@ -576,25 +576,37 @@ public interface Collection<E> extends Iterable<E>
 	 * or a <tt>List</tt>) must exercise care if they choose to override the
 	 * 如果選擇複寫Object.equals必須小心使用.
 	 * <tt>Object.equals</tt>.  It is not necessary to do so, and the simplest
+	 * 這是非必須的,
 	 * course of action is to rely on <tt>Object</tt>'s implementation, but
-	 *
+	 * 最簡單的行為過程依賴於Object的實現,
 	 * the implementor may wish to implement a "value comparison" in place of
+	 * 但是實現者可以在默認比較中實現值的比較.
 	 * the default "reference comparison."  (The <tt>List</tt> and
 	 * <tt>Set</tt> interfaces mandate such value comparisons.)<p>
+	 * (List與Set接口都有類似的值比較.)
 	 * The general contract for the <tt>Object.equals</tt> method states that
+	 * 對於Object.equals方法陳述的通用的契約必須是對等的
 	 * equals must be symmetric (in other words, <tt>a.equals(b)</tt> if and
+	 * (換句話說,a.equals(b)當且僅當b.equals(a))
 	 * only if <tt>b.equals(a)</tt>).  The contracts for <tt>List.equals</tt>
 	 * and <tt>Set.equals</tt> state that lists are only equal to other lists,
+	 * 對於List與Set的equals描述的契約僅僅是list等於其他的list，
 	 * and sets to other sets.  Thus, a custom <tt>equals</tt> method for a
+	 * set等於另外的set.
 	 * collection class that implements neither the <tt>List</tt> nor
+	 * 因此對於實現既不是List也不是set接口的集合類的通用的equals方法
 	 * <tt>Set</tt> interface must return <tt>false</tt> when this collection
+	 * 必須返回false當這個集合與另外的list或者set相比較時.
 	 * is compared to any list or set.  (By the same logic, it is not possible
 	 * to write a class that correctly implements both the <tt>Set</tt> and
+	 * (相同的邏輯,寫一個正確的實現Set與List接口的類是不可能的.)
 	 * <tt>List</tt> interfaces.)
 	 *
 	 * @param o object to be compared for equality with this collection
+	 *          一個對象與這個集合比較相等性
 	 *
 	 * @return <tt>true</tt> if the specified object is equal to this
+	 *                       如果指定的obj與這個集合相等，返回true
 	 * collection
 	 *
 	 * @see Object#equals(Object)
@@ -605,15 +617,21 @@ public interface Collection<E> extends Iterable<E>
 
 	/**
 	 * Returns the hash code value for this collection.  While the
+	 * 返回這個集合的hashcode
 	 * <tt>Collection</tt> interface adds no stipulations to the general
+	 * 當這個集合接口添加了沒有約定的Object.hashCode方法通用的契約,
 	 * contract for the <tt>Object.hashCode</tt> method, programmers should
 	 * take note that any class that overrides the <tt>Object.equals</tt>
+	 * 程序員應該標記任何複寫了Object.equals方法的列必須複寫hashcode方法，
 	 * method must also override the <tt>Object.hashCode</tt> method in order
 	 * to satisfy the general contract for the <tt>Object.hashCode</tt> method.
+	 * 在安全的hashcode方法中的公共契約中.
 	 * In particular, <tt>c1.equals(c2)</tt> implies that
+	 * 特別說明,c1.equals(c2)意味著c1.hashCode() == c2.hashCode();
 	 * <tt>c1.hashCode()==c2.hashCode()</tt>.
 	 *
 	 * @return the hash code value for this collection
+	 *         返回這個集合的hash code值
 	 *
 	 * @see Object#hashCode()
 	 * @see Object#equals(Object)
