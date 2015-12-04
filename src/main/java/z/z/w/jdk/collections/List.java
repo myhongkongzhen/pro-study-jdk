@@ -20,6 +20,7 @@ package z.z.w.jdk.collections;
  *********************************************************************************************/
 
 import java.util.*;
+import java.util.Iterator;
 
 /**
  * An ordered collection (also known as a <i>sequence</i>).  The user of this
@@ -166,6 +167,7 @@ public interface List<E> extends Collection<E>
 	/**
 	 * Returns <tt>true</tt> if this list contains the specified element.
 	 * More formally, returns <tt>true</tt> if and only if this list contains
+	 * 更正式的講:
 	 * at least one element <tt>e</tt> such that
 	 * <tt>(o==null&nbsp;?&nbsp;e==null&nbsp;:&nbsp;o.equals(e))</tt>.
 	 *
@@ -173,6 +175,7 @@ public interface List<E> extends Collection<E>
 	 * @return <tt>true</tt> if this list contains the specified element
 	 * @throws ClassCastException if the type of the specified element
 	 *         is incompatible with this list
+	 *            互不相容的
 	 * (<a href="Collection.html#optional-restrictions">optional</a>)
 	 * @throws NullPointerException if the specified element is null and this
 	 *         list does not permit null elements
@@ -182,19 +185,22 @@ public interface List<E> extends Collection<E>
 
 	/**
 	 * Returns an iterator over the elements in this list in proper sequence.
-	 *
+	 *            返回一個在list中的按照本是序列的元素的迭代器
 	 * @return an iterator over the elements in this list in proper sequence
 	 */
-	java.util.Iterator<E> iterator();
+	Iterator<E> iterator();
 
 	/**
 	 * Returns an array containing all of the elements in this list in proper
 	 * sequence (from first to last element).
 	 *
 	 * <p>The returned array will be "safe" in that no references to it are
+	 * 返回到數組將會是安全的在由這個list維護的無引用他的情況下.
 	 * maintained by this list.  (In other words, this method must
 	 * allocate a new array even if this list is backed by an array).
+	 * (換句換說,這個方法必須分配一個新的數組即使他是支持數組的).
 	 * The caller is thus free to modify the returned array.
+	 * 調用者因此可以自由的修改返回的數組.
 	 *
 	 * <p>This method acts as bridge between array-based and collection-based
 	 * APIs.
@@ -217,13 +223,16 @@ public interface List<E> extends Collection<E>
 	 * the array has more elements than the list), the element in the array
 	 * immediately following the end of the list is set to <tt>null</tt>.
 	 * (This is useful in determining the length of the list <i>only</i> if
+	 * (這有助於測試當調用者知道列表中不能包含任何null元素時list的長度.)
 	 * the caller knows that the list does not contain any null elements.)
 	 *
 	 * <p>Like the {@link #toArray()} method, this method acts as bridge between
 	 * array-based and collection-based APIs.  Further, this method allows
+	 *                                         更進一步的,
 	 * precise control over the runtime type of the output array, and may,
+	 * 精確的
 	 * under certain circumstances, be used to save allocation costs.
-	 *
+	 * 在某種確定情況下,
 	 * <p>Suppose <tt>x</tt> is a list known to contain only strings.
 	 * The following code can be used to dump the list into a newly
 	 * allocated array of <tt>String</tt>:
