@@ -241,10 +241,13 @@ public interface List<E> extends Collection<E>
 	 *     String[] y = x.toArray(new String[0]);</pre>
 	 *
 	 * Note that <tt>toArray(new Object[0])</tt> is identical in function to
+	 *                                              完全相同的
 	 * <tt>toArray()</tt>.
 	 *
 	 * @param a the array into which the elements of this list are to
+	 *          足夠大的放入列表元素的空間
 	 *          be stored, if it is big enough; otherwise, a new array of the
+	 *          另外,一個相同運行時類型的新的數組為了這個目的分配.
 	 *          same runtime type is allocated for this purpose.
 	 * @return an array containing the elements of this list
 	 * @throws ArrayStoreException if the runtime type of the specified array
@@ -262,18 +265,25 @@ public interface List<E> extends Collection<E>
 	 * operation).
 	 *
 	 * <p>Lists that support this operation may place limitations on what
+	 * 支持這個操作的列表也許在添加元素到列表中存在局限性.
 	 * elements may be added to this list.  In particular, some
+	 *                                      詳細來講,
 	 * lists will refuse to add null elements, and others will impose
+	 * 一些list會拒絕添加null元素,
 	 * restrictions on the type of elements that may be added.  List
+	 * 而另一些會強加可添加元素類型的限制條件
 	 * classes should clearly specify in their documentation any restrictions
+	 * 列表類應該明確的在他們的文檔中指出可以添加的元素的任何的限制條件
 	 * on what elements may be added.
 	 *
 	 * @param e element to be appended to this list
+	 *          添加至list的元素
 	 * @return <tt>true</tt> (as specified by {@link java.util.Collection#add})
 	 * @throws UnsupportedOperationException if the <tt>add</tt> operation
 	 *         is not supported by this list
 	 * @throws ClassCastException if the class of the specified element
 	 *         prevents it from being added to this list
+	 *         阻止
 	 * @throws NullPointerException if the specified element is null and this
 	 *         list does not permit null elements
 	 * @throws IllegalArgumentException if some property of this element
@@ -283,18 +293,24 @@ public interface List<E> extends Collection<E>
 
 	/**
 	 * Removes the first occurrence of the specified element from this list,
+	 * 從list中移出第一個出現的指定的元素.
 	 * if it is present (optional operation).  If this list does not contain
+	 * 如果存在(可選的操作)
 	 * the element, it is unchanged.  More formally, removes the element with
+	 * 如果list不包含這個元素，不會改變. 更正式的講,
 	 * the lowest index <tt>i</tt> such that
+	 * 移除(o == null ? get(i) == null : o.equals(get(i))) 存在的最低索引的元素
 	 * <tt>(o==null&nbsp;?&nbsp;get(i)==null&nbsp;:&nbsp;o.equals(get(i)))</tt>
 	 * (if such an element exists).  Returns <tt>true</tt> if this list
 	 * contained the specified element (or equivalently, if this list changed
+	 *                                     相等的,
 	 * as a result of the call).
 	 *
 	 * @param o element to be removed from this list, if present
 	 * @return <tt>true</tt> if this list contained the specified element
 	 * @throws ClassCastException if the type of the specified element
 	 *         is incompatible with this list
+	 *            互不相容的
 	 * (<a href="Collection.html#optional-restrictions">optional</a>)
 	 * @throws NullPointerException if the specified element is null and this
 	 *         list does not permit null elements
@@ -309,9 +325,11 @@ public interface List<E> extends Collection<E>
 
 	/**
 	 * Returns <tt>true</tt> if this list contains all of the elements of the
+	 * 如果這個集合包含所有的指定集合的元素，返回true
 	 * specified collection.
 	 *
 	 * @param  c collection to be checked for containment in this list
+	 *           這個list中包含的要檢查的集合
 	 * @return <tt>true</tt> if this list contains all of the elements of the
 	 *         specified collection
 	 * @throws ClassCastException if the types of one or more elements
@@ -329,13 +347,18 @@ public interface List<E> extends Collection<E>
 
 	/**
 	 * Appends all of the elements in the specified collection to the end of
+	 * 在這個list末尾添加指定集合中的所有元素.
 	 * this list, in the order that they are returned by the specified
+	 * 按照指定集合的跌倒順序返回.
 	 * collection's iterator (optional operation).  The behavior of this
 	 * operation is undefined if the specified collection is modified while
+	 * 這個操作的行為是未定義的如果當操作在過程中將指定的集合改變了.
 	 * the operation is in progress.  (Note that this will occur if the
 	 * specified collection is this list, and it's nonempty.)
+	 * (如果指定的集合是這個list,並且他不是空的,將會發生這樣的事情.)
 	 *
 	 * @param c collection containing elements to be added to this list
+	 *          將要添加到這個list的集合元素
 	 * @return <tt>true</tt> if this list changed as a result of the call
 	 * @throws UnsupportedOperationException if the <tt>addAll</tt> operation
 	 *         is not supported by this list
@@ -352,16 +375,21 @@ public interface List<E> extends Collection<E>
 
 	/**
 	 * Inserts all of the elements in the specified collection into this
+	 * 向list指定位置添加指定集合的所有元素.
 	 * list at the specified position (optional operation).  Shifts the
 	 * element currently at that position (if any) and any subsequent
+	 * 改變元素現有的位置(如果存在)並且後續的元素在其右邊
 	 * elements to the right (increases their indices).  The new elements
+	 *                       (增長他們的目錄).
 	 * will appear in this list in the order that they are returned by the
+	 * 這些新的元素將會按照在list中的指定集合的迭代順序出現.
 	 * specified collection's iterator.  The behavior of this operation is
 	 * undefined if the specified collection is modified while the
 	 * operation is in progress.  (Note that this will occur if the specified
 	 * collection is this list, and it's nonempty.)
 	 *
 	 * @param index index at which to insert the first element from the
+	 *              從指定集合中插入的第一個元素的索引
 	 *              specified collection
 	 * @param c collection containing elements to be added to this list
 	 * @return <tt>true</tt> if this list changed as a result of the call
@@ -374,13 +402,16 @@ public interface List<E> extends Collection<E>
 	 *         elements, or if the specified collection is null
 	 * @throws IllegalArgumentException if some property of an element of the
 	 *         specified collection prevents it from being added to this list
+	 *         如果指定集合中的一個元素的某些屬性阻止添加進這個集合，將會拋出異常
 	 * @throws IndexOutOfBoundsException if the index is out of range
+	 *                                   索引超出範圍
 	 *         (<tt>index &lt; 0 || index &gt; size()</tt>)
 	 */
 	boolean addAll(int index, java.util.Collection<? extends E> c);
 
 	/**
 	 * Removes from this list all of its elements that are contained in the
+	 * 從集合中移除所有的包含在指定集合中的元素
 	 * specified collection (optional operation).
 	 *
 	 * @param c collection containing elements to be removed from this list
@@ -401,8 +432,10 @@ public interface List<E> extends Collection<E>
 
 	/**
 	 * Retains only the elements in this list that are contained in the
+	 * 保存在這個list中的僅僅在指定集合中的元素
 	 * specified collection (optional operation).  In other words, removes
 	 * from this list all of its elements that are not contained in the
+	 * 換句話說，移除所有的list的中元素，這些元素不包含在指定集合中.
 	 * specified collection.
 	 *
 	 * @param c collection containing elements to be retained in this list
@@ -435,13 +468,18 @@ public interface List<E> extends Collection<E>
 
 	/**
 	 * Compares the specified object with this list for equality.  Returns
+	 * 比較指定的obj與這個list相等性.
 	 * <tt>true</tt> if and only if the specified object is also a list, both
+	 * 當且僅當指定的obj也是一個list,
 	 * lists have the same size, and all corresponding pairs of elements in
+	 * 兩個list有相同的size，在兩個list中相應的元素是相等的.
 	 * the two lists are <i>equal</i>.  (Two elements <tt>e1</tt> and
 	 * <tt>e2</tt> are <i>equal</i> if <tt>(e1==null ? e2==null :
+	 * (e1 == null ? e2 == null : eq.equals(e2))
 	 * e1.equals(e2))</tt>.)  In other words, two lists are defined to be
 	 * equal if they contain the same elements in the same order.  This
 	 * definition ensures that the equals method works properly across
+	 * 這個定義確保了equals方法在List接口的不同實現的適當工作.
 	 * different implementations of the <tt>List</tt> interface.
 	 *
 	 * @param o the object to be compared for equality with this list
@@ -483,6 +521,7 @@ public interface List<E> extends Collection<E>
 
 	/**
 	 * Replaces the element at the specified position in this list with the
+	 * 替換指定位置的元素用指定的元素
 	 * specified element (optional operation).
 	 *
 	 * @param index index of the element to replace
@@ -503,8 +542,11 @@ public interface List<E> extends Collection<E>
 
 	/**
 	 * Inserts the specified element at the specified position in this list
+	 * 在指定的位置添加指定的元素.
 	 * (optional operation).  Shifts the element currently at that position
+	 *  改變元素當前的位置
 	 * (if any) and any subsequent elements to the right (adds one to their
+	 *  任何後續的元素在其右邊(他們的目錄下添加)
 	 * indices).
 	 *
 	 * @param index index at which the specified element is to be inserted
@@ -526,10 +568,12 @@ public interface List<E> extends Collection<E>
 	 * Removes the element at the specified position in this list (optional
 	 * operation).  Shifts any subsequent elements to the left (subtracts one
 	 * from their indices).  Returns the element that was removed from the
+	 * 返回這個移出list的元素
 	 * list.
 	 *
 	 * @param index the index of the element to be removed
 	 * @return the element previously at the specified position
+	 *                     先前的
 	 * @throws UnsupportedOperationException if the <tt>remove</tt> operation
 	 *         is not supported by this list
 	 * @throws IndexOutOfBoundsException if the index is out of range
@@ -542,9 +586,13 @@ public interface List<E> extends Collection<E>
 
 	/**
 	 * Returns the index of the first occurrence of the specified element
+	 * 返回在list中第一個范閒指定元素的索引
 	 * in this list, or -1 if this list does not contain the element.
+	 * 或者返回-1當這個list不包含這個元素時
 	 * More formally, returns the lowest index <tt>i</tt> such that
+	 * 更正式的講,
 	 * <tt>(o==null&nbsp;?&nbsp;get(i)==null&nbsp;:&nbsp;o.equals(get(i)))</tt>,
+	 * ( o == null ? get( i ) == null : o.equals( get( i ) ) )
 	 * or -1 if there is no such index.
 	 *
 	 * @param o element to search for
@@ -583,6 +631,7 @@ public interface List<E> extends Collection<E>
 
 	/**
 	 * Returns a list iterator over the elements in this list (in proper
+	 *                                                            適當的
 	 * sequence).
 	 *
 	 * @return a list iterator over the elements in this list (in proper
@@ -594,8 +643,10 @@ public interface List<E> extends Collection<E>
 	 * Returns a list iterator over the elements in this list (in proper
 	 * sequence), starting at the specified position in the list.
 	 * The specified index indicates the first element that would be
+	 * 指定的索引表示第一個初始調ListIterator.next()用返回的元素.
 	 * returned by an initial call to {@link ListIterator#next next}.
 	 * An initial call to {@link ListIterator#previous previous} would
+	 * 初始調用ListIterator.previous()將會返回指定索引減一的元素
 	 * return the element with the specified index minus one.
 	 *
 	 * @param index index of the first element to be returned from the
@@ -611,36 +662,53 @@ public interface List<E> extends Collection<E>
 
 	/**
 	 * Returns a view of the portion of this list between the specified
+	 * 返回這個list指定位置的視圖，
 	 * <tt>fromIndex</tt>, inclusive, and <tt>toIndex</tt>, exclusive.  (If
+	 * 在包含指定的fromIndex與不包含的toIndex索引的位置之間
 	 * <tt>fromIndex</tt> and <tt>toIndex</tt> are equal, the returned list is
+	 * (如果fromIndex與toIndex相等,則返回空的list.)
 	 * empty.)  The returned list is backed by this list, so non-structural
+	 *          返回的list基於這個list,因此返回的list沒有結構化的改變反應這個list
 	 * changes in the returned list are reflected in this list, and vice-versa.
+	 *                                                          反之亦然
 	 * The returned list supports all of the optional list operations supported
+	 * 返回的list支持所有這個集合支持的可選操作
 	 * by this list.<p>
 	 *
 	 * This method eliminates the need for explicit range operations (of
+	 * 這個方法消除了對於明確範圍操作的需要
 	 * the sort that commonly exist for arrays).  Any operation that expects
+	 * (對於數組一般的存在的方式).
 	 * a list can be used as a range operation by passing a subList view
+	 * 任何期望list能用於範圍操作的操作通過整個一個子list視圖代替整個list
 	 * instead of a whole list.  For example, the following idiom
 	 * removes a range of elements from a list:
+	 * 例如：從一個list移出一個範圍的元素的習慣操作
 	 * <pre>
 	 *      list.subList(from, to).clear();
 	 * </pre>
 	 * Similar idioms may be constructed for <tt>indexOf</tt> and
+	 * 類似的習慣可以用於構建indexOf與lastIndexOf
 	 * <tt>lastIndexOf</tt>, and all of the algorithms in the
+	 * 並且集合中的所有算法都支持子列表.
 	 * <tt>Collections</tt> class can be applied to a subList.<p>
 	 *
 	 * The semantics of the list returned by this method become undefined if
+	 * 整個方法返回的集合的語意未定義的，如果基於這個集合是經由任何渠道上結構上的改變
 	 * the backing list (i.e., this list) is <i>structurally modified</i> in
 	 * any way other than via the returned list.  (Structural modifications are
 	 * those that change the size of this list, or otherwise perturb it in such
+	 * (結構上的改變是集合size的改變,或者在迭代過程中增益的正確的結果的樣式其他的擾亂.)
 	 * a fashion that iterations in progress may yield incorrect results.)
 	 *
 	 * @param fromIndex low endpoint (inclusive) of the subList
+	 *                  包含的最低的節點
 	 * @param toIndex high endpoint (exclusive) of the subList
+	 *                不包含的最高的節點
 	 * @return a view of the specified range within this list
 	 * @throws IndexOutOfBoundsException for an illegal endpoint index value
 	 *         (<tt>fromIndex &lt; 0 || toIndex &gt; size ||
+	 *         (fromIndex < 0 || toIndex > size || fromIndex > toIndex)
 	 *         fromIndex &gt; toIndex</tt>)
 	 */
 	List<E> subList(int fromIndex, int toIndex);
