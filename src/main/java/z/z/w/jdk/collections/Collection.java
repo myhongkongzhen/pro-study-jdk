@@ -323,7 +323,7 @@ public interface Collection<E> extends Iterable<E>
 	 * Ensures that this collection contains the specified element (optional
 	 * 保證集合包含特定的元素(可選的操作)
 	 * operation).  Returns <tt>true</tt> if this collection changed as a
-	 * 如果結婚由於這個調用而改變了,則返回true
+	 * 如果集合由於這個調用而改變了,則返回true
 	 * result of the call.  (Returns <tt>false</tt> if this collection does
 	 * not permit duplicates and already contains the specified element.)<p>
 	 * (如果集合不允許重複的操作並且已經包含了指定的元素則返回false.)

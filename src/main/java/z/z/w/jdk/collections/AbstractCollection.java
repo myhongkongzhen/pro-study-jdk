@@ -8,9 +8,6 @@
 
 package z.z.w.jdk.collections;
 
-import java.util.Arrays;
-import java.util.Iterator;
-
 /*********************************************************************************************
  * <pre>
  *     FileName: z.z.w.jdk.collections.AbstractCollection
@@ -22,24 +19,39 @@ import java.util.Iterator;
  * </pre>
  *********************************************************************************************/
 
+import org.apache.poi.ss.formula.functions.T;
+
 /**
  * This class provides a skeletal implementation of the <tt>Collection</tt>
+ * 這個類提供了集合接口實現的框架
  * interface, to minimize the effort required to implement this interface. <p>
+ *            實現了這個接口的所需的最小化的精力.
  * To implement an unmodifiable collection, the programmer needs only to
+ * 實現一個無法改變的集合,
  * extend this class and provide implementations for the <tt>iterator</tt> and
+ * 程序員僅僅需要擴展這個類并提供實現所需的迭代器及大小的方法即可.
  * <tt>size</tt> methods.  (The iterator returned by the <tt>iterator</tt>
  * method must implement <tt>hasNext</tt> and <tt>next</tt>.)<p>
+ * (迭代器返回必須實現hasNext及next方法.)
  * To implement a modifiable collection, the programmer must additionally
+ * 實現可改變的集合,
  * override this class's <tt>add</tt> method (which otherwise throws an
+ * 程序員需要添加複寫add方法
  * <tt>UnsupportedOperationException</tt>), and the iterator returned by the
+ * (另外需要拋出一個未支持操作異常),
  * <tt>iterator</tt> method must additionally implement its <tt>remove</tt>
+ * 並且迭代器返回必須添加實現它的remove方法.
  * method.<p>
  * The programmer should generally provide a void (no argument) and
+ * 程序員應該提供通用的void(無參的)集合構造器,
  * <tt>Collection</tt> constructor, as per the recommendation in the
+ * 作為在集合接口詳述中的每一個建議
  * <tt>Collection</tt> interface specification.<p>
  * The documentation for each non-abstract method in this class describes its
+ * 文檔提供在這個類的詳述中對於每個非抽象方法的實現的細節描述
  * implementation in detail.  Each of these methods may be overridden if
  * the collection being implemented admits a more efficient implementation.<p>
+ * 這些方法中的每一個都可以重寫當這個結合允許實現更有效的實現時.
  * This class is a member of the
  * <a href="{@docRoot}/../technotes/guides/collections/index.html">
  * Java Collections Framework</a>.
@@ -53,6 +65,7 @@ public abstract class AbstractCollection<E> implements Collection<E>
 {
 	/**
 	 * Sole constructor.  (For invocation by subclass constructors, typically
+	 * 僅有的構造器.(由子類構造器隱含的調用.)
 	 * implicit.)
 	 */
 	protected AbstractCollection()
@@ -63,6 +76,7 @@ public abstract class AbstractCollection<E> implements Collection<E>
 
 	/**
 	 * Returns an iterator over the elements contained in this collection.
+	 * 返回這個集合迭代包含元素的迭代器
 	 *
 	 * @return an iterator over the elements contained in this collection
 	 */
@@ -73,6 +87,7 @@ public abstract class AbstractCollection<E> implements Collection<E>
 	/**
 	 * {@inheritDoc}
 	 * <p>This implementation returns <tt>size() == 0</tt>.
+	 * 這個實現返回(size() == 0)
 	 */
 	public boolean isEmpty()
 	{
@@ -82,7 +97,9 @@ public abstract class AbstractCollection<E> implements Collection<E>
 	/**
 	 * {@inheritDoc}
 	 * <p>This implementation iterates over the elements in the collection,
+	 * 這個實現迭代集合中的所有元素
 	 * checking each element in turn for equality with the specified element.
+	 * 依次檢查每一個元素與指定元素相等性
 	 *
 	 * @throws ClassCastException   {@inheritDoc}
 	 * @throws NullPointerException {@inheritDoc}
@@ -104,15 +121,24 @@ public abstract class AbstractCollection<E> implements Collection<E>
 	/**
 	 * {@inheritDoc}
 	 * <p>This implementation returns an array containing all the elements
+	 * 這個實現返回一個數組，包含了所有的元素.
 	 * returned by this collection's iterator, in the same order, stored in
+	 * 由這個集合的迭代器,按照相同的順序,
 	 * consecutive elements of the array, starting with index {@code 0}.
+	 * 從索引0開始的連貫的數組中的元素.
 	 * The length of the returned array is equal to the number of elements
+	 * 返回的數組的長度等於由迭代器返回的元素的個數,
 	 * returned by the iterator, even if the size of this collection changes
+	 *                           甚至這個集合的大小在迭代過程中改變了
 	 * during iteration, as might happen if the collection permits
+	 * 如果集合允許在迭代中並發的改變是可發生的.
 	 * concurrent modification during iteration.  The {@code size} method is
 	 * called only as an optimization hint; the correct result is returned
+	 * size方法僅僅作為一個優化的提示被調用;正確的結果可返回
 	 * even if the iterator returns a different number of elements.
+	 * 儘管迭代者返回一個不同元素個數
 	 * <p>This method is equivalent to:
+	 *                   等價的
 	 * <pre> {@code
 	 * List<E> list = new ArrayList<E>(size());
 	 * for (E e : this)
@@ -123,14 +149,19 @@ public abstract class AbstractCollection<E> implements Collection<E>
 	public Object[] toArray()
 	{
 		// Estimate size of array; be prepared to see more or fewer elements
+		// 預估數組的大小
 		Object[]    r  = new Object[ size() ];
 		Iterator<E> it = iterator();
 		for ( int i = 0 ; i < r.length ; i++ )
 		{
 			if ( !it.hasNext() ) // fewer elements than expected
+			    //當集合中不存在下一個元素時，返回一個新的拷貝的數組.
 				return Arrays.copyOf( r, i );
-			r[ i ] = it.next();
+			r[ i ] = it.next(); //將集合迭代元素依次放入臨時Obj[]中
 		}
+		/* 如果size為0，判斷集合是否有下一個元素 */
+		/* 如果不存在，返回一個空的數組 */
+		/* 如果存在，進行finishToArray()操作 */
 		return it.hasNext() ? finishToArray( r, it ) : r;
 	}
 
@@ -139,13 +170,20 @@ public abstract class AbstractCollection<E> implements Collection<E>
 	 * <p>This implementation returns an array containing all the elements
 	 * returned by this collection's iterator in the same order, stored in
 	 * consecutive elements of the array, starting with index {@code 0}.
+	 * 連貫的數
 	 * If the number of elements returned by the iterator is too large to
+	 * 如果由迭代器返回的元素的個數太大了
 	 * fit into the specified array, then the elements are returned in a
+	 * 而不適合指定的數組,
 	 * newly allocated array with length equal to the number of elements
+	 * 那麼在一個重新分配的由迭代者返回元素的個數相等的長度的數組中返回元素
 	 * returned by the iterator, even if the size of this collection
 	 * changes during iteration, as might happen if the collection permits
+	 * 儘管集合在迭代中改變了大小,
 	 * concurrent modification during iteration.  The {@code size} method is
+	 * 如果集合允許在迭代中並發修改的發生.
 	 * called only as an optimization hint; the correct result is returned
+	 *                   優化的提示
 	 * even if the iterator returns a different number of elements.
 	 * <p>This method is equivalent to:
 	 * <pre> {@code
@@ -162,6 +200,7 @@ public abstract class AbstractCollection<E> implements Collection<E>
 	{
 		// Estimate size of array; be prepared to see more or fewer elements
 		int         size = size();
+		                                          //創建一個新的數組，由指定類型，底層由native方法newArray實現數組的創建
 		T[]         r    = a.length >= size ? a : ( T[] ) java.lang.reflect.Array.newInstance( a.getClass().getComponentType(), size );
 		Iterator<E> it   = iterator();
 
@@ -196,21 +235,30 @@ public abstract class AbstractCollection<E> implements Collection<E>
 	/**
 	 * The maximum size of array to allocate.
 	 * Some VMs reserve some header words in an array.
+	 * 一些vm在數組里提供某些header信息
 	 * Attempts to allocate larger arrays may result in
+	 * 嘗試分配更大的數組會拋出OutOfMemoryError.
 	 * OutOfMemoryError: Requested array size exceeds VM limit
+	 *                   請求的數組大小超過vm的限制
 	 */
 	private static final int MAX_ARRAY_SIZE = Integer.MAX_VALUE - 8;
 
 	/**
 	 * Reallocates the array being used within toArray when the iterator
+	 * 重新分配數組用於在toArray內，迭代器返回比期望更多的元素時，
 	 * returned more elements than expected, and finishes filling it from
+	 *                                       并完成從迭代器填充.
 	 * the iterator.
 	 *
 	 * @param r  the array, replete with previously stored elements
+	 *           一個數組，充滿了先前的元素的
 	 * @param it the in-progress iterator over this collection
+	 *           迭代這個集合的迭代器
 	 *
 	 * @return array containing the elements in the given array, plus any
+	 *         返回數組包含了在特定數組中的元素,
 	 * further elements returned by the iterator, trimmed to size
+	 * 由迭代器返回添加任意將來的元素,消減規模
 	 */
 	private static <T> T[] finishToArray( T[] r, Iterator<?> it )
 	{
@@ -222,6 +270,7 @@ public abstract class AbstractCollection<E> implements Collection<E>
 			{
 				int newCap = cap + ( cap >> 1 ) + 1;
 				// overflow-conscious code
+				// 合理的溢出代碼
 				if ( newCap - MAX_ARRAY_SIZE > 0 ) newCap = hugeCapacity( cap + 1 );
 				r = Arrays.copyOf( r, newCap );
 			}
@@ -231,6 +280,7 @@ public abstract class AbstractCollection<E> implements Collection<E>
 		return ( i == r.length ) ? r : Arrays.copyOf( r, i );
 	}
 
+	/*最小容量校驗，負值判斷,0x7fffffff最大整數判斷*/
 	private static int hugeCapacity( int minCapacity )
 	{
 		if ( minCapacity < 0 ) // overflow
@@ -243,6 +293,7 @@ public abstract class AbstractCollection<E> implements Collection<E>
 	/**
 	 * {@inheritDoc}
 	 * <p>This implementation always throws an
+	 * 這個實現總是拋出一個UnsupportedOperationException
 	 * <tt>UnsupportedOperationException</tt>.
 	 *
 	 * @throws UnsupportedOperationException {@inheritDoc}
@@ -259,12 +310,17 @@ public abstract class AbstractCollection<E> implements Collection<E>
 	/**
 	 * {@inheritDoc}
 	 * <p>This implementation iterates over the collection looking for the
+	 * 這個實現通過迭代集合尋找指定的元素
 	 * specified element.  If it finds the element, it removes the element
+	 *                     如果找到元素,移除這個元素從結婚中,使用迭代器的remove方法
 	 * from the collection using the iterator's remove method.
 	 * <p>Note that this implementation throws an
+	 * 注意這個實現會拋出一個不支持操作異常，
 	 * <tt>UnsupportedOperationException</tt> if the iterator returned by this
+	 *                                        如果又集合的迭代器方法沒有實現remove方法
 	 * collection's iterator method does not implement the <tt>remove</tt>
 	 * method and this collection contains the specified object.
+	 * 並且集合包含指定的實體的迭代器.
 	 *
 	 * @throws UnsupportedOperationException {@inheritDoc}
 	 * @throws ClassCastException            {@inheritDoc}
@@ -434,10 +490,15 @@ public abstract class AbstractCollection<E> implements Collection<E>
 
 	/**
 	 * Returns a string representation of this collection.  The string
+	 * 返回這個集合的字符串表示.
 	 * representation consists of a list of the collection's elements in the
+	 * 這個字符串表示包含集合元素的列表
 	 * order they are returned by its iterator, enclosed in square brackets
+	 * 由他的迭代器返回的順序的列表,在封閉的括號內
 	 * (<tt>"[]"</tt>).  Adjacent elements are separated by the characters
+	 *                   合適的元素由逗號和空格分離
 	 * <tt>", "</tt> (comma and space).  Elements are converted to strings as
+	 *                                   由String.valueOf()方法轉換為字符串.
 	 * by {@link String#valueOf(Object)}.
 	 *
 	 * @return a string representation of this collection
