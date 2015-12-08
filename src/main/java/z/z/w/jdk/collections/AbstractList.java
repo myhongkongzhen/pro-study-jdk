@@ -21,9 +21,7 @@ package z.z.w.jdk.collections;
 
 
 import java.util.ConcurrentModificationException;
-import java.util.ListIterator;
 import java.util.NoSuchElementException;
-import java.util.RandomAccess;
 
 /**
  * This class provides a skeletal implementation of the {@link List}
@@ -567,30 +565,43 @@ public abstract class AbstractList<E> extends AbstractCollection<E> implements L
 	 *         {@code (fromIndex > toIndex)}
 	 */
 	public List<E> subList(int fromIndex, int toIndex) {
-		return (this instanceof RandomAccess ?
-				new RandomAccessSubList<>(this, fromIndex, toIndex) :
-				new SubList<>(this, fromIndex, toIndex));
+		return (this instanceof RandomAccess ? // 判斷當前集合是 RandomAccess 實例
+				new RandomAccessSubList<>(this, fromIndex, toIndex) : // 如果是，有 RandomAccessSubList返回一個子list
+				new SubList<>(this, fromIndex, toIndex)); // 否則有 SubList直接返回
 	}
 
 	// Comparison and hashing
 
 	/**
 	 * Compares the specified object with this list for equality.  Returns
+	 * 比較指定的obj與此list的相等性.
 	 * {@code true} if and only if the specified object is also a list, both
+	 * 當且僅當指定的obj也是一個list，
 	 * lists have the same size, and all corresponding pairs of elements in
+	 * 兩個list有相同size
 	 * the two lists are <i>equal</i>.  (Two elements {@code e1} and
+	 * 並且所有相應元素對在兩個list中都是相等的
 	 * {@code e2} are <i>equal</i> if {@code (e1==null ? e2==null :
 	 * e1.equals(e2))}.)  In other words, two lists are defined to be
 	 * equal if they contain the same elements in the same order.<p>
+	 * 換句話，兩個list如果他們在相同的排列中包含相同的元素則標記為相等
 	 *
 	 * This implementation first checks if the specified object is this
+	 * 這個實現首先檢查指定的元素是不是當前list
 	 * list. If so, it returns {@code true}; if not, it checks if the
+	 * 如果是，返回true;如果不是，檢查指定的obj是否是一個list
 	 * specified object is a list. If not, it returns {@code false}; if so,
+	 * 如果不是，返回false;
 	 * it iterates over both lists, comparing corresponding pairs of elements.
+	 * 如果是，迭代兩個list,比較相應的元素.
 	 * If any comparison returns {@code false}, this method returns
+	 * 如果任意比較返回了false,
 	 * {@code false}.  If either iterator runs out of elements before the
+	 * 那麼這個方法返回false;如果任意迭代器在另一些前運行出元素範圍，則返回false
 	 * other it returns {@code false} (as the lists are of unequal length);
+	 * (由於list存在不等的長度)
 	 * otherwise it returns {@code true} when the iterations complete.
+	 * 當迭代器完成，返回true
 	 *
 	 * @param o the object to be compared for equality with this list
 	 * @return {@code true} if the specified object is equal to this list
@@ -614,8 +625,10 @@ public abstract class AbstractList<E> extends AbstractCollection<E> implements L
 
 	/**
 	 * Returns the hash code value for this list.
+	 * 返回這個list的hashcode值
 	 *
 	 * <p>This implementation uses exactly the code that is used to define the
+	 * 這個實現用於在文檔中為List.hasCode方法定義list的hash函數的實質代碼
 	 * list hash function in the documentation for the {@link List#hashCode}
 	 * method.
 	 *
