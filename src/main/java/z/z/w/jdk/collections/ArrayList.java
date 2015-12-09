@@ -194,7 +194,7 @@ public class ArrayList<E> extends AbstractList<E>
 
 	/**
 	 * Constructs an empty list with an initial capacity of ten.
-	 * 創建一個空的list，大小為10，默認大小
+	 * 創建一個空的list
 	 */
 	public ArrayList() {
 		super();
@@ -263,7 +263,10 @@ public class ArrayList<E> extends AbstractList<E>
 
 	// 明確內部容量
 	private void ensureCapacityInternal(int minCapacity) {
+		// 判斷共享數據是否是一個空數組
 		if (elementData == EMPTY_ELEMENTDATA) {
+			// 如果是，設置最小容量，默認 10 ，指定的容量大於10時設為
+			// 指定的容量
 			minCapacity = Math.max(DEFAULT_CAPACITY, minCapacity);
 		}
 
@@ -300,13 +303,15 @@ public class ArrayList<E> extends AbstractList<E>
 	 */
 	private void grow(int minCapacity) {
 		// overflow-conscious code
-		int oldCapacity = elementData.length;
-		int newCapacity = oldCapacity + (oldCapacity >> 1);
-		if (newCapacity - minCapacity < 0)
-			newCapacity = minCapacity;
-		if (newCapacity - MAX_ARRAY_SIZE > 0)
-			newCapacity = hugeCapacity(minCapacity);
+		//====================================== 如果共享數組為空數組
+		int oldCapacity = elementData.length; // 0
+		int newCapacity = oldCapacity + (oldCapacity >> 1); // 0
+		if (newCapacity - minCapacity < 0) // 一定為負數
+			newCapacity = minCapacity; // 新容量為 指定最小容量
+		if (newCapacity - MAX_ARRAY_SIZE > 0) // 新容量與最大容量比較
+			newCapacity = hugeCapacity(minCapacity); // 設為最大容量:Integer.MAX_VALUE - 8;
 		// minCapacity is usually close to size, so this is a win:
+		// 數組拷貝
 		elementData = Arrays.copyOf(elementData, newCapacity);
 	}
 
@@ -652,11 +657,15 @@ public class ArrayList<E> extends AbstractList<E>
 
 	/**
 	 * Appends all of the elements in the specified collection to the end of
+	 * 在list的末尾添加指定集合中的所有元素
 	 * this list, in the order that they are returned by the
+	 * 按照集合迭代順序返回的順序
 	 * specified collection's Iterator.  The behavior of this operation is
 	 * undefined if the specified collection is modified while the operation
+	 * 這個操作的行為是未定義的,如果當操作過程中指定的集合改變了
 	 * is in progress.  (This implies that the behavior of this call is
 	 * undefined if the specified collection is this list, and this
+	 * (這就暗示了調用的行為當這個指定的集合是這個list，並且這個list是不為空時，是未定義的)
 	 * list is nonempty.)
 	 *
 	 * @param c collection containing elements to be added to this list
@@ -667,6 +676,17 @@ public class ArrayList<E> extends AbstractList<E>
 		Object[] a = c.toArray();
 		int numNew = a.length;
 		ensureCapacityInternal(size + numNew);  // Increments modCount
+
+		/**
+		 *
+		 * Integer[] des = new Integer[ 4 ];
+		 * Integer[] src = { 6 , 7 , 8 , 9 , 10 , 11 , 12 , 13 };
+		 *
+		 * // 把 src 數組的元素從 第 2 號位置開始拷貝,拷貝3個元素
+		 * // 到 des 數組中，在des中的 1 號位置開始放置這些數據
+		 * System.arraycopy( src, 2, des, 1, 3 );
+		 *
+		 */
 		System.arraycopy(a, 0, elementData, size, numNew);
 		size += numNew;
 		return numNew != 0;
@@ -675,6 +695,7 @@ public class ArrayList<E> extends AbstractList<E>
 	/**
 	 * Inserts all of the elements in the specified collection into this
 	 * list, starting at the specified position.  Shifts the element
+	 *       開始於指定的位置
 	 * currently at that position (if any) and any subsequent elements to
 	 * the right (increases their indices).  The new elements will appear
 	 * in the list in the order that they are returned by the
@@ -706,10 +727,12 @@ public class ArrayList<E> extends AbstractList<E>
 
 	/**
 	 * Removes from this list all of the elements whose index is between
+	 * 從list中移除所有的索引在[fromIndex,toIndex)之間元素
 	 * {@code fromIndex}, inclusive, and {@code toIndex}, exclusive.
 	 * Shifts any succeeding elements to the left (reduces their index).
 	 * This call shortens the list by {@code (toIndex - fromIndex)} elements.
 	 * (If {@code toIndex==fromIndex}, this operation has no effect.)
+	 * (如果fromIndex == toIndex，這個操作沒有任何影響)
 	 *
 	 * @throws IndexOutOfBoundsException if {@code fromIndex} or
 	 *         {@code toIndex} is out of range
@@ -727,7 +750,7 @@ public class ArrayList<E> extends AbstractList<E>
 		// clear to let GC do its work
 		int newSize = size - (toIndex-fromIndex);
 		for (int i = newSize; i < size; i++) {
-			elementData[i] = null;
+			elementData[i] = null; // clear to let GC do its work
 		}
 		size = newSize;
 	}
@@ -767,6 +790,7 @@ public class ArrayList<E> extends AbstractList<E>
 
 	/**
 	 * Removes from this list all of its elements that are contained in the
+	 * 從list中移除所有的包含于指定集合中的元素
 	 * specified collection.
 	 *
 	 * @param c collection containing elements to be removed from this list
@@ -786,6 +810,7 @@ public class ArrayList<E> extends AbstractList<E>
 
 	/**
 	 * Retains only the elements in this list that are contained in the
+	 * 保留值得你該集合中的所有元素
 	 * specified collection.  In other words, removes from this list all
 	 * of its elements that are not contained in the specified collection.
 	 *
@@ -810,12 +835,19 @@ public class ArrayList<E> extends AbstractList<E>
 		boolean modified = false;
 		try {
 			for (; r < size; r++)
+				// 判斷當前集合的元素是否包含在指定集合中
+				// 如果不包含在其中 complement = false
+				// 將此元素重新索引到數組中==即保留非指定的元素集，去除了包含的元素
+				// 如果包含在其中 complement = true
+				// 將此元素重新索引到數組中==即保留指定的元素集，去除了非包含的元素
 				if (c.contains(elementData[r]) == complement)
 					elementData[w++] = elementData[r];
 		} finally {
 			// Preserve behavioral compatibility with AbstractCollection,
+			// 保留AbstractCollection的兼容性行為
 			// even if c.contains() throws.
 			if (r != size) {
+				// 拷貝剩餘的未同指定集合比較的元素到新索引位置
 				System.arraycopy(elementData, r,
 								 elementData, w,
 								 size - r);
@@ -835,6 +867,7 @@ public class ArrayList<E> extends AbstractList<E>
 
 	/**
 	 * Save the state of the <tt>ArrayList</tt> instance to a stream (that
+	 * 保存ArrayList實例的流狀態，串行化
 	 * is, serialize it).
 	 *
 	 * @serialData The length of the array backing the <tt>ArrayList</tt>
@@ -888,10 +921,14 @@ public class ArrayList<E> extends AbstractList<E>
 
 	/**
 	 * Returns a list iterator over the elements in this list (in proper
+	 * 返回一個list中的遍歷元素的list迭代器
 	 * sequence), starting at the specified position in the list.
+	 *            開始於指定的位置
 	 * The specified index indicates the first element that would be
+	 * 指定的索引說明第一個元素由初始ListIterator.next調用返回
 	 * returned by an initial call to {@link ListIterator#next next}.
 	 * An initial call to {@link ListIterator#previous previous} would
+	 * 初始調用ListIterator.previous調用用指定的索引減一的元素
 	 * return the element with the specified index minus one.
 	 *
 	 * <p>The returned list iterator is <a href="#fail-fast"><i>fail-fast</i></a>.
@@ -900,7 +937,9 @@ public class ArrayList<E> extends AbstractList<E>
 	 */
 	public ListIterator<E> listIterator(int index) {
 		if (index < 0 || index > size)
+			// 索引越界異常
 			throw new IndexOutOfBoundsException("Index: "+index);
+		// 新建一個指定索引開始的迭代器
 		return new ListItr(index);
 	}
 
@@ -929,6 +968,7 @@ public class ArrayList<E> extends AbstractList<E>
 
 	/**
 	 * An optimized version of AbstractList.Itr
+	 * 一個優化AbstractList.Itr的版本
 	 */
 	private class Itr implements Iterator<E> {
 		int cursor;       // index of next element to return
@@ -941,6 +981,7 @@ public class ArrayList<E> extends AbstractList<E>
 
 		@SuppressWarnings("unchecked")
 		public E next() {
+			// 並發修改異常
 			checkForComodification();
 			int i = cursor;
 			if (i >= size)
@@ -975,6 +1016,7 @@ public class ArrayList<E> extends AbstractList<E>
 
 	/**
 	 * An optimized version of AbstractList.ListItr
+	 * 一個優化AbstractList.ListItr的版本
 	 */
 	private class ListItr extends Itr implements ListIterator<E> {
 		ListItr(int index) {
@@ -1036,28 +1078,44 @@ public class ArrayList<E> extends AbstractList<E>
 
 	/**
 	 * Returns a view of the portion of this list between the specified
+	 * 返回在[fromIndex,toIndex)之間的list的一部分視圖
 	 * {@code fromIndex}, inclusive, and {@code toIndex}, exclusive.  (If
 	 * {@code fromIndex} and {@code toIndex} are equal, the returned list is
+	 * (如果 fromIndex == toIndex ，返回list是empty的)
 	 * empty.)  The returned list is backed by this list, so non-structural
+	 *          這個返回的list基於當前的list,
 	 * changes in the returned list are reflected in this list, and vice-versa.
+	 * 因此沒有結構改變在這個list中返回的list是課反射的,反之亦然
 	 * The returned list supports all of the optional list operations.
+	 * 這個返回的list支持所有的list的可選操作
 	 *
 	 * <p>This method eliminates the need for explicit range operations (of
+	 * 這個方法消除了明確範圍操作的需要
 	 * the sort that commonly exist for arrays).  Any operation that expects
+	 * (排序一般存在的數組)
 	 * a list can be used as a range operation by passing a subList view
+	 * 任何期望一個list用於範圍操作的操作通過一個子list視圖帶起整個list
 	 * instead of a whole list.  For example, the following idiom
+	 *                           例如，從list中移除一個範圍的元素
 	 * removes a range of elements from a list:
+	 * 之後通常的做法:
 	 * <pre>
 	 *      list.subList(from, to).clear();
 	 * </pre>
 	 * Similar idioms may be constructed for {@link #indexOf(Object)} and
+	 * 類似的做法能構造indexOf,lastIndexOf方法，
 	 * {@link #lastIndexOf(Object)}, and all of the algorithms in the
+	 * 並且所有的算法在Collections類中的都可以應用於子list.
 	 * {@link Collections} class can be applied to a subList.
 	 *
 	 * <p>The semantics of the list returned by this method become undefined if
+	 * 有這個方法返回的list的語意成為未定義的，
 	 * the backing list (i.e., this list) is <i>structurally modified</i> in
+	 * 如果基於list的結構化的改變通過任何方式
 	 * any way other than via the returned list.  (Structural modifications are
+	 *                    通過返回的list
 	 * those that change the size of this list, or otherwise perturb it in such
+	 * (結構化改變指的是那些改變list大小，或者除此之外的麻煩的，在迭代過程中正確結果產出的方法)
 	 * a fashion that iterations in progress may yield incorrect results.)
 	 *
 	 * @throws IndexOutOfBoundsException {@inheritDoc}
