@@ -21,6 +21,8 @@ package z.z.w.jdk.collections;
 
 //import java.util.ArrayList;
 
+import java.util.LinkedList;
+
 /**
  * Map<K,V>
  * K - the type of keys maintained by this map
@@ -28,8 +30,8 @@ package z.z.w.jdk.collections;
  */
 public class MainClass extends //
 //		Stack
-//		LinkedList
-		ArrayList
+		LinkedList
+//		ArrayList
 //		CopyOnWriteArrayList
 
 //		AbstractList
