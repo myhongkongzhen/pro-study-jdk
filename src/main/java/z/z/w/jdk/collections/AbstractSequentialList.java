@@ -23,6 +23,7 @@ import java.util.NoSuchElementException;
 
 /**
  * This class provides a skeletal implementation of the <tt>List</tt>
+ * 這個類提供了List接口的一個實現骨架
  * interface to minimize the effort required to implement this interface
  * backed by a "sequential access" data store (such as a linked list).  For
  * random access data (such as an array), <tt>AbstractList</tt> should be used
