@@ -19,6 +19,9 @@ package z.z.w.jdk.collections;
  * </pre>
  *********************************************************************************************/
 
+import java.util.*;
+import java.util.Iterator;
+
 /**
  * A linear collection that supports element insertion and removal at
  * both ends.  The name <i>deque</i> is short for "double ended queue"
@@ -77,7 +80,7 @@ package z.z.w.jdk.collections;
  *  </tr>
  * </table>
  *
- * <p>This interface extends the {@link Queue} interface.  When a deque is
+ * <p>This interface extends the {@link java.util.Queue} interface.  When a deque is
  * used as a queue, FIFO (First-In-First-Out) behavior results.  Elements are
  * added at the end of the deque and removed from the beginning.  The methods
  * inherited from the <tt>Queue</tt> interface are precisely equivalent to
@@ -116,7 +119,7 @@ package z.z.w.jdk.collections;
  * </table>
  *
  * <p>Deques can also be used as LIFO (Last-In-First-Out) stacks.  This
- * interface should be used in preference to the legacy {@link Stack} class.
+ * interface should be used in preference to the legacy {@link java.util.Stack} class.
  * When a deque is used as a stack, elements are pushed and popped from the
  * beginning of the deque.  Stack methods are precisely equivalent to
  * <tt>Deque</tt> methods as indicated in the table below:
@@ -149,7 +152,7 @@ package z.z.w.jdk.collections;
  * elements, {@link #removeFirstOccurrence removeFirstOccurrence} and
  * {@link #removeLastOccurrence removeLastOccurrence}.
  *
- * <p>Unlike the {@link List} interface, this interface does not
+ * <p>Unlike the {@link java.util.List} interface, this interface does not
  * provide support for indexed access to elements.
  *
  * <p>While <tt>Deque</tt> implementations are not strictly required
@@ -175,7 +178,8 @@ package z.z.w.jdk.collections;
  * @param <E> the type of elements held in this collection
  */
 
-public interface Deque<E> extends Queue<E> {
+public interface Deque<E> extends java.util.Queue<E>
+{
 	/**
 	 * Inserts the specified element at the front of this deque if it is
 	 * possible to do so immediately without violating capacity restrictions.
@@ -377,7 +381,7 @@ public interface Deque<E> extends Queue<E> {
 	 * <p>This method is equivalent to {@link #addLast}.
 	 *
 	 * @param e the element to add
-	 * @return <tt>true</tt> (as specified by {@link Collection#add})
+	 * @return <tt>true</tt> (as specified by {@link java.util.Collection#add})
 	 * @throws IllegalStateException if the element cannot be added at this
 	 *         time due to capacity restrictions
 	 * @throws ClassCastException if the class of the specified element
@@ -553,7 +557,7 @@ public interface Deque<E> extends Queue<E> {
 	 *
 	 * @return an iterator over the elements in this deque in proper sequence
 	 */
-	Iterator<E> iterator();
+	java.util.Iterator<E> iterator();
 
 	/**
 	 * Returns an iterator over the elements in this deque in reverse
