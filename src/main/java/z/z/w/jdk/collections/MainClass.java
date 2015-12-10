@@ -21,7 +21,7 @@ package z.z.w.jdk.collections;
 
 //import java.util.ArrayList;
 
-import java.util.Queue;
+import java.util.concurrent.LinkedBlockingDeque;
 
 /**
  * Map<K,V>
@@ -29,14 +29,14 @@ import java.util.Queue;
  * V - the type of mapped values
  */
 public class MainClass
-//		extends //
+		extends //
 //		Stack
 //		LinkedList
 //		CopyOnWriteArrayList
-//		LinkedBlockingDeque
-		implements //
+		LinkedBlockingDeque
+//		implements //
 //		NavigableSet, TransferQueue, java.util.List, BlockingDeque, ConcurrentNavigableMap
-		Queue
+//		Queue
 {
 
 }
