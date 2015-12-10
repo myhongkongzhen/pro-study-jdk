@@ -21,21 +21,22 @@ package z.z.w.jdk.collections;
 
 //import java.util.ArrayList;
 
-import java.util.LinkedList;
+import java.util.Queue;
 
 /**
  * Map<K,V>
  * K - the type of keys maintained by this map
  * V - the type of mapped values
  */
-public class MainClass extends //
+public class MainClass
+//		extends //
 //		Stack
-		LinkedList
-//		ArrayList
+//		LinkedList
 //		CopyOnWriteArrayList
-
-//		AbstractList
-//		AbstractCollection
+//		LinkedBlockingDeque
+		implements //
+//		NavigableSet, TransferQueue, java.util.List, BlockingDeque, ConcurrentNavigableMap
+		Queue
 {
 
 }
