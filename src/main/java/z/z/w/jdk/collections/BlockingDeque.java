@@ -25,16 +25,25 @@ import java.util.concurrent.*;
 
 /**
  * A {@link java.util.Deque} that additionally supports blocking operations that wait
+ * 另外支持阻塞操作的deque等待deque成為空empty當檢索一個元素時
  * for the deque to become non-empty when retrieving an element, and wait for
  * space to become available in the deque when storing an element.
+ * 存儲元素在deque等待空間成為可用
  *
  * <p><tt>BlockingDeque</tt> methods come in four forms, with different ways
+ * 阻塞隊列方法有四個方式,
  * of handling operations that cannot be satisfied immediately, but may be
+ * 不同的操作不能立即滿意
  * satisfied at some point in the future:
+ * 但可以在未來某一點滿意
  * one throws an exception, the second returns a special value (either
+ * 一個是拋出一個異常,         第二是返回一個特定的值
  * <tt>null</tt> or <tt>false</tt>, depending on the operation), the third
+ * (依賴於操作可能是null也可能是false)
  * blocks the current thread indefinitely until the operation can succeed,
+ * 第三個是一直阻塞當前線程直到操作成功
  * and the fourth blocks for only a given maximum time limit before giving
+ * 以及第四點阻塞增長前僅僅給定一個最大的時間限制
  * up.  These methods are summarized in the following table:
  *
  * <p>
@@ -104,13 +113,19 @@ import java.util.concurrent.*;
  * </table>
  *
  * <p>Like any {@link java.util.concurrent.BlockingQueue}, a <tt>BlockingDeque</tt> is thread safe,
+ * 與BlockingQueue一樣，BlockingDeque是一個線程安全的
  * does not permit null elements, and may (or may not) be
+ * 不允許null元素
  * capacity-constrained.
+ * 可以有限或無線的容量
  *
  * <p>A <tt>BlockingDeque</tt> implementation may be used directly as a FIFO
+ * 一個BlockingDeque實現直接用於一個fifo的blockingqueue隊列
  * <tt>BlockingQueue</tt>. The methods inherited from the
+ *                         blockingqueue接口遺傳而來的方法
  * <tt>BlockingQueue</tt> interface are precisely equivalent to
  * <tt>BlockingDeque</tt> methods as indicated in the following table:
+ * 與blockingdeque恰好相同
  *
  * <p>
  * <table BORDER CELLPADDING=3 CELLSPACING=1>
@@ -170,7 +185,9 @@ import java.util.concurrent.*;
  * </table>
  *
  * <p>Memory consistency effects: As with other concurrent
+ * 內存一致:
  * collections, actions in a thread prior to placing an object into a
+ * 作為使用另外的並發集合, 在一個線程中預先操作數據到blockingdeque對了中
  * {@code BlockingDeque}
  * <a href="package-summary.html#MemoryVisibility"><i>happen-before</i></a>
  * actions subsequent to the access or removal of that element from
@@ -188,15 +205,20 @@ public interface BlockingDeque<E> extends java.util.concurrent.BlockingQueue<E>,
 {
     /*
      * We have "diamond" multiple interface inheritance here, and that
+     * 我們有更好的多個接口繼承這里
      * introduces ambiguities.  Methods might end up with different
+     * 并介紹各種歧義.
      * specs depending on the branch chosen by javadoc.  Thus a lot of
+     * 方法依賴於選擇的分支結束不同的規格
      * methods specs here are copied from superinterfaces.
+     * 因而許多方法規格可有子接口拷貝
      */
 
 	/**
 	 * Inserts the specified element at the front of this deque if it is
 	 * possible to do so immediately without violating capacity restrictions,
 	 * throwing an <tt>IllegalStateException</tt> if no space is currently
+	 * 沒有可用空間會拋出一個異常
 	 * available.  When using a capacity-restricted deque, it is generally
 	 * preferable to use {@link #offerFirst(Object) offerFirst}.
 	 *
@@ -258,6 +280,7 @@ public interface BlockingDeque<E> extends java.util.concurrent.BlockingQueue<E>,
 	/**
 	 * Inserts the specified element at the front of this deque,
 	 * waiting if necessary for space to become available.
+	 * 必須等待空間成為可用
 	 *
 	 * @param e the element to add
 	 * @throws InterruptedException if interrupted while waiting
@@ -290,7 +313,9 @@ public interface BlockingDeque<E> extends java.util.concurrent.BlockingQueue<E>,
 	 *
 	 * @param e the element to add
 	 * @param timeout how long to wait before giving up, in units of
+	 *                放棄前等待的時間
 	 *        <tt>unit</tt>
+	 *        單位時間
 	 * @param unit a <tt>TimeUnit</tt> determining how to interpret the
 	 *        <tt>timeout</tt> parameter
 	 * @return <tt>true</tt> if successful, or <tt>false</tt> if
@@ -417,6 +442,7 @@ public interface BlockingDeque<E> extends java.util.concurrent.BlockingQueue<E>,
 
 	/**
 	 * Inserts the specified element into the queue represented by this deque
+	 *                                              意味著
 	 * (in other words, at the tail of this deque) if it is possible to do so
 	 * immediately without violating capacity restrictions, returning
 	 * <tt>true</tt> upon success and throwing an
@@ -624,7 +650,9 @@ public interface BlockingDeque<E> extends java.util.concurrent.BlockingQueue<E>,
 
 	/**
 	 * Pushes an element onto the stack represented by this deque.  In other
+	 *   壓棧                             意味著
 	 * words, inserts the element at the front of this deque unless it would
+	 *                                                       除非
 	 * violate capacity restrictions.
 	 *
 	 * <p>This method is equivalent to {@link #addFirst(Object) addFirst}.
