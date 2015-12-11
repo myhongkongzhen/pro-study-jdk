@@ -24,23 +24,35 @@ import java.util.Iterator;
 
 /**
  * A linear collection that supports element insertion and removal at
+ * 支持元素在兩端插入移除的線性的集合
  * both ends.  The name <i>deque</i> is short for "double ended queue"
  * and is usually pronounced "deck".  Most <tt>Deque</tt>
  * implementations place no fixed limits on the number of elements
+ * 大多數的Deque實現不適合有限的能夠存儲的元素的數量
  * they may contain, but this interface supports capacity-restricted
+ *                   但這個實習支持容量受限的deques
  * deques as well as those with no fixed size limit.
+ * 比起那些不受限制的隊列
  *
  * <p>This interface defines methods to access the elements at both
+ * 這個接口定義的方法在隊列兩端訪問元素
  * ends of the deque.  Methods are provided to insert, remove, and
+ *                     方法提供各類insert,remove,以及檢查元素
  * examine the element.  Each of these methods exists in two forms:
+ *                       每個方法都存在兩個方式：
  * one throws an exception if the operation fails, the other returns a
+ * 一個如果操作失敗拋出異常
  * special value (either <tt>null</tt> or <tt>false</tt>, depending on
+ * 另一個返回一個特定的值(或者null或者false)依賴於操作
  * the operation).  The latter form of the insert operation is
+ *                  後面的插入操作的方式設計成為特別使用容量有限的實現
  * designed specifically for use with capacity-restricted
  * <tt>Deque</tt> implementations; in most implementations, insert
  * operations cannot fail.
+ * 在大多數實現中，插入操作不能失敗
  *
  * <p>The twelve methods described above are summarized in the
+ * 12個方法描述在表格中總結：
  * following table:
  *
  * <p>
@@ -81,9 +93,13 @@ import java.util.Iterator;
  * </table>
  *
  * <p>This interface extends the {@link java.util.Queue} interface.  When a deque is
+ * 這個接口擴展自Queue接口，
  * used as a queue, FIFO (First-In-First-Out) behavior results.  Elements are
+ * 當一個deque作為一個隊列使用個，返回fifo行為.
  * added at the end of the deque and removed from the beginning.  The methods
+ * 元素添加與隊列的末尾，并從開頭移除
  * inherited from the <tt>Queue</tt> interface are precisely equivalent to
+ * queue接口的內部方法恰恰與deque方法等效的說明在下列表格中
  * <tt>Deque</tt> methods as indicated in the following table:
  *
  * <p>
