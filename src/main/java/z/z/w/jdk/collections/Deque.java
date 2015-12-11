@@ -135,9 +135,13 @@ import java.util.Iterator;
  * </table>
  *
  * <p>Deques can also be used as LIFO (Last-In-First-Out) stacks.  This
+ * Deques也可以用於LIFO棧
  * interface should be used in preference to the legacy {@link java.util.Stack} class.
+ * 這個接口應該用於執行Stack遺留類
  * When a deque is used as a stack, elements are pushed and popped from the
+ * 當一個deque作為一個棧使用,          元素從隊列的開始入棧和出棧
  * beginning of the deque.  Stack methods are precisely equivalent to
+ *                          棧方法恰恰相同與Deque方法在下列表格中
  * <tt>Deque</tt> methods as indicated in the table below:
  *
  * <p>
@@ -161,27 +165,39 @@ import java.util.Iterator;
  * </table>
  *
  * <p>Note that the {@link #peek peek} method works equally well when
+ * 注意peek方法當deque用於一個queue與stack剛好相同
  * a deque is used as a queue or a stack; in either case, elements are
  * drawn from the beginning of the deque.
+ * 另外的情況，元素從隊列頭部放入
  *
  * <p>This interface provides two methods to remove interior
+ * 這個接口提供兩個方法移除內部元素
  * elements, {@link #removeFirstOccurrence removeFirstOccurrence} and
  * {@link #removeLastOccurrence removeLastOccurrence}.
  *
  * <p>Unlike the {@link java.util.List} interface, this interface does not
+ * 不同於List接口，
  * provide support for indexed access to elements.
+ * 這個接口不提供支持索引的訪問元素
  *
  * <p>While <tt>Deque</tt> implementations are not strictly required
+ * 當deque實現不必嚴格要求禁止添加null元素時
  * to prohibit the insertion of null elements, they are strongly
  * encouraged to do so.  Users of any <tt>Deque</tt> implementations
+ * 他們強烈鼓勵這樣做.      一些deque實現的用戶允許null元素
  * that do allow null elements are strongly encouraged <i>not</i> to
+ *                                 是強烈鼓勵添加null能力的非重要要點
  * take advantage of the ability to insert nulls.  This is so because
  * <tt>null</tt> is used as a special return value by various methods
+ * 這就是因為null用於一個特定的返回值在多個方法中
  * to indicated that the deque is empty.
+ * 說明deque是empty
  *
  * <p><tt>Deque</tt> implementations generally do not define
+ * deque實現一般不會定義基本的元素版本針對於equeals與hashCode
  * element-based versions of the <tt>equals</tt> and <tt>hashCode</tt>
  * methods, but instead inherit the identity-based versions from class
+ * 但是替代的用內部的從Object繼承而來的基本標示
  * <tt>Object</tt>.
  *
  * <p>This interface is a member of the <a
@@ -198,9 +214,13 @@ public interface Deque<E> extends java.util.Queue<E>
 {
 	/**
 	 * Inserts the specified element at the front of this deque if it is
+	 * 插入指定的元素在deque的前驅
 	 * possible to do so immediately without violating capacity restrictions.
+	 * 如果沒有違反容量限制會理解插入
 	 * When using a capacity-restricted deque, it is generally preferable to
+	 * 當使用有限容量的deque,
 	 * use method {@link #offerFirst}.
+	 * 一般更喜歡使用offerFirst方法
 	 *
 	 * @param e the element to add
 	 * @throws IllegalStateException if the element cannot be added at this
@@ -216,9 +236,13 @@ public interface Deque<E> extends java.util.Queue<E>
 
 	/**
 	 * Inserts the specified element at the end of this deque if it is
+	 * 插入指定的元素在deque的末尾
 	 * possible to do so immediately without violating capacity restrictions.
+	 * 如果滅有違反容量限制就會立即執行
 	 * When using a capacity-restricted deque, it is generally preferable to
+	 * 當使用一個有限容量的deque
 	 * use method {@link #offerLast}.
+	 * 通常更好的操作是使用offerLast方法
 	 *
 	 * <p>This method is equivalent to {@link #add}.
 	 *
@@ -236,15 +260,20 @@ public interface Deque<E> extends java.util.Queue<E>
 
 	/**
 	 * Inserts the specified element at the front of this deque unless it would
+	 * 插入一個指定的元素在deque的前驅
 	 * violate capacity restrictions.  When using a capacity-restricted deque,
+	 * 直到他違反了容量限制
 	 * this method is generally preferable to the {@link #addFirst} method,
+	 * 當使用一個有限容量deque,這個方法通常比addFirst方法更好
 	 * which can fail to insert an element only by throwing an exception.
+	 * 它能夠由拋出一個異常表示添加元素失敗
 	 *
 	 * @param e the element to add
 	 * @return <tt>true</tt> if the element was added to this deque, else
 	 *         <tt>false</tt>
 	 * @throws ClassCastException if the class of the specified element
 	 *         prevents it from being added to this deque
+	 *         防止
 	 * @throws NullPointerException if the specified element is null and this
 	 *         deque does not permit null elements
 	 * @throws IllegalArgumentException if some property of the specified
@@ -254,8 +283,11 @@ public interface Deque<E> extends java.util.Queue<E>
 
 	/**
 	 * Inserts the specified element at the end of this deque unless it would
+	 * 添加指定的元素在deque的末尾
 	 * violate capacity restrictions.  When using a capacity-restricted deque,
+	 * 直到違反容量限制
 	 * this method is generally preferable to the {@link #addLast} method,
+	 * 當使用一個有限容量deque，這個方法通常是更優於addLast方法
 	 * which can fail to insert an element only by throwing an exception.
 	 *
 	 * @param e the element to add
@@ -272,7 +304,9 @@ public interface Deque<E> extends java.util.Queue<E>
 
 	/**
 	 * Retrieves and removes the first element of this deque.  This method
+	 * 檢查和移除deque的首元素
 	 * differs from {@link #pollFirst pollFirst} only in that it throws an
+	 * 這個方法與pollFirst方法不同之處僅僅在於如果deque是一個empty他會拋出一個異常
 	 * exception if this deque is empty.
 	 *
 	 * @return the head of this deque
@@ -292,7 +326,9 @@ public interface Deque<E> extends java.util.Queue<E>
 
 	/**
 	 * Retrieves and removes the first element of this deque,
+	 * 檢查和移除隊列中的首元素
 	 * or returns <tt>null</tt> if this deque is empty.
+	 * 如果隊列為空，返回null
 	 *
 	 * @return the head of this deque, or <tt>null</tt> if this deque is empty
 	 */
@@ -308,8 +344,9 @@ public interface Deque<E> extends java.util.Queue<E>
 
 	/**
 	 * Retrieves, but does not remove, the first element of this deque.
-	 *
+	 * 檢查，但不移除隊列中的首元素
 	 * This method differs from {@link #peekFirst peekFirst} only in that it
+	 * 與peekFirst方法不同之處僅僅為當隊列為空，拋出一個異常
 	 * throws an exception if this deque is empty.
 	 *
 	 * @return the head of this deque
@@ -330,6 +367,7 @@ public interface Deque<E> extends java.util.Queue<E>
 	/**
 	 * Retrieves, but does not remove, the first element of this deque,
 	 * or returns <tt>null</tt> if this deque is empty.
+	 * 如果隊列為空，返回null
 	 *
 	 * @return the head of this deque, or <tt>null</tt> if this deque is empty
 	 */
@@ -345,12 +383,19 @@ public interface Deque<E> extends java.util.Queue<E>
 
 	/**
 	 * Removes the first occurrence of the specified element from this deque.
+	 * 移除隊列中第一個發現的指定元素
 	 * If the deque does not contain the element, it is unchanged.
+	 * 如果隊列中不包含這個元素,隊列不會改變
 	 * More formally, removes the first element <tt>e</tt> such that
+	 * 更嚴格的講，移除第一個元素e
 	 * <tt>(o==null&nbsp;?&nbsp;e==null&nbsp;:&nbsp;o.equals(e))</tt>
+	 * 當(o == null ? e == null : e.equals(e))
 	 * (if such an element exists).
+	 * 如果這樣的元素存在
 	 * Returns <tt>true</tt> if this deque contained the specified element
+	 * 如果隊列包含了指定元素，返回true
 	 * (or equivalently, if this deque changed as a result of the call).
+	 * 與之相應的，作為調用的結果對聯改變了。
 	 *
 	 * @param o element to be removed from this deque, if present
 	 * @return <tt>true</tt> if an element was removed as a result of this call
@@ -387,14 +432,20 @@ public interface Deque<E> extends java.util.Queue<E>
 
 	/**
 	 * Inserts the specified element into the queue represented by this deque
+	 * 添加指定的元素到隊列中意味著如果沒有違反容量限制，他會立即執行
 	 * (in other words, at the tail of this deque) if it is possible to do so
+	 * (換句話說，在隊列的末尾)
 	 * immediately without violating capacity restrictions, returning
 	 * <tt>true</tt> upon success and throwing an
+	 * 成功返回true
 	 * <tt>IllegalStateException</tt> if no space is currently available.
+	 * 如果當前沒有可用空間會拋出一個異常
 	 * When using a capacity-restricted deque, it is generally preferable to
+	 * 當使用一個有限隊列，通常更好的做法是使用offer方法
 	 * use {@link #offer(Object) offer}.
 	 *
 	 * <p>This method is equivalent to {@link #addLast}.
+	 * 這個方法等效于addLast方法
 	 *
 	 * @param e the element to add
 	 * @return <tt>true</tt> (as specified by {@link java.util.Collection#add})
@@ -414,9 +465,11 @@ public interface Deque<E> extends java.util.Queue<E>
 	 * (in other words, at the tail of this deque) if it is possible to do so
 	 * immediately without violating capacity restrictions, returning
 	 * <tt>true</tt> upon success and <tt>false</tt> if no space is currently
+	 *                                如果沒有可用空間，返回false
 	 * available.  When using a capacity-restricted deque, this method is
 	 * generally preferable to the {@link #add} method, which can fail to
 	 * insert an element only by throwing an exception.
+	 * 僅僅由拋出一個異常表示添加元素失敗
 	 *
 	 * <p>This method is equivalent to {@link #offerLast}.
 	 *
@@ -459,6 +512,7 @@ public interface Deque<E> extends java.util.Queue<E>
 
 	/**
 	 * Retrieves, but does not remove, the head of the queue represented by
+	 * 檢查，但不移除
 	 * this deque (in other words, the first element of this deque).
 	 * This method differs from {@link #peek peek} only in that it throws an
 	 * exception if this deque is empty.
@@ -487,10 +541,13 @@ public interface Deque<E> extends java.util.Queue<E>
 
 	/**
 	 * Pushes an element onto the stack represented by this deque (in other
+	 * 壓入一個元到棧中意味著這個隊列如果沒有違反容量限制會立即執行
 	 * words, at the head of this deque) if it is possible to do so
 	 * immediately without violating capacity restrictions, returning
 	 * <tt>true</tt> upon success and throwing an
+	 * 成功返回true
 	 * <tt>IllegalStateException</tt> if no space is currently available.
+	 * 如果滅有可用空間拋出一個異常
 	 *
 	 * <p>This method is equivalent to {@link #addFirst}.
 	 *
@@ -509,6 +566,7 @@ public interface Deque<E> extends java.util.Queue<E>
 	/**
 	 * Pops an element from the stack represented by this deque.  In other
 	 * words, removes and returns the first element of this deque.
+	 *        移除和返回隊列中的第一個元素
 	 *
 	 * <p>This method is equivalent to {@link #removeFirst()}.
 	 *
@@ -573,12 +631,15 @@ public interface Deque<E> extends java.util.Queue<E>
 	 *
 	 * @return an iterator over the elements in this deque in proper sequence
 	 */
-	java.util.Iterator<E> iterator();
+	Iterator<E> iterator();
 
 	/**
 	 * Returns an iterator over the elements in this deque in reverse
+	 *                                                        相反
 	 * sequential order.  The elements will be returned in order from
+	 * 的序列順序
 	 * last (tail) to first (head).
+	 * 從尾到頭
 	 *
 	 * @return an iterator over the elements in this deque in reverse
 	 * sequence
