@@ -29,26 +29,14 @@ package z.z.w.jdk.collections;
  */
 public class MainClass //
         extends //
-        java.util.Stack
-//		CopyOnWriteArrayList
+//        java.util.LinkedHashSet
+//        java.util.TreeSet
+//        java.util.EnumSet
 
-/**
- * juc包下學習
- * //		ConcurrentLinkedDeque
- //		ArrayDeque
- //		java.util.concurrent.LinkedTransferQueue
- //		java.util.concurrent.LinkedBlockingQueue
- //		java.util.concurrent.ArrayBlockingQueue
- //		java.util.concurrent.ConcurrentLinkedQueue
- java.util.PriorityQueue
- //		java.util.concurrent.DelayQueue
- //		java.util.concurrent.SynchronousQueue
- //		java.util.concurrent.PriorityBlockingQueue
- */
 
-//		implements //
-//		java.util.NavigableSet, java.util.concurrent.TransferQueue, java.util.List, BlockingDeque, java.util.concurrent.ConcurrentNavigableMap
-//		Queue
+
+		implements //
+		java.util.NavigableSet, java.util.concurrent.TransferQueue, java.util.List, BlockingDeque, java.util.concurrent.ConcurrentNavigableMap
 {
 
 }
