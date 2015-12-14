@@ -20,51 +20,74 @@ package z.z.w.jdk.collections;
  *********************************************************************************************/
 
 import java.util.*;
-import java.util.Deque;
-import java.util.List;
-import java.util.Queue;
 
 /**
  * Doubly-linked list implementation of the {@code List} and {@code Deque}
+ * 雙向鏈錶實現了List以及Deque接口
  * interfaces.  Implements all optional list operations, and permits all
+ *              實現了所有的list可選操作
  * elements (including {@code null}).
+ * 允許所有元素，包括null
  *
  * <p>All of the operations perform as could be expected for a doubly-linked
+ * 對於雙向鏈錶所有的操作許可是可預期的
  * list.  Operations that index into the list will traverse the list from
+ *        通過list索引操作會從列表頭到尾部遍歷
  * the beginning or the end, whichever is closer to the specified index.
+ *                           任何特定的索引都可接近
  *
  * <p><strong>Note that this implementation is not synchronized.</strong>
+ * 注意這個實現是非同步的
  * If multiple threads access a linked list concurrently, and at least
+ * 如果多個線程並發的訪問一個鏈錶
  * one of the threads modifies the list structurally, it <i>must</i> be
+ * 至少有一個線程改變了list的結構
  * synchronized externally.  (A structural modification is any operation
+ * 他必須外部支持同步
  * that adds or deletes one or more elements; merely setting the value of
+ *  (一個結構改變指的是任何操作添加，刪除，一個或更多個元素，僅僅設置元素的值，不是
  * an element is not a structural modification.)  This is typically
+ * 一個結構化改變)
  * accomplished by synchronizing on some object that naturally
+ * 這種通常完成與一個相同的對象鎖自然的封裝list
  * encapsulates the list.
  *
  * If no such object exists, the list should be "wrapped" using the
+ * 如果沒有這樣的對象存在，這個list將會封裝用於Collections.synchronizedList方法
  * {@link Collections#synchronizedList Collections.synchronizedList}
  * method.  This is best done at creation time, to prevent accidental
+ *          在創建時機最好的做法
  * unsynchronized access to the list:<pre>
+ * 防止未同步的偶然存儲list
  *   List list = Collections.synchronizedList(new LinkedList(...));</pre>
  *
  * <p>The iterators returned by this class's {@code iterator} and
+ * 由這個類的iterator和listIterator方法返回的迭代器是快速失敗的
  * {@code listIterator} methods are <i>fail-fast</i>: if the list is
  * structurally modified at any time after the iterator is created, in
+ * 如果list在任何迭代器創建之後的時間結構改變了
  * any way except through the Iterator's own {@code remove} or
+ * 出去自身迭代過程中的remove，add方法，迭代器都會拋出一個異常
  * {@code add} methods, the iterator will throw a {@link
  * ConcurrentModificationException}.  Thus, in the face of concurrent
  * modification, the iterator fails quickly and cleanly, rather than
+ * 從而，並發操作的同時，迭代器快速的失敗和清理，
  * risking arbitrary, non-deterministic behavior at an undetermined
+ * 而不是冒著隨意的風險，不確定的行為，在一個未確定的時間里
  * time in the future.
  *
  * <p>Note that the fail-fast behavior of an iterator cannot be guaranteed
+ * 注意一個迭代器的快速失敗行為是為保證的
  * as it is, generally speaking, impossible to make any hard guarantees in the
+ *  通常的講，在未同步的並發操作存在時提供任何保證是不可能的。
  * presence of unsynchronized concurrent modification.  Fail-fast iterators
  * throw {@code ConcurrentModificationException} on a best-effort basis.
+ *  快速失敗迭代器作為一個最好的基礎拋出一個異常
  * Therefore, it would be wrong to write a program that depended on this
+ * 因此，依賴於這個異常因他的正確性編寫一個程序是錯誤的做法
  * exception for its correctness:   <i>the fail-fast behavior of iterators
  * should be used only to detect bugs.</i>
+ * 快速失敗行為僅僅用於檢測bug
  *
  * <p>This class is a member of the
  * <a href="{@docRoot}/../technotes/guides/collections/index.html">
@@ -78,8 +101,8 @@ import java.util.Queue;
  */
 
 public class LinkedList<E>
-        extends java.util.AbstractSequentialList<E>
-        implements java.util.List<E>, java.util.Deque<E>, Cloneable, java.io.Serializable
+        extends AbstractSequentialList<E>
+        implements List<E>, Deque<E>, Cloneable, java.io.Serializable
 {
     transient int size = 0;
 
@@ -380,7 +403,7 @@ public class LinkedList<E>
      * @return {@code true} if this list changed as a result of the call
      * @throws NullPointerException if the specified collection is null
      */
-    public boolean addAll( java.util.Collection<? extends E> c) {
+    public boolean addAll( Collection<? extends E> c) {
         return addAll(size, c);
     }
 
@@ -400,7 +423,7 @@ public class LinkedList<E>
      * @throws NullPointerException if the specified collection is null
      */
     public boolean addAll(int index, java.util.Collection<? extends E> c) {
-        checkPositionIndex(index);
+        checkPositionIndex(index); // 索引是否有效
 
         Object[] a = c.toArray();
         int numNew = a.length;
@@ -559,6 +582,7 @@ public class LinkedList<E>
 
     /**
      * Returns the (non-null) Node at the specified element index.
+     * 返回指定索引位置的節點(非空)
      */
     Node<E> node(int index) {
         // assert isElementIndex(index);
@@ -772,6 +796,7 @@ public class LinkedList<E>
 
     /**
      * Pushes an element onto the stack represented by this list.  In other
+     *                                  意味著
      * words, inserts the element at the front of this list.
      *
      * <p>This method is equivalent to {@link #addFirst}.
@@ -860,12 +885,12 @@ public class LinkedList<E>
      * @throws IndexOutOfBoundsException {@inheritDoc}
      * @see List#listIterator(int)
      */
-    public java.util.ListIterator<E> listIterator( int index) {
+    public ListIterator<E> listIterator( int index) {
         checkPositionIndex(index);
         return new ListItr(index);
     }
 
-    private class ListItr implements java.util.ListIterator<E>
+    private class ListItr implements ListIterator<E>
     {
         private Node<E> lastReturned = null;
         private Node<E> next;
@@ -969,14 +994,14 @@ public class LinkedList<E>
     /**
      * @since 1.6
      */
-    public java.util.Iterator<E> descendingIterator() {
+    public Iterator<E> descendingIterator() {
         return new DescendingIterator();
     }
 
     /**
      * Adapter to provide descending iterators via ListItr.previous
      */
-    private class DescendingIterator implements java.util.Iterator<E>
+    private class DescendingIterator implements Iterator<E>
     {
         private final ListItr itr = new ListItr(size());
         public boolean hasNext() {
