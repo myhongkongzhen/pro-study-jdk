@@ -31,12 +31,12 @@ public class MainClass //
         extends //
 //        java.util.LinkedHashSet
 //        java.util.TreeSet
-//        java.util.EnumSet
+        java.util.EnumSet
 
 
 
-		implements //
-		java.util.NavigableSet, java.util.concurrent.TransferQueue, java.util.List, BlockingDeque, java.util.concurrent.ConcurrentNavigableMap
+//		implements //
+//		java.util.NavigableSet, java.util.concurrent.TransferQueue, java.util.List, BlockingDeque, java.util.concurrent.ConcurrentNavigableMap
 {
 
 }
