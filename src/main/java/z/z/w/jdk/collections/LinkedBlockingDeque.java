@@ -26,22 +26,32 @@ import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * An optionally-bounded {@linkplain java.util.concurrent.BlockingDeque blocking deque} based on
+ * 基於鏈錶節點的可選邊界的deque隊列
  * linked nodes.
  *
  * <p> The optional capacity bound constructor argument serves as a
+ * 可選的容量邊界的構造器參數作為一種防止過多填充物的服務
  * way to prevent excessive expansion. The capacity, if unspecified,
+ *                                     這個容量，如果沒有特定
  * is equal to {@link Integer#MAX_VALUE}.  Linked nodes are
+ * 等於Integer.MAX_VALUE
  * dynamically created upon each insertion unless this would bring the
+ * 鏈錶節點在每一個添加中自動增長除非容量超過隊列容量
  * deque above capacity.
  *
  * <p>Most operations run in constant time (ignoring time spent
+ * 大多數的操作恆定時間內運行(忽略阻塞時間)
  * blocking).  Exceptions include {@link #remove(Object) remove},
+ *             異常包括remove，removeFirstOccurrence
  * {@link #removeFirstOccurrence removeFirstOccurrence}, {@link
  * #removeLastOccurrence removeLastOccurrence}, {@link #contains
  * contains}, {@link #iterator iterator.remove()}, and the bulk
+ * removeLastOccurrence，以及塊操作，
  * operations, all of which run in linear time.
+ * 這些所有操作都是線性時間的
  *
  * <p>This class and its iterator implement all of the
+ * 這個類和他的迭代實現了所有Collection與Iterator接口的可先操作
  * <em>optional</em> methods of the {@link java.util.Collection} and {@link
  * java.util.Iterator} interfaces.
  *
@@ -59,52 +69,76 @@ public class LinkedBlockingDeque<E>
 
     /*
      * Implemented as a simple doubly-linked list protected by a
+     * 由一個單獨的鎖實現了簡單的雙端鏈錶list，並且有條件管理阻塞
      * single lock and using conditions to manage blocking.
      *
      * To implement weakly consistent iterators, it appears we need to
+     * 實現弱兼容的迭代器,
      * keep all Nodes GC-reachable from a predecessor dequeued Node.
+     * 我們需要保持所有節點從前任隊列節點到達gc
      * That would cause two problems:
+     * 這將導致兩個問題
      * - allow a rogue Iterator to cause unbounded memory retention
+     * - 允許一個強迭代導致未綁定的內存保留
      * - cause cross-generational linking of old Nodes to new Nodes if
+     * - 導致舊節點的交叉連接到新節點如果一個節點一直存活
      *   a Node was tenured while live, which generational GCs have a
      *   hard time dealing with, causing repeated major collections.
+     *   GC會有一個長時間處理這個，導致修復主集合
      * However, only non-deleted Nodes need to be reachable from
+     * 然而，僅僅未刪除的節點需要從隊列節點中到達
      * dequeued Nodes, and reachability does not necessarily have to
+     *                 並且可到達不必須由gc所了解
      * be of the kind understood by the GC.  We use the trick of
      * linking a Node that has just been dequeued to itself.  Such a
+     * 我們使用節點正如隊列自己一樣的方式
      * self-link implicitly means to jump to "first" (for next links)
+     * 一個自身鏈錶的隱含意思為跳轉到第一個(對於下一個節點)
      * or "last" (for prev links).
+     * 或者最後一個(對於上一個節點)
      */
 
     /*
      * We have "diamond" multiple interface/abstract class inheritance
+     * 我們有更好的多個接口抽象類繼承這里
      * here, and that introduces ambiguities. Often we want the
+     *       并介紹歧義
      * BlockingDeque javadoc combined with the AbstractQueue
+     * 我們經常想要BlockingDeque文檔綜合的AbstractQueue實現
      * implementation, so a lot of method specs are duplicated here.
+     *                 一些特別的方法副本在這裡
      */
 
 	private static final long serialVersionUID = -387911632671998426L;
 
 	/** Doubly-linked list node class */
+	/** 雙端鏈錶節點類 */
 	static final class Node<E> {
 		/**
 		 * The item, or null if this node has been removed.
+		 * 條目，如果已經刪除，則為null
 		 */
 		E item;
 
 		/**
 		 * One of:
 		 * - the real predecessor Node
+		 * - 真實的前任節點
 		 * - this Node, meaning the predecessor is tail
+		 * - 這個節點，意味著前任為結尾
 		 * - null, meaning there is no predecessor
+		 * - null，意味著沒有前任
 		 */
 		Node<E> prev;
 
 		/**
 		 * One of:
 		 * - the real successor Node
+		 * - 真實的後繼
 		 * - this Node, meaning the successor is head
+		 * - 節點，意味著後繼為頭
 		 * - null, meaning there is no successor
+		 * - null,意味著沒有後繼
 		 */
 		Node<E> next;
 
@@ -115,8 +149,9 @@ public class LinkedBlockingDeque<E>
 
 	/**
 	 * Pointer to first node.
+	 * 指向首節點的指針
 	 * Invariant: (first == null && last == null) ||
-	 *            (first.prev == null && first.item != null)
+	 * 不變       (first.prev == null && first.item != null)
 	 */
 	transient Node<E> first;
 
@@ -134,17 +169,19 @@ public class LinkedBlockingDeque<E>
 	private final int capacity;
 
 	/** Main lock guarding all access */
+	/** 所有存儲訪問的主要守護鎖 */
 	final ReentrantLock lock = new ReentrantLock();
 
-	/** Condition for waiting takes */
+	/** Condition for waiting takes 等待取出條件 */
 	private final Condition notEmpty = lock.newCondition();
 
-	/** Condition for waiting puts */
+	/** Condition for waiting puts 等待放置條件 */
 	private final Condition notFull = lock.newCondition();
 
 	/**
 	 * Creates a {@code LinkedBlockingDeque} with a capacity of
 	 * {@link Integer#MAX_VALUE}.
+	 * 最大容量Integer.MAX_VALUE
 	 */
 	public LinkedBlockingDeque() {
 		this(Integer.MAX_VALUE);
@@ -152,6 +189,7 @@ public class LinkedBlockingDeque<E>
 
 	/**
 	 * Creates a {@code LinkedBlockingDeque} with the given (fixed) capacity.
+	 * 創建一個隊列用固定的容量
 	 *
 	 * @param capacity the capacity of this deque
 	 * @throws IllegalArgumentException if {@code capacity} is less than 1
@@ -166,12 +204,14 @@ public class LinkedBlockingDeque<E>
 	 * {@link Integer#MAX_VALUE}, initially containing the elements of
 	 * the given collection, added in traversal order of the
 	 * collection's iterator.
+	 * 按照添加的集合迭代遍歷順序
 	 *
 	 * @param c the collection of elements to initially contain
 	 * @throws NullPointerException if the specified collection or any
 	 *         of its elements are null
+	 *         如果指定的集合或者他的任意元素為null，拋出異常
 	 */
-	public LinkedBlockingDeque( java.util.Collection<? extends E> c) {
+	public LinkedBlockingDeque( Collection<? extends E> c) {
 		this(Integer.MAX_VALUE);
 		final ReentrantLock lock = this.lock;
 		lock.lock(); // Never contended, but necessary for visibility
@@ -211,6 +251,7 @@ public class LinkedBlockingDeque<E>
 
 	/**
 	 * Links node as last element, or returns false if full.
+	 * 連邊節點最後一個元素，或者如果full返回false
 	 */
 	private boolean linkLast(Node<E> node) {
 		// assert lock.isHeldByCurrentThread();
@@ -640,6 +681,7 @@ public class LinkedBlockingDeque<E>
 
 	/**
 	 * Retrieves and removes the head of the queue represented by this deque.
+	 *                                             代表
 	 * This method differs from {@link #poll poll} only in that it throws an
 	 * exception if this deque is empty.
 	 *
@@ -684,7 +726,9 @@ public class LinkedBlockingDeque<E>
 
 	/**
 	 * Returns the number of additional elements that this deque can ideally
+	 * 返回隊列理想情況無阻賽訪問的元素的數量
 	 * (in the absence of memory or resource constraints) accept without
+	 * (在內存不足或資源)
 	 * blocking. This is always equal to the initial capacity of this deque
 	 * less the current {@code size} of this deque.
 	 *
@@ -709,7 +753,7 @@ public class LinkedBlockingDeque<E>
 	 * @throws NullPointerException          {@inheritDoc}
 	 * @throws IllegalArgumentException      {@inheritDoc}
 	 */
-	public int drainTo( java.util.Collection<? super E> c) {
+	public int drainTo( Collection<? super E> c) {
 		return drainTo(c, Integer.MAX_VALUE);
 	}
 
@@ -814,10 +858,14 @@ public class LinkedBlockingDeque<E>
 
     /*
      * TODO: Add support for more efficient bulk operations.
+     *                       更多  高效       塊   操作
      *
      * We don't want to acquire the lock for every iteration, but we
+     *                  獲得
      * also want other threads a chance to interact with the
+     *                                     相互作用
      * collection, especially when count is close to capacity.
+     *             特別的
      */
 
 //     /**
@@ -896,7 +944,9 @@ public class LinkedBlockingDeque<E>
 	 * <p>Like the {@link #toArray()} method, this method acts as bridge between
 	 * array-based and collection-based APIs.  Further, this method allows
 	 * precise control over the runtime type of the output array, and may,
+	 * 精確
 	 * under certain circumstances, be used to save allocation costs.
+	 *               情況
 	 *
 	 * <p>Suppose {@code x} is a deque known to contain only strings.
 	 * The following code can be used to dump the deque into a newly
@@ -990,13 +1040,14 @@ public class LinkedBlockingDeque<E>
 	 * <p>The returned iterator is a "weakly consistent" iterator that
 	 * will never throw {@link java.util.ConcurrentModificationException
 	 * ConcurrentModificationException}, and guarantees to traverse
+	 *                                       保證
 	 * elements as they existed upon construction of the iterator, and
 	 * may (but is not guaranteed to) reflect any modifications
 	 * subsequent to construction.
 	 *
 	 * @return an iterator over the elements in this deque in proper sequence
 	 */
-	public java.util.Iterator<E> iterator() {
+	public Iterator<E> iterator() {
 		return new Itr();
 	}
 
@@ -1014,7 +1065,7 @@ public class LinkedBlockingDeque<E>
 	 *
 	 * @return an iterator over the elements in this deque in reverse order
 	 */
-	public java.util.Iterator<E> descendingIterator() {
+	public Iterator<E> descendingIterator() {
 		return new DescendingItr();
 	}
 
@@ -1127,7 +1178,7 @@ public class LinkedBlockingDeque<E>
 		Node<E> nextNode(Node<E> n) { return n.next; }
 	}
 
-	/** Descending iterator */
+	/** Descending iterator 降序 */
 	private class DescendingItr extends AbstractItr {
 		Node<E> firstNode() { return last; }
 		Node<E> nextNode(Node<E> n) { return n.prev; }
