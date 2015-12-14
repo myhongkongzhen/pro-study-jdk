@@ -28,17 +28,27 @@ package z.z.w.jdk.collections;
  * V - the type of mapped values
  */
 public class MainClass //
-		extends //
+        extends //
 //		Stack
-//		LinkedList
 //		CopyOnWriteArrayList
-		LinkedBlockingDeque
+        java.util.LinkedList
 
-//		ConcurrentLinkedDeque
-//		ArrayDeque
+/**
+ * juc包下學習
+ * //		ConcurrentLinkedDeque
+ //		ArrayDeque
+ //		java.util.concurrent.LinkedTransferQueue
+ //		java.util.concurrent.LinkedBlockingQueue
+ //		java.util.concurrent.ArrayBlockingQueue
+ //		java.util.concurrent.ConcurrentLinkedQueue
+ java.util.PriorityQueue
+ //		java.util.concurrent.DelayQueue
+ //		java.util.concurrent.SynchronousQueue
+ //		java.util.concurrent.PriorityBlockingQueue
+ */
 
 //		implements //
-//		NavigableSet, TransferQueue, java.util.List, BlockingDeque, ConcurrentNavigableMap
+//		java.util.NavigableSet, java.util.concurrent.TransferQueue, java.util.List, BlockingDeque, java.util.concurrent.ConcurrentNavigableMap
 //		Queue
 {
 
