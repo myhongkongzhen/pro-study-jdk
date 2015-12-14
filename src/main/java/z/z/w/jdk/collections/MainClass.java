@@ -29,9 +29,8 @@ package z.z.w.jdk.collections;
  */
 public class MainClass //
         extends //
-//		Stack
+        java.util.Stack
 //		CopyOnWriteArrayList
-        java.util.LinkedList
 
 /**
  * juc包下學習
