@@ -30,13 +30,14 @@ package z.z.w.jdk.collections;
 public class MainClass //
         extends //
 //        java.util.LinkedHashSet
-        java.util.TreeSet
+//        java.util.TreeSet
 //        java.util.EnumSet
 
-
-
-//		implements //
+//        java.util.LinkedHashMap
+        java.util.TreeMap
+//        implements //
 //		java.util.NavigableSet, java.util.concurrent.TransferQueue, java.util.List, BlockingDeque, java.util.concurrent.ConcurrentNavigableMap
+//        java.util.NavigableMap
 {
 
 }
