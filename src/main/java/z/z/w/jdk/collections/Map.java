@@ -49,44 +49,75 @@ import java.util.TreeMap;
  * class, do not.
  *
  * <p>Note: great care must be exercised if mutable objects are used as map
+ * 注意：最關心的必須是多變的對象的應用用於map的key
  * keys.  The behavior of a map is not specified if the value of an object is
+ *        一個map的行為是沒有特定的，如果一個對象的值改變了在 map的的對象是個key
  * changed in a manner that affects <tt>equals</tt> comparisons while the
+ * 比較equals方式
  * object is a key in the map.  A special case of this prohibition is that it
  * is not permissible for a map to contain itself as a key.  While it is
+ * 這種違規的特殊情況的寓意一個map包含他自己作為一個key是不允許的
  * permissible for a map to contain itself as a value, extreme caution is
+ *  當他允許作為一個map包含自身的一個值時，
  * advised: the <tt>equals</tt> and <tt>hashCode</tt> methods are no longer
+ * 極端的警告是：equals與hashCode方法不能作為一個map更好的定義
  * well defined on such a map.
  *
  * <p>All general-purpose map implementation classes should provide two
+ * 所有通用目的的map實現類應該提供過兩個基本的構造器
  * "standard" constructors: a void (no arguments) constructor which creates an
+ * 一個無參數的構造器，用於創建一個空的map
  * empty map, and a constructor with a single argument of type <tt>Map</tt>,
+ * 一個只有一個Map類型的參數的構造器
  * which creates a new map with the same key-value mappings as its argument.
+ * 用於創建一個相同k-v影射的參數
  * In effect, the latter constructor allows the user to copy any map,
+ * 事實上，最新的構造器允許用戶拷貝任何map
  * producing an equivalent map of the desired class.  There is no way to
+ * 生產處一個希望的類的相同的map
  * enforce this recommendation (as interfaces cannot contain constructors) but
+ * 沒有方法執行這個建議(作為接口不能包含構造器)
  * all of the general-purpose map implementations in the JDK comply.
+ * 但是所有的通用目的的map實現在JDK中執行
  *
  * <p>The "destructive" methods contained in this interface, that is, the
+ * 這接口包含了不好的方法
  * methods that modify the map on which they operate, are specified to throw
+ * 這些方法就是在他們操作中改變map
  * <tt>UnsupportedOperationException</tt> if this map does not support the
+ *  如果這個map不支持這些操作，將會指定拋出一個異常
  * operation.  If this is the case, these methods may, but are not required
+ * 這些方法能夠，但不是必須的，如果在map中不期望的調用，拋出一個異常的原因
  * to, throw an <tt>UnsupportedOperationException</tt> if the invocation would
  * have no effect on the map.  For example, invoking the {@link #putAll(Map)}
+ * 列入，調用putAll方法在一個不可改變map中，
  * method on an unmodifiable map may, but is not required to, throw the
+ * 不是必須的，如果jap影射支持空，會拋出一個異常
  * exception if the map whose mappings are to be "superimposed" is empty.
  *
  * <p>Some map implementations have restrictions on the keys and values they
+ * 一些map實現存在限制，在他們包含的k-v上
  * may contain.  For example, some implementations prohibit null keys and
+ * 例如，一些實現禁止null的key與values
  * values, and some have restrictions on the types of their keys.  Attempting
+ * 一些則限制key的類型
  * to insert an ineligible key or value throws an unchecked exception,
+ * 常識添加一個不適合的key或者value拋出一個未檢查異常
  * typically <tt>NullPointerException</tt> or <tt>ClassCastException</tt>.
+ * 通常是 NullPointerException or ClassCastException異常
  * Attempting to query the presence of an ineligible key or value may throw an
+ * 常識查詢一個不合適的key與value是否村子，也許拋出一個異常
  * exception, or it may simply return false; some implementations will exhibit
+ * 或者簡單的返回false
  * the former behavior and some will exhibit the latter.  More generally,
+ * 一些實現將展示前驅的行為，一些將展示後繼的行為
  * attempting an operation on an ineligible key or value whose completion
+ * 更通俗的講，視圖操作一個不適合的key與value在不合適的元素插入一個map完成是沒有結果的
  * would not result in the insertion of an ineligible element into the map may
  * throw an exception or it may succeed, at the option of the implementation.
+ * 或許拋出一個異常，或者他可能成功，在可選的實現中
  * Such exceptions are marked as "optional" in the specification for this
+ * 一些異常是標記為可選的對於這個接口
  * interface.
  *
  * <p>This interface is a member of the
@@ -94,21 +125,30 @@ import java.util.TreeMap;
  * Java Collections Framework</a>.
  *
  * <p>Many methods in Collections Framework interfaces are defined
+ * 在集合框架接口中許多方法是定義的在equals條目上
  * in terms of the {@link Object#equals(Object) equals} method.  For
  * example, the specification for the {@link #containsKey(Object)
+ * 例如，忒定的containKey方法：
  * containsKey(Object key)} method says: "returns <tt>true</tt> if and
+ * 返回true當且僅當map包含key ( key == null ? k == null: key.equals(k))的情況下
  * only if this map contains a mapping for a key <tt>k</tt> such that
  * <tt>(key==null ? k==null : key.equals(k))</tt>." This specification should
  * <i>not</i> be construed to imply that invoking <tt>Map.containsKey</tt>
+ * 特定將不會解釋意味著調用Map.containsKey用一個非空餐宿key對於任意k調用
  * with a non-null argument <tt>key</tt> will cause <tt>key.equals(k)</tt> to
  * be invoked for any key <tt>k</tt>.  Implementations are free to
  * implement optimizations whereby the <tt>equals</tt> invocation is avoided,
+ * 實現是自由的對於實現優化任何避免調用equals的地方
  * for example, by first comparing the hash codes of the two keys.  (The
+ * 例如，用於比較兩個key的hashcode
  * {@link Object#hashCode()} specification guarantees that two objects with
+ * hashCode特定維護兩個對象不同的hashcode不會相等
  * unequal hash codes cannot be equal.)  More generally, implementations of
  * the various Collections Framework interfaces are free to take advantage of
+ * 更通暢的講，各個集合框架接口的實現自由的指定底層方法的行為
  * the specified behavior of underlying {@link Object} methods wherever the
  * implementor deems it appropriate.
+ * 在任何認為適當的地方實現
  *
  * @param <K> the type of keys maintained by this map
  * @param <V> the type of mapped values
@@ -191,8 +231,10 @@ public interface Map<K,V> {
      *
      * <p>If this map permits null values, then a return value of
      * {@code null} does not <i>necessarily</i> indicate that the map
+     *                                          表明
      * contains no mapping for the key; it's also possible that the map
      * explicitly maps the key to {@code null}.  The {@link #containsKey
+     * 明確
      * containsKey} operation may be used to distinguish these two cases.
      *
      * @param key the key whose associated value is to be returned
@@ -211,8 +253,11 @@ public interface Map<K,V> {
 
     /**
      * Associates the specified value with the specified key in this map
+     * 關聯
      * (optional operation).  If the map previously contained a mapping for
+     *                        如果集合先前包含了key的影射
      * the key, the old value is replaced by the specified value.  (A map
+     *          舊值會由指定的值指定
      * <tt>m</tt> is said to contain a mapping for a key <tt>k</tt> if and only
      * if {@link #containsKey(Object) m.containsKey(k)} would return
      * <tt>true</tt>.)
@@ -243,7 +288,9 @@ public interface Map<K,V> {
      * is removed.  (The map can contain at most one such mapping.)
      *
      * <p>Returns the value to which this map previously associated the key,
+     * 返回先前map中關聯這個key的值
      * or <tt>null</tt> if the map contained no mapping for the key.
+     * 如果沒有影射返回null
      *
      * <p>If this map permits null values, then a return value of
      * <tt>null</tt> does not <i>necessarily</i> indicate that the map
@@ -318,7 +365,7 @@ public interface Map<K,V> {
      *
      * @return a set view of the keys contained in this map
      */
-    java.util.Set<K> keySet();
+    Set<K> keySet();
 
     /**
      * Returns a {@link java.util.Collection} view of the values contained in this map.
@@ -335,7 +382,7 @@ public interface Map<K,V> {
      *
      * @return a collection view of the values contained in this map
      */
-    java.util.Collection<V> values();
+    Collection<V> values();
 
     /**
      * Returns a {@link java.util.Set} view of the mappings contained in this map.
@@ -353,7 +400,7 @@ public interface Map<K,V> {
      *
      * @return a set view of the mappings contained in this map
      */
-    java.util.Set< z.z.w.jdk.collections.Map.Entry<K, V>> entrySet();
+    Set< z.z.w.jdk.collections.Map.Entry<K, V>> entrySet();
 
     /**
      * A map entry (key-value pair).  The <tt>Map.entrySet</tt> method returns
