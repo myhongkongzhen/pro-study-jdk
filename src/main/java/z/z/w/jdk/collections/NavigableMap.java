@@ -24,21 +24,31 @@ import java.util.Comparator;
 
 /**
  * A {@link java.util.SortedMap} extended with navigation methods returning the
+ * 為了給定搜素目標返回最接近的匹配的方法擴展了SortedMap的導航方法
  * closest matches for given search targets. Methods
  * {@code lowerEntry}, {@code floorEntry}, {@code ceilingEntry},
+ * 方法lowerEntry,floorEntry,ceilingEntry,higherEntry,返回的Map.Entry
  * and {@code higherEntry} return {@code Map.Entry} objects
  * associated with keys respectively less than, less than or equal,
+ * 對象關聯個別的keys少於，少於等於，
  * greater than or equal, and greater than a given key, returning
+ * 大於等於，大於一個給定的key
  * {@code null} if there is no such key.  Similarly, methods
+ * 如果沒有這樣的key返回一個null
  * {@code lowerKey}, {@code floorKey}, {@code ceilingKey}, and
  * {@code higherKey} return only the associated keys. All of these
+ * 相似的方法...返回管理的key
  * methods are designed for locating, not traversing entries.
+ * 這些所有的方法設計成為定位而不是遍歷的實體
  *
  * <p>A {@code NavigableMap} may be accessed and traversed in either
+ * NavigableMap能夠存儲訪問和遍歷按照key順序的正序或者倒序
  * ascending or descending key order.  The {@code descendingMap}
  * method returns a view of the map with the senses of all relational
+ * descendingMap方法返回一個map的視圖，所有關聯的定向的方法反轉的鏡像
  * and directional methods inverted. The performance of ascending
  * operations and views is likely to be faster than that of descending
+ * ascending操作的執行和視圖比起descending操作更加的快速
  * ones.  Methods {@code subMap}, {@code headMap},
  * and {@code tailMap} differ from the like-named {@code
  * SortedMap} methods in accepting additional arguments describing
@@ -79,7 +89,7 @@ import java.util.Comparator;
  * @param <V> the type of mapped values
  * @since 1.6
  */
-public interface NavigableMap<K,V> extends java.util.SortedMap<K,V>
+public interface NavigableMap<K,V> extends SortedMap<K,V>
 {
     /**
      * Returns a key-value mapping associated with the greatest key
@@ -94,7 +104,7 @@ public interface NavigableMap<K,V> extends java.util.SortedMap<K,V>
      * @throws NullPointerException if the specified key is null
      *         and this map does not permit null keys
      */
-    java.util.Map.Entry<K,V> lowerEntry( K key);
+    Entry<K,V> lowerEntry( K key);
 
     /**
      * Returns the greatest key strictly less than the given key, or
@@ -123,7 +133,7 @@ public interface NavigableMap<K,V> extends java.util.SortedMap<K,V>
      * @throws NullPointerException if the specified key is null
      *         and this map does not permit null keys
      */
-    java.util.Map.Entry<K,V> floorEntry( K key);
+    Entry<K,V> floorEntry( K key);
 
     /**
      * Returns the greatest key less than or equal to the given key,
@@ -141,6 +151,7 @@ public interface NavigableMap<K,V> extends java.util.SortedMap<K,V>
 
     /**
      * Returns a key-value mapping associated with the least key
+     *                             關聯
      * greater than or equal to the given key, or {@code null} if
      * there is no such key.
      *
@@ -152,7 +163,7 @@ public interface NavigableMap<K,V> extends java.util.SortedMap<K,V>
      * @throws NullPointerException if the specified key is null
      *         and this map does not permit null keys
      */
-    java.util.Map.Entry<K,V> ceilingEntry( K key);
+    Entry<K,V> ceilingEntry( K key);
 
     /**
      * Returns the least key greater than or equal to the given key,
@@ -181,7 +192,7 @@ public interface NavigableMap<K,V> extends java.util.SortedMap<K,V>
      * @throws NullPointerException if the specified key is null
      *         and this map does not permit null keys
      */
-    java.util.Map.Entry<K,V> higherEntry( K key);
+    Entry<K,V> higherEntry( K key);
 
     /**
      * Returns the least key strictly greater than the given key, or
@@ -204,7 +215,7 @@ public interface NavigableMap<K,V> extends java.util.SortedMap<K,V>
      * @return an entry with the least key,
      *         or {@code null} if this map is empty
      */
-    java.util.Map.Entry<K,V> firstEntry();
+    Entry<K,V> firstEntry();
 
     /**
      * Returns a key-value mapping associated with the greatest
@@ -213,7 +224,7 @@ public interface NavigableMap<K,V> extends java.util.SortedMap<K,V>
      * @return an entry with the greatest key,
      *         or {@code null} if this map is empty
      */
-    java.util.Map.Entry<K,V> lastEntry();
+    Entry<K,V> lastEntry();
 
     /**
      * Removes and returns a key-value mapping associated with
@@ -222,7 +233,7 @@ public interface NavigableMap<K,V> extends java.util.SortedMap<K,V>
      * @return the removed first entry of this map,
      *         or {@code null} if this map is empty
      */
-    java.util.Map.Entry<K,V> pollFirstEntry();
+    Entry<K,V> pollFirstEntry();
 
     /**
      * Removes and returns a key-value mapping associated with
@@ -231,7 +242,7 @@ public interface NavigableMap<K,V> extends java.util.SortedMap<K,V>
      * @return the removed last entry of this map,
      *         or {@code null} if this map is empty
      */
-    java.util.Map.Entry<K,V> pollLastEntry();
+    Entry<K,V> pollLastEntry();
 
     /**
      * Returns a reverse order view of the mappings contained in this map.
@@ -264,7 +275,7 @@ public interface NavigableMap<K,V> extends java.util.SortedMap<K,V>
      *
      * @return a navigable set view of the keys in this map
      */
-    java.util.NavigableSet<K> navigableKeySet();
+    NavigableSet<K> navigableKeySet();
 
     /**
      * Returns a reverse order {@link java.util.NavigableSet} view of the keys contained in this map.
@@ -280,7 +291,7 @@ public interface NavigableMap<K,V> extends java.util.SortedMap<K,V>
      *
      * @return a reverse order navigable set view of the keys in this map
      */
-    java.util.NavigableSet<K> descendingKeySet();
+    NavigableSet<K> descendingKeySet();
 
     /**
      * Returns a view of the portion of this map whose keys range from
@@ -386,7 +397,7 @@ public interface NavigableMap<K,V> extends java.util.SortedMap<K,V>
      * @throws NullPointerException     {@inheritDoc}
      * @throws IllegalArgumentException {@inheritDoc}
      */
-    java.util.SortedMap<K,V> subMap( K fromKey, K toKey);
+    SortedMap<K,V> subMap( K fromKey, K toKey);
 
     /**
      * {@inheritDoc}
@@ -397,7 +408,7 @@ public interface NavigableMap<K,V> extends java.util.SortedMap<K,V>
      * @throws NullPointerException     {@inheritDoc}
      * @throws IllegalArgumentException {@inheritDoc}
      */
-    java.util.SortedMap<K,V> headMap( K toKey);
+    SortedMap<K,V> headMap( K toKey);
 
     /**
      * {@inheritDoc}
@@ -408,5 +419,5 @@ public interface NavigableMap<K,V> extends java.util.SortedMap<K,V>
      * @throws NullPointerException     {@inheritDoc}
      * @throws IllegalArgumentException {@inheritDoc}
      */
-    java.util.SortedMap<K,V> tailMap( K fromKey);
+    SortedMap<K,V> tailMap( K fromKey);
 }
