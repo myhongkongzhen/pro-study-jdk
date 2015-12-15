@@ -23,38 +23,57 @@ import java.util.*;
 
 /**
  * A {@link java.util.Map} that further provides a <em>total ordering</em> on its keys.
+ * Map依據他的key提供了總共的排序
  * The map is ordered according to the {@linkplain Comparable natural
+ * map按照自然順序排序
  * ordering} of its keys, or by a {@link Comparator} typically
+ * 或者由Comparator提供的排列順序
  * provided at sorted map creation time.  This order is reflected when
  * iterating over the sorted map's collection views (returned by the
+ * 這個順序會由迭代器遍歷map集合視圖的時候引用
  * {@code entrySet}, {@code keySet} and {@code values} methods).
+ * 由entrySet，keySet，values方法返回
  * Several additional operations are provided to take advantage of the
+ * 多個額外的操作由更深入的排序提供
  * ordering.  (This interface is the map analogue of {@link java.util.SortedSet}.)
+ * 這個接口與SortedSet類似的集合
  *
  * <p>All keys inserted into a sorted map must implement the {@code Comparable}
+ * 所有keys插入排序的map必須實現Comparable接口
  * interface (or be accepted by the specified comparator).  Furthermore, all
+ *                                                          此外
  * such keys must be <em>mutually comparable</em>: {@code k1.compareTo(k2)} (or
+ * 所有這樣的keys必須相互比較
  * {@code comparator.compare(k1, k2)}) must not throw a
  * {@code ClassCastException} for any keys {@code k1} and {@code k2} in
  * the sorted map.  Attempts to violate this restriction will cause the
+ *                  試圖違反這個限制將會導致違反方法或者構造器調用拋出一個異常
  * offending method or constructor invocation to throw a
  * {@code ClassCastException}.
  *
  * <p>Note that the ordering maintained by a sorted map (whether or not an
+ * 注意排序的map維護順序
  * explicit comparator is provided) must be <em>consistent with equals</em> if
+ * 必須兼容equals
  * the sorted map is to correctly implement the {@code Map} interface.  (See
+ * 如果已排序的map正確的實現了Map接口
  * the {@code Comparable} interface or {@code Comparator} interface for a
  * precise definition of <em>consistent with equals</em>.)  This is so because
  * the {@code Map} interface is defined in terms of the {@code equals}
+ * 這就是由equals操作條目定義的接口的原因
  * operation, but a sorted map performs all key comparisons using its
+ * 但是已排序的map執行所有的key的比較用compareTo或者compare方法
  * {@code compareTo} (or {@code compare}) method, so two keys that are
  * deemed equal by this method are, from the standpoint of the sorted map,
+ * 兩個keys認為是相等的又這個方法，從排序的map的角度
  * equal.  The behavior of a tree map <em>is</em> well-defined even if its
+ * treemap的行為是更好的實現，如果他的排序不適合用equals
  * ordering is inconsistent with equals; it just fails to obey the general
  * contract of the {@code Map} interface.
  *
  * <p>All general-purpose sorted map implementation classes should provide four
  * "standard" constructors. It is not possible to enforce this recommendation
+ *                                                執行             建議
  * though as required constructors cannot be specified by interfaces. The
  * expected "standard" constructors for all sorted map implementations are:
  * <ol>
@@ -71,6 +90,7 @@ import java.util.*;
  * </ol>
  *
  * <p><strong>Note</strong>: several methods return submaps with restricted key
+ * 注意：幾個方法返回submaps由受限的key範圍
  * ranges. Such ranges are <em>half-open</em>, that is, they include their low
  * endpoint but not their high endpoint (where applicable).  If you need a
  * <em>closed range</em> (which includes both endpoints), and the key type
@@ -106,7 +126,7 @@ import java.util.*;
  * @since 1.2
  */
 
-public interface SortedMap<K,V> extends java.util.Map<K,V>
+public interface SortedMap<K,V> extends Map<K,V>
 {
     /**
      * Returns the comparator used to order the keys in this map, or
@@ -237,7 +257,7 @@ public interface SortedMap<K,V> extends java.util.Map<K,V>
      * @return a set view of the keys contained in this map, sorted in
      *         ascending order
      */
-    java.util.Set<K> keySet();
+    Set<K> keySet();
 
     /**
      * Returns a {@link java.util.Collection} view of the values contained in this map.
@@ -257,7 +277,7 @@ public interface SortedMap<K,V> extends java.util.Map<K,V>
      * @return a collection view of the values contained in this map,
      *         sorted in ascending key order
      */
-    java.util.Collection<V> values();
+    Collection<V> values();
 
     /**
      * Returns a {@link java.util.Set} view of the mappings contained in this map.
@@ -277,5 +297,6 @@ public interface SortedMap<K,V> extends java.util.Map<K,V>
      * @return a set view of the mappings contained in this map,
      *         sorted in ascending key order
      */
-    java.util.Set<java.util.Map.Entry<K, V>> entrySet();
+    Set<Entry<K, V>> entrySet();
+
 }
