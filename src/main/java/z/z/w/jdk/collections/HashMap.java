@@ -26,16 +26,23 @@ import java.util.TreeMap;
 
 /**
  * Hash table based implementation of the <tt>Map</tt> interface.  This
+ * hashtable基於Map接口的實現
  * implementation provides all of the optional map operations, and permits
+ * 這個實現提供了所有map可選的操作，
  * <tt>null</tt> values and the <tt>null</tt> key.  (The <tt>HashMap</tt>
+ * 並且允許null值和nullkey
  * class is roughly equivalent to <tt>Hashtable</tt>, except that it is
+ * HashMap類與HashTable大致相等，除了這個類是個未同步並且允許null之外
  * unsynchronized and permits nulls.)  This class makes no guarantees as to
  * the order of the map; in particular, it does not guarantee that the order
+ * 這個類不維護map的排列；特別的，不能維護超過的停留時間
  * will remain constant over time.
  *
  * <p>This implementation provides constant-time performance for the basic
+ * 這個實現提供了恆定的時間複雜度執行基礎的操作get，put
  * operations (<tt>get</tt> and <tt>put</tt>), assuming the hash function
  * disperses the elements properly among the buckets.  Iteration over
+ * 假設哈希函數分散元素的屬性在
  * collection views requires time proportional to the "capacity" of the
  * <tt>HashMap</tt> instance (the number of buckets) plus its size (the number
  * of key-value mappings).  Thus, it's very important not to set the initial
