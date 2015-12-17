@@ -72,51 +72,78 @@ import java.util.TreeMap;
  * 哈希表會有大約兩倍的塊的數量
  *
  * <p>As a general rule, the default load factor (.75) offers a good tradeoff
+ * 作為一個通用規則，默認的負載因子為0.75時間與空間交換最好的因子
  * between time and space costs.  Higher values decrease the space overhead
  * but increase the lookup cost (reflected in most of the operations of the
+ * 更高的值減少空間使用但增加時間成本(反映在HashMap類更多的操作，包括get，put)
  * <tt>HashMap</tt> class, including <tt>get</tt> and <tt>put</tt>).  The
  * expected number of entries in the map and its load factor should be taken
+ * 進入map所期望的大小他的負載因子應該設置當設置初始容量時
  * into account when setting its initial capacity, so as to minimize the
  * number of rehash operations.  If the initial capacity is greater
+ * 作為最小的rehash操作的數值
  * than the maximum number of entries divided by the load factor, no
+ * 如果初始容量大於最大的進入數值分配的負載因子
  * rehash operations will ever occur.
+ * 沒有rehash操作發生
  *
  * <p>If many mappings are to be stored in a <tt>HashMap</tt> instance,
+ * 如果多個map在hashMap實例中存儲
  * creating it with a sufficiently large capacity will allow the mappings to
+ * 使用足夠大的容量創建允許更多的有效的影射比起讓他執行自動rehash需要增長的表
  * be stored more efficiently than letting it perform automatic rehashing as
  * needed to grow the table.
  *
  * <p><strong>Note that this implementation is not synchronized.</strong>
+ * 注意，這個實現是未同步的
  * If multiple threads access a hash map concurrently, and at least one of
+ * 如果一個hashmap並發的多個線程存儲訪問，
  * the threads modifies the map structurally, it <i>must</i> be
+ * 並且至少一個線程改變了map的結構
  * synchronized externally.  (A structural modification is any operation
+ * 他必須通過外部同步
  * that adds or deletes one or more mappings; merely changing the value
+ * 結構改變是任何操作添加，刪除或者更多的影射，僅僅改變關聯key的值
  * associated with a key that an instance already contains is not a
+ * 一個已包含的實例不是一個結構可變的
  * structural modification.)  This is typically accomplished by
  * synchronizing on some object that naturally encapsulates the map.
+ * 這是由同步的一樣的對象自然封裝的map通常的完成的
  *
  * If no such object exists, the map should be "wrapped" using the
+ * 如果沒有這樣的對象存在，map應該用 Collections.synchronizedMap方法封裝
  * {@link Collections#synchronizedMap Collections.synchronizedMap}
  * method.  This is best done at creation time, to prevent accidental
+ * 在創建時機最好的做法
  * unsynchronized access to the map:<pre>
+ *     避免意外的未同步的訪問map
  *   Map m = Collections.synchronizedMap(new HashMap(...));</pre>
  *
  * <p>The iterators returned by all of this class's "collection view methods"
+ * 這個類的集合視圖方法返回的迭代器都是fail-fast的
  * are <i>fail-fast</i>: if the map is structurally modified at any time after
  * the iterator is created, in any way except through the iterator's own
+ * 在迭代器創建之後map的結構改變，任何方法的期望迭代器自身的remove方法
  * <tt>remove</tt> method, the iterator will throw a
+ * 迭代器都會拋出一個異常
  * {@link ConcurrentModificationException}.  Thus, in the face of concurrent
  * modification, the iterator fails quickly and cleanly, rather than risking
+ * 因此，並發的操作的表面，迭代器快速的失敗和清理，而不是冒著未知的，沒有明確行為的風險
  * arbitrary, non-deterministic behavior at an undetermined time in the
  * future.
  *
  * <p>Note that the fail-fast behavior of an iterator cannot be guaranteed
+ * 注意，迭代器的快速失敗的行為是不受維護的
  * as it is, generally speaking, impossible to make any hard guarantees in the
+ * 通常的講，在未同步的並發改變中進行維護是不可能的
  * presence of unsynchronized concurrent modification.  Fail-fast iterators
  * throw <tt>ConcurrentModificationException</tt> on a best-effort basis.
+ * 快速失敗一般會迭代器拋出一個異常
  * Therefore, it would be wrong to write a program that depended on this
+ * 而後，依賴於這個異常的不確定編寫程序是錯誤的做法
  * exception for its correctness: <i>the fail-fast behavior of iterators
  * should be used only to detect bugs.</i>
+ * 快速失敗的迭代器行為僅僅用於檢查bug
  *
  * <p>This class is a member of the
  * <a href="{@docRoot}/../technotes/guides/collections/index.html">
@@ -144,46 +171,56 @@ public class HashMap<K,V>
 
     /**
      * The default initial capacity - MUST be a power of two.
+     * 默認的初始化容量 - 必須是2的冪數
      */
-    static final int DEFAULT_INITIAL_CAPACITY = 1 << 4; // aka 16
+    static final int DEFAULT_INITIAL_CAPACITY = 1 << 4; // aka 16 左移4位，就是2的4次方=16
 
     /**
      * The maximum capacity, used if a higher value is implicitly specified
+     * 最大的容量，用於如果一個更大值隱含的由任何一個帶參的構造器指定
      * by either of the constructors with arguments.
      * MUST be a power of two <= 1<<30.
+     * 其值必須小於 1 << 30;
      */
     static final int MAXIMUM_CAPACITY = 1 << 30;
 
     /**
      * The load factor used when none specified in constructor.
+     * 當構造函數未指定時的負載因子
      */
     static final float DEFAULT_LOAD_FACTOR = 0.75f;
 
     /**
      * An empty table instance to share when the table is not inflated.
+     * 為填充表共享一個空的表實例
      */
     static final Entry<?,?>[] EMPTY_TABLE = {};
 
     /**
      * The table, resized as necessary. Length MUST Always be a power of two.
+     * 重新設置值的表，長度必須是2的冪數
      */
     transient Entry<K,V>[] table = (Entry<K,V>[]) EMPTY_TABLE;
 
     /**
      * The number of key-value mappings contained in this map.
+     * map中k-v影射包含的數量
      */
     transient int size;
 
     /**
      * The next size value at which to resize (capacity * load factor).
+     * 用於重新設置值的值，閥值
      * @serial
      */
     // If table == EMPTY_TABLE then this is the initial capacity at which the
+//            如果table == EMPTY_TABLE 那麼初始的容量在table創建時
     // table will be created when inflated.
     int threshold;
 
     /**
      * The load factor for the hash table.
+     * 哈希表的負載因子
      *
      * @serial
      */
@@ -191,27 +228,36 @@ public class HashMap<K,V>
 
     /**
      * The number of times this HashMap has been structurally modified
+     * HashMap結構化改變的次數
      * Structural modifications are those that change the number of mappings in
+     * 在hashMap中影射的改變或者
      * the HashMap or otherwise modify its internal structure (e.g.,
+     * 內部結構的改變(例如rehash)
      * rehash).  This field is used to make iterators on Collection-views of
      * the HashMap fail-fast.  (See ConcurrentModificationException).
+     * 這個域用於HahsMap快速失敗集合視圖上的迭代器
      */
     transient int modCount;
 
     /**
      * The default threshold of map capacity above which alternative hashing is
+     * 默認的超過替代散列的map容量的閥值用於字符串key
      * used for String keys. Alternative hashing reduces the incidence of
+     * 替代散列減少發生碰撞提供對於字符串key的弱的代碼計算
      * collisions due to weak hash code calculation for String keys.
      * <p/>
      * This value may be overridden by defining the system property
+     * 這個值可以重寫由系統屬性定義
      * {@code jdk.map.althashing.threshold}. A property value of {@code 1}
      * forces alternative hashing to be used at all times whereas
+     * 一個屬性值1 強迫在任何時間替代散列，而-1則確保任何時間都不會用到
      * {@code -1} value ensures that alternative hashing is never used.
      */
     static final int ALTERNATIVE_HASHING_THRESHOLD_DEFAULT = Integer.MAX_VALUE;
 
     /**
      * holds values which can't be initialized until after VM is booted.
+     * 維護的值不能初始化知道VM啟動之後
      */
     private static class Holder {
 
@@ -223,7 +269,8 @@ public class HashMap<K,V>
         static {
             String altThreshold = java.security.AccessController.doPrivileged(
                     new sun.security.action.GetPropertyAction(
-                            "jdk.map.althashing.threshold"));
+                            "jdk.map.althashing.threshold")); // 前面提到的替代默認閥值，用系統提供的
+                                                              // static final int ALTERNATIVE_HASHING_THRESHOLD_DEFAULT = Integer.MAX_VALUE;
 
             int threshold;
             try {
@@ -249,14 +296,17 @@ public class HashMap<K,V>
 
     /**
      * A randomizing value associated with this instance that is applied to
+     * 關聯這個實例的隨機的值應用于建立哈希集合深度查找的哈希code的key
      * hash code of keys to make hash collisions harder to find. If 0 then
      * alternative hashing is disabled.
+     * 如果為0，替代散列不顯示
      */
     transient int hashSeed = 0;
 
     /**
      * Constructs an empty <tt>HashMap</tt> with the specified initial
      * capacity and load factor.
+     * 使用指定的初始容量姐負載因子創建一個空的hashmap
      *
      * @param  initialCapacity the initial capacity
      * @param  loadFactor      the load factor
@@ -269,7 +319,8 @@ public class HashMap<K,V>
                                                initialCapacity);
         if (initialCapacity > MAXIMUM_CAPACITY)
             initialCapacity = MAXIMUM_CAPACITY;
-        if (loadFactor <= 0 || Float.isNaN(loadFactor))
+//                                     Not a Number
+        if (loadFactor <= 0 || Float.isNaN(loadFactor)) // 判斷負載因子是否是一個數值，不是返回true，反之返回false
             throw new IllegalArgumentException("Illegal load factor: " +
                                                loadFactor);
 
@@ -294,13 +345,16 @@ public class HashMap<K,V>
      * (16) and the default load factor (0.75).
      */
     public HashMap() {
+//            16
         this(DEFAULT_INITIAL_CAPACITY, DEFAULT_LOAD_FACTOR);
     }
 
     /**
      * Constructs a new <tt>HashMap</tt> with the same mappings as the
+     * 用與指定的Mpa相同的影射構造一個新的hashmap
      * specified <tt>Map</tt>.  The <tt>HashMap</tt> is created with
      * default load factor (0.75) and an initial capacity sufficient to
+     * 用默認的負載因子及足夠維持指定map影射的初始容量創建
      * hold the mappings in the specified <tt>Map</tt>.
      *
      * @param   m the map whose mappings are to be placed in this map
@@ -323,6 +377,7 @@ public class HashMap<K,V>
 
     /**
      * Inflates the table.
+     * 擴大表
      */
     private void inflateTable(int toSize) {
         // Find a power of 2 >= toSize
@@ -337,16 +392,22 @@ public class HashMap<K,V>
 
     /**
      * Initialization hook for subclasses. This method is called
+     * 未小類初始化鉤子
      * in all constructors and pseudo-constructors (clone, readObject)
+     * 這個方法在所有構造器以及偽構造器中調用
      * after HashMap has been initialized but before any entries have
+     * HashMap已初始化之後但任何條目插入之前
      * been inserted.  (In the absence of this method, readObject would
+     *                  在這個方法的缺席中
      * require explicit knowledge of subclasses.)
+     * readObject將明確要求小類信息
      */
     void init() {
     }
 
     /**
      * Initialize the hashing mask value. We defer initialization until we
+     * 初始化散列標記值，延緩初始化知道真正需要他
      * really need it.
      */
     final boolean initHashSeedAsNeeded(int capacity) {
@@ -364,10 +425,15 @@ public class HashMap<K,V>
 
     /**
      * Retrieve object hash code and applies a supplemental hash function to the
+     * 回復對象哈希值并應用補充哈希函數哈希結果
      * result hash, which defends against poor quality hash functions.  This is
+     * 依賴於針對弱品質的哈希函數
      * critical because HashMap uses power-of-two length hash tables, that
+     * 這是一個臨界值因為hashMap用2的冪數的長度
      * otherwise encounter collisions for hashCodes that do not differ
+     * 另外的遭遇碰撞hashcode在低比特中不同
      * in lower bits. Note: Null keys always map to hash 0, thus index 0.
+     * 注意：null鍵總是影射哈希為0，索引為0
      */
     final int hash(Object k) {
         int h = hashSeed;
@@ -378,14 +444,17 @@ public class HashMap<K,V>
         h ^= k.hashCode();
 
         // This function ensures that hashCodes that differ only by
+//        這個函數確保哈希值存在不同僅僅恆定的倍數在每個比特位有幫定的配裝數
         // constant multiples at each bit position have a bounded
         // number of collisions (approximately 8 at default load factor).
+//                                大約為8
         h ^= (h >>> 20) ^ (h >>> 12);
         return h ^ (h >>> 7) ^ (h >>> 4);
     }
 
     /**
      * Returns index for hash code h.
+     * 返回哈希值的索引
      */
     static int indexFor(int h, int length) {
         // assert Integer.bitCount(length) == 1 : "length must be a non-zero power of 2";
@@ -422,8 +491,10 @@ public class HashMap<K,V>
      * <p>A return value of {@code null} does not <i>necessarily</i>
      * indicate that the map contains no mapping for the key; it's also
      * possible that the map explicitly maps the key to {@code null}.
+     *                       明確的
      * The {@link #containsKey containsKey} operation may be used to
      * distinguish these two cases.
+     * 區分
      *
      * @see #put(Object, Object)
      */
@@ -437,9 +508,12 @@ public class HashMap<K,V>
 
     /**
      * Offloaded version of get() to look up null keys.  Null keys map
+     * 卸載
      * to index 0.  This null case is split out into separate methods
      * for the sake of performance in the two most commonly used
+     *         為了
      * operations (get and put), but incorporated with conditionals in
+     *                               合併
      * others.
      */
     private V getForNullKey() {
@@ -467,6 +541,7 @@ public class HashMap<K,V>
 
     /**
      * Returns the entry associated with the specified key in the
+     *                   關聯
      * HashMap.  Returns null if the HashMap contains no mapping
      * for the key.
      */
@@ -489,8 +564,10 @@ public class HashMap<K,V>
 
     /**
      * Associates the specified value with the specified key in this map.
+     * 在map中關聯指定的值與建
      * If the map previously contained a mapping for the key, the old
      * value is replaced.
+     * 如果map中先前包含這個key的影射，舊值會重寫
      *
      * @param key key with which the specified value is to be associated
      * @param value value to be associated with the specified key
@@ -541,8 +618,10 @@ public class HashMap<K,V>
 
     /**
      * This method is used instead of put by constructors and
+     * 這個方法用於替代又構造器及偽構造器妨害
      * pseudoconstructors (clone, readObject).  It does not resize the table,
      * check for comodification, etc.  It calls createEntry rather than
+     * 他不會重新設置表大小，檢查，例如，調用 createEntry而不是 addEntry
      * addEntry.
      */
     private void putForCreate(K key, V value) {
@@ -551,8 +630,11 @@ public class HashMap<K,V>
 
         /**
          * Look for preexisting entry for key.  This will never happen for
+         * 為key查詢先前存在的entry
          * clone or deserialize.  It will only happen for construction if the
+         * 對於克隆或者反序列化將永遠不會發生
          * input Map is a sorted map whose ordering is inconsistent w/ equals.
+         * 這將僅僅發生對於構造器，如果輸入的map是一個已排序的map排序與equals不符的時候
          */
         for (Entry<K,V> e = table[i]; e != null; e = e.next) {
             Object k;
@@ -573,12 +655,17 @@ public class HashMap<K,V>
 
     /**
      * Rehashes the contents of this map into a new array with a
+     * 用一個大容量重新散列這個map的內容進入一個新的數組
      * larger capacity.  This method is called automatically when the
      * number of keys in this map reaches its threshold.
+     * 這個方法會自動調用，當鍵的數量超過他的閥值的時候
      *
      * If current capacity is MAXIMUM_CAPACITY, this method does not
+     * 如果當前大容量是最大容量
      * resize the map, but sets threshold to Integer.MAX_VALUE.
+     * 這個方法不會重新大小map，但會設置最大閥值
      * This has the effect of preventing future calls.
+     * 預防將來調用
      *
      * @param newCapacity the new capacity, MUST be a power of two;
      *        must be greater than current capacity unless current
@@ -601,6 +688,7 @@ public class HashMap<K,V>
 
     /**
      * Transfers all entries from current table to newTable.
+     * 從當前的table到新的table轉換entries
      */
     void transfer(Entry[] newTable, boolean rehash) {
         int newCapacity = newTable.length;
@@ -637,10 +725,15 @@ public class HashMap<K,V>
 
         /*
          * Expand the map if the map if the number of mappings to be added
+         * 擴大
          * is greater than or equal to threshold.  This is conservative; the
+         *                                                 保守
          * obvious condition is (m.size() + size) >= threshold, but this
+         * 明顯
          * condition could result in a map with twice the appropriate capacity,
+         *                                                適當
          * if the keys to be added overlap with the keys already in this map.
+         *                         交疊
          * By using the conservative calculation, we subject ourself
          * to at most one extra resize.
          */
@@ -748,7 +841,7 @@ public class HashMap<K,V>
      */
     public void clear() {
         modCount++;
-        Arrays.fill( table, null);
+        java.util.Arrays.fill( table, null);
         size = 0;
     }
 
@@ -870,6 +963,7 @@ public class HashMap<K,V>
         /**
          * This method is invoked whenever the value in an entry is
          * overwritten by an invocation of put(k,v) for a key k that's already
+         * 方法會調用，每當一個entry中的值重寫有put(k,v)調用，key存在在hashmap中的時候
          * in the HashMap.
          */
         void recordAccess(HashMap<K,V> m) {
@@ -885,8 +979,10 @@ public class HashMap<K,V>
 
     /**
      * Adds a new entry with the specified key, value and hash code to
+     * 添加一個新的實體由指定的key，value以及哈希值到指定的塊中
      * the specified bucket.  It is the responsibility of this
      * method to resize the table if appropriate.
+     * 這個方法響應的重新resize適當的表
      *
      * Subclass overrides this to alter the behavior of put method.
      */
@@ -902,8 +998,10 @@ public class HashMap<K,V>
 
     /**
      * Like addEntry except that this version is used when creating entries
+     * 如同addEntry期望的這個版本用於當創建entries作為map構造器或偽構造器一部分時
      * as part of Map construction or "pseudo-construction" (cloning,
      * deserialization).  This version needn't worry about resizing the table.
+     * 這個版本不需要擔心重新resize表
      *
      * Subclass overrides this to alter the behavior of HashMap(Map),
      * clone, and readObject.
