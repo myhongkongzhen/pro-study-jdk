@@ -44,21 +44,32 @@ import java.util.TreeMap;
  * disperses the elements properly among the buckets.  Iteration over
  * 假設哈希函數分散元素的屬性在
  * collection views requires time proportional to the "capacity" of the
+ * 迭代集合視圖需要與集合實例的容量時間成比例的
  * <tt>HashMap</tt> instance (the number of buckets) plus its size (the number
  * of key-value mappings).  Thus, it's very important not to set the initial
  * capacity too high (or the load factor too low) if iteration performance is
+ * 因此，不設置初始容量太大(或者負載因子太低)是非常重要的
  * important.
+ * 如果迭代性能很重要的話
  *
  * <p>An instance of <tt>HashMap</tt> has two parameters that affect its
+ * HashMap的實例有兩個參數對於他的性能作用
  * performance: <i>initial capacity</i> and <i>load factor</i>.  The
+ * 初始容量與負載因子
  * <i>capacity</i> is the number of buckets in the hash table, and the initial
+ * 容量是哈希表塊的數量，初始容量在哈希表創建時的簡單容量。
  * capacity is simply the capacity at the time the hash table is created.  The
  * <i>load factor</i> is a measure of how full the hash table is allowed to
+ * 負載因子是用來測試哈希表允許獲得多大空間的測量標準，在容量自動增長之前
  * get before its capacity is automatically increased.  When the number of
  * entries in the hash table exceeds the product of the load factor and the
+ * 在進入哈希表的數量超過負載因子與當前容量的積，
  * current capacity, the hash table is <i>rehashed</i> (that is, internal data
+ * 哈希表會進行rehashed
  * structures are rebuilt) so that the hash table has approximately twice the
+ * 內部數據會重建
  * number of buckets.
+ * 哈希表會有大約兩倍的塊的數量
  *
  * <p>As a general rule, the default load factor (.75) offers a good tradeoff
  * between time and space costs.  Higher values decrease the space overhead
