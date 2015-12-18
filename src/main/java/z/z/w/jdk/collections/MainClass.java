@@ -33,8 +33,7 @@ public class MainClass //
 //        java.util.TreeSet
 //        java.util.EnumSet
 
-        java.util.LinkedHashMap
-//        java.util.TreeMap
+        java.util.TreeMap
 //        implements //
 //		java.util.NavigableSet, java.util.concurrent.TransferQueue, java.util.List, BlockingDeque, java.util.concurrent.ConcurrentNavigableMap
 //        java.util.NavigableMap
