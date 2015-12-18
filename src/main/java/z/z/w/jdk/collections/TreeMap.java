@@ -23,32 +23,50 @@ import java.util.*;
 
 /**
  * A Red-Black tree based {@link java.util.NavigableMap} implementation.
+ * 一個基於NavigableMap的紅黑樹實現
  * The map is sorted according to the {@linkplain Comparable natural
+ * 這個map按照Comparable的鍵值的自然排序順序
  * ordering} of its keys, or by a {@link Comparator} provided at map
+ * 或者Comparator提供的map創建時依賴於用到的構造器
  * creation time, depending on which constructor is used.
  *
  * <p>This implementation provides guaranteed log(n) time cost for the
+ * 實現提供了保證log(n)的時間複雜度對於containsKey，get，put，revmoe操作
  * {@code containsKey}, {@code get}, {@code put} and {@code remove}
  * operations.  Algorithms are adaptations of those in Cormen, Leiserson, and
+ * 算法改編自Cormen，Leiserson，Rivest的算法介紹
  * Rivest's <em>Introduction to Algorithms</em>.
  *
  * <p>Note that the ordering maintained by a tree map, like any sorted map, and
+ * 注意順序由一個treemap維護，與任何排序map一樣
  * whether or not an explicit comparator is provided, must be <em>consistent
+ * 不論明確的比較器是否提供，都必須維持相等
  * with {@code equals}</em> if this sorted map is to correctly implement the
+ * 如果這個已排序的map是Map接口正確的實現
  * {@code Map} interface.  (See {@code Comparable} or {@code Comparator} for a
  * precise definition of <em>consistent with equals</em>.)  This is so because
+ * 精確的    定義
  * the {@code Map} interface is defined in terms of the {@code equals}
+ * 這是因為map接口定義于equals操作條目
  * operation, but a sorted map performs all key comparisons using its {@code
+ * 但是一個已排序的map執行所有key的比較，用compareTo或者compare方法
  * compareTo} (or {@code compare}) method, so two keys that are deemed equal by
  * this method are, from the standpoint of the sorted map, equal.  The behavior
+ * 兩個key由equlas方法確定相等從已排序map的觀點上
  * of a sorted map <em>is</em> well-defined even if its ordering is
+ * 已排序的map的行為是最好定義的如果他的順序不符合equlas
  * inconsistent with {@code equals}; it just fails to obey the general contract
+ * 他會失敗的服從通用map接口約定
  * of the {@code Map} interface.
  *
  * <p><strong>Note that this implementation is not synchronized.</strong>
+ * 注意這個實現是未同步的
  * If multiple threads access a map concurrently, and at least one of the
+ * 在多線程中並發的存取一個map
  * threads modifies the map structurally, it <em>must</em> be synchronized
+ * 並且至少一個線程修改了map的結構
  * externally.  (A structural modification is any operation that adds or
+ * 必須外部提供同步
  * deletes one or more mappings; merely changing the value associated
  * with an existing key is not a structural modification.)  This is
  * typically accomplished by synchronizing on some object that naturally
@@ -78,9 +96,11 @@ import java.util.*;
  *
  * <p>All {@code Map.Entry} pairs returned by methods in this class
  * and its views represent snapshots of mappings at the time they were
+ *               代表
  * produced. They do <strong>not</strong> support the {@code Entry.setValue}
  * method. (Note however that it is possible to change mappings in the
  * associated map using {@code put}.)
+ * 關聯
  *
  * <p>This class is a member of the
  * <a href="{@docRoot}/../technotes/guides/collections/index.html">
@@ -100,12 +120,14 @@ import java.util.*;
  */
 
 public class TreeMap<K,V>
-        extends java.util.AbstractMap<K,V>
-        implements java.util.NavigableMap<K,V>, Cloneable, java.io.Serializable
+        extends AbstractMap<K,V>
+        implements NavigableMap<K,V>, Cloneable, java.io.Serializable
 {
     /**
      * The comparator used to maintain order in this tree map, or
+     * 維護treemap排序的比較器
      * null if it uses the natural ordering of its keys.
+     * 如果使用鍵值的自然排序則為null
      *
      * @serial
      */
@@ -127,10 +149,13 @@ public class TreeMap<K,V>
      * Constructs a new, empty tree map, using the natural ordering of its
      * keys.  All keys inserted into the map must implement the {@link
      * Comparable} interface.  Furthermore, all such keys must be
+     * 所有插入map的key必須實現Comparable接口
      * <em>mutually comparable</em>: {@code k1.compareTo(k2)} must not throw
+     * 此外，所有這樣的key必須相互比較，對於任意k1和k2不拋出異常
      * a {@code ClassCastException} for any keys {@code k1} and
      * {@code k2} in the map.  If the user attempts to put a key into the
      * map that violates this constraint (for example, the user attempts to
+     * 如果用戶視圖添加key到集合中，違反這個約定
      * put a string key into a map whose keys are integers), the
      * {@code put(Object key, Object value)} call will throw a
      * {@code ClassCastException}.
@@ -171,7 +196,7 @@ public class TreeMap<K,V>
      *         or are not mutually comparable
      * @throws NullPointerException if the specified map is null
      */
-    public TreeMap( java.util.Map<? extends K, ? extends V> m) {
+    public TreeMap( Map<? extends K, ? extends V> m) {
         comparator = null;
         putAll(m);
     }
@@ -185,7 +210,7 @@ public class TreeMap<K,V>
      *         and whose comparator is to be used to sort this map
      * @throws NullPointerException if the specified map is null
      */
-    public TreeMap( java.util.SortedMap<K, ? extends V> m) {
+    public TreeMap( SortedMap<K, ? extends V> m) {
         comparator = m.comparator();
         try {
             buildFromSorted(m.size(), m.entrySet().iterator(), null, null);
@@ -290,7 +315,9 @@ public class TreeMap<K,V>
 
     /**
      * Copies all of the mappings from the specified map to this map.
+     * 拷貝所有的影射從指定的map到這個map
      * These mappings replace any mappings that this map had for any
+     * 這些影射替換任何的這個map中已存在的當前的key的影射
      * of the keys currently in the specified map.
      *
      * @param  map mappings to be stored in this map
@@ -300,10 +327,10 @@ public class TreeMap<K,V>
      *         the specified map contains a null key and this map does not
      *         permit null keys
      */
-    public void putAll( java.util.Map<? extends K, ? extends V> map) {
+    public void putAll( Map<? extends K, ? extends V> map) {
         int mapSize = map.size();
-        if (size==0 && mapSize!=0 && map instanceof java.util.SortedMap ) {
-            Comparator c = (( java.util.SortedMap )map).comparator();
+        if (size==0 && mapSize!=0 && map instanceof SortedMap ) {
+            Comparator c = (( SortedMap )map).comparator();
             if (c == comparator || (c != null && c.equals(comparator))) {
                 ++modCount;
                 try {
@@ -376,6 +403,7 @@ public class TreeMap<K,V>
 
     /**
      * Gets the entry corresponding to the specified key; if no such entry
+     *                 相應的
      * exists, returns the entry for the least key greater than the specified
      * key; if no such entry exists (i.e., the greatest key in the Tree is less
      * than the specified key), returns {@code null}.
@@ -505,6 +533,7 @@ public class TreeMap<K,V>
 
     /**
      * Associates the specified value with the specified key in this map.
+     * 關聯
      * If the map previously contained a mapping for the key, the old
      * value is replaced.
      *
@@ -644,23 +673,23 @@ public class TreeMap<K,V>
     /**
      * @since 1.6
      */
-    public java.util.Map.Entry<K,V> firstEntry() {
+    public Map.Entry<K,V> firstEntry() {
         return exportEntry(getFirstEntry());
     }
 
     /**
      * @since 1.6
      */
-    public java.util.Map.Entry<K,V> lastEntry() {
+    public Map.Entry<K,V> lastEntry() {
         return exportEntry(getLastEntry());
     }
 
     /**
      * @since 1.6
      */
-    public java.util.Map.Entry<K,V> pollFirstEntry() {
+    public Map.Entry<K,V> pollFirstEntry() {
         Entry<K,V>               p      = getFirstEntry();
-        java.util.Map.Entry<K,V> result = exportEntry( p);
+        Map.Entry<K,V> result = exportEntry( p);
         if (p != null)
             deleteEntry(p);
         return result;
@@ -669,9 +698,9 @@ public class TreeMap<K,V>
     /**
      * @since 1.6
      */
-    public java.util.Map.Entry<K,V> pollLastEntry() {
+    public Map.Entry<K,V> pollLastEntry() {
         Entry<K,V>               p      = getLastEntry();
-        java.util.Map.Entry<K,V> result = exportEntry( p);
+        Map.Entry<K,V> result = exportEntry( p);
         if (p != null)
             deleteEntry(p);
         return result;
@@ -684,7 +713,7 @@ public class TreeMap<K,V>
      *         does not permit null keys
      * @since 1.6
      */
-    public java.util.Map.Entry<K,V> lowerEntry( K key) {
+    public Map.Entry<K,V> lowerEntry( K key) {
         return exportEntry(getLowerEntry(key));
     }
 
@@ -706,7 +735,7 @@ public class TreeMap<K,V>
      *         does not permit null keys
      * @since 1.6
      */
-    public java.util.Map.Entry<K,V> floorEntry( K key) {
+    public Map.Entry<K,V> floorEntry( K key) {
         return exportEntry(getFloorEntry(key));
     }
 
@@ -728,7 +757,7 @@ public class TreeMap<K,V>
      *         does not permit null keys
      * @since 1.6
      */
-    public java.util.Map.Entry<K,V> ceilingEntry( K key) {
+    public Map.Entry<K,V> ceilingEntry( K key) {
         return exportEntry(getCeilingEntry(key));
     }
 
@@ -750,7 +779,7 @@ public class TreeMap<K,V>
      *         does not permit null keys
      * @since 1.6
      */
-    public java.util.Map.Entry<K,V> higherEntry( K key) {
+    public Map.Entry<K,V> higherEntry( K key) {
         return exportEntry(getHigherEntry(key));
     }
 
@@ -774,10 +803,10 @@ public class TreeMap<K,V>
      */
     private transient EntrySet                    entrySet        = null;
     private transient KeySet<K>                   navigableKeySet = null;
-    private transient java.util.NavigableMap<K,V> descendingMap   = null;
+    private transient NavigableMap<K,V> descendingMap   = null;
 
     /**
-     * Returns a {@link java.util.Set} view of the keys contained in this map.
+     * Returns a {@link Set} view of the keys contained in this map.
      * The set's iterator returns the keys in ascending order.
      * The set is backed by the map, so changes to the map are
      * reflected in the set, and vice-versa.  If the map is modified
@@ -790,14 +819,14 @@ public class TreeMap<K,V>
      * operations.  It does not support the {@code add} or {@code addAll}
      * operations.
      */
-    public java.util.Set<K> keySet() {
+    public Set<K> keySet() {
         return navigableKeySet();
     }
 
     /**
      * @since 1.6
      */
-    public java.util.NavigableSet<K> navigableKeySet() {
+    public NavigableSet<K> navigableKeySet() {
         KeySet<K> nks = navigableKeySet;
         return (nks != null) ? nks : (navigableKeySet = new KeySet(this));
     }
@@ -805,12 +834,12 @@ public class TreeMap<K,V>
     /**
      * @since 1.6
      */
-    public java.util.NavigableSet<K> descendingKeySet() {
+    public NavigableSet<K> descendingKeySet() {
         return descendingMap().navigableKeySet();
     }
 
     /**
-     * Returns a {@link java.util.Collection} view of the values contained in this map.
+     * Returns a {@link Collection} view of the values contained in this map.
      * The collection's iterator returns the values in ascending order
      * of the corresponding keys.
      * The collection is backed by the map, so changes to the map are
@@ -824,13 +853,13 @@ public class TreeMap<K,V>
      * {@code retainAll} and {@code clear} operations.  It does not
      * support the {@code add} or {@code addAll} operations.
      */
-    public java.util.Collection<V> values() {
+    public Collection<V> values() {
         Collection<V> vs = values;
         return (vs != null) ? vs : (values = new Values());
     }
 
     /**
-     * Returns a {@link java.util.Set} view of the mappings contained in this map.
+     * Returns a {@link Set} view of the mappings contained in this map.
      * The set's iterator returns the entries in ascending key order.
      * The set is backed by the map, so changes to the map are
      * reflected in the set, and vice-versa.  If the map is modified
@@ -844,7 +873,7 @@ public class TreeMap<K,V>
      * {@code clear} operations.  It does not support the
      * {@code add} or {@code addAll} operations.
      */
-    public java.util.Set<java.util.Map.Entry<K,V>> entrySet() {
+    public Set<Map.Entry<K,V>> entrySet() {
         EntrySet es = entrySet;
         return (es != null) ? es : (entrySet = new EntrySet());
     }
@@ -852,8 +881,8 @@ public class TreeMap<K,V>
     /**
      * @since 1.6
      */
-    public java.util.NavigableMap<K, V> descendingMap() {
-        java.util.NavigableMap<K, V> km = descendingMap;
+    public NavigableMap<K, V> descendingMap() {
+        NavigableMap<K, V> km = descendingMap;
         return (km != null) ? km :
                (descendingMap = new DescendingSubMap(this,
                                                      true, null, true,
@@ -868,7 +897,7 @@ public class TreeMap<K,V>
      * @throws IllegalArgumentException {@inheritDoc}
      * @since 1.6
      */
-    public java.util.NavigableMap<K,V> subMap( K fromKey, boolean fromInclusive,
+    public NavigableMap<K,V> subMap( K fromKey, boolean fromInclusive,
                                                K toKey, boolean toInclusive) {
         return new AscendingSubMap(this,
                                    false, fromKey, fromInclusive,
@@ -883,7 +912,7 @@ public class TreeMap<K,V>
      * @throws IllegalArgumentException {@inheritDoc}
      * @since 1.6
      */
-    public java.util.NavigableMap<K,V> headMap( K toKey, boolean inclusive) {
+    public NavigableMap<K,V> headMap( K toKey, boolean inclusive) {
         return new AscendingSubMap(this,
                                    true,  null,  true,
                                    false, toKey, inclusive);
@@ -897,7 +926,7 @@ public class TreeMap<K,V>
      * @throws IllegalArgumentException {@inheritDoc}
      * @since 1.6
      */
-    public java.util.NavigableMap<K,V> tailMap( K fromKey, boolean inclusive) {
+    public NavigableMap<K,V> tailMap( K fromKey, boolean inclusive) {
         return new AscendingSubMap(this,
                                    false, fromKey, inclusive,
                                    true,  null,    true);
@@ -910,7 +939,7 @@ public class TreeMap<K,V>
      *         does not permit null keys
      * @throws IllegalArgumentException {@inheritDoc}
      */
-    public java.util.SortedMap<K,V> subMap( K fromKey, K toKey) {
+    public SortedMap<K,V> subMap( K fromKey, K toKey) {
         return subMap(fromKey, true, toKey, false);
     }
 
@@ -921,7 +950,7 @@ public class TreeMap<K,V>
      *         does not permit null keys
      * @throws IllegalArgumentException {@inheritDoc}
      */
-    public java.util.SortedMap<K,V> headMap( K toKey) {
+    public SortedMap<K,V> headMap( K toKey) {
         return headMap(toKey, false);
     }
 
@@ -932,7 +961,7 @@ public class TreeMap<K,V>
      *         does not permit null keys
      * @throws IllegalArgumentException {@inheritDoc}
      */
-    public java.util.SortedMap<K,V> tailMap( K fromKey) {
+    public SortedMap<K,V> tailMap( K fromKey) {
         return tailMap(fromKey, true);
     }
 
@@ -940,7 +969,7 @@ public class TreeMap<K,V>
 
     class Values extends AbstractCollection<V>
     {
-        public java.util.Iterator<V> iterator() {
+        public Iterator<V> iterator() {
             return new ValueIterator(getFirstEntry());
         }
 
@@ -967,25 +996,25 @@ public class TreeMap<K,V>
         }
     }
 
-    class EntrySet extends java.util.AbstractSet<java.util.Map.Entry<K,V>>
+    class EntrySet extends AbstractSet<Map.Entry<K,V>>
     {
-        public java.util.Iterator<java.util.Map.Entry<K,V>> iterator() {
+        public Iterator<Map.Entry<K,V>> iterator() {
             return new EntryIterator(getFirstEntry());
         }
 
         public boolean contains(Object o) {
-            if (!(o instanceof java.util.Map.Entry))
+            if (!(o instanceof Map.Entry))
                 return false;
-            java.util.Map.Entry<K,V> entry = ( java.util.Map.Entry<K,V>) o;
+            Map.Entry<K,V> entry = ( Map.Entry<K,V>) o;
             V                        value = entry.getValue();
             Entry<K,V>               p     = getEntry(entry.getKey());
             return p != null && valEquals(p.getValue(), value);
         }
 
         public boolean remove(Object o) {
-            if (!(o instanceof java.util.Map.Entry))
+            if (!(o instanceof Map.Entry))
                 return false;
-            java.util.Map.Entry<K,V> entry = ( java.util.Map.Entry<K,V>) o;
+            Map.Entry<K,V> entry = ( Map.Entry<K,V>) o;
             V                        value = entry.getValue();
             Entry<K,V>               p     = getEntry(entry.getKey());
             if (p != null && valEquals(p.getValue(), value)) {
@@ -1007,36 +1036,38 @@ public class TreeMap<K,V>
     /*
      * Unlike Values and EntrySet, the KeySet class is static,
      * delegating to a NavigableMap to allow use by SubMaps, which
+     * 委託
      * outweighs the ugliness of needing type-tests for the following
+     * 勝過          醜陋
      * Iterator methods that are defined appropriately in main versus
      * submap classes.
      */
 
-    java.util.Iterator<K> keyIterator() {
+    Iterator<K> keyIterator() {
         return new KeyIterator(getFirstEntry());
     }
 
-    java.util.Iterator<K> descendingKeyIterator() {
+    Iterator<K> descendingKeyIterator() {
         return new DescendingKeyIterator(getLastEntry());
     }
 
-    static final class KeySet<E> extends java.util.AbstractSet<E> implements java.util.NavigableSet<E>
+    static final class KeySet<E> extends AbstractSet<E> implements NavigableSet<E>
     {
-        private final java.util.NavigableMap<E, Object> m;
-        KeySet( java.util.NavigableMap<E,Object> map) { m = map; }
+        private final NavigableMap<E, Object> m;
+        KeySet( NavigableMap<E,Object> map) { m = map; }
 
-        public java.util.Iterator<E> iterator() {
+        public Iterator<E> iterator() {
             if (m instanceof TreeMap)
                 return ((TreeMap<E,Object>)m).keyIterator();
             else
-                return ( java.util.Iterator<E> )(((TreeMap.NavigableSubMap)m).keyIterator());
+                return ( Iterator<E> )(((TreeMap.NavigableSubMap)m).keyIterator());
         }
 
-        public java.util.Iterator<E> descendingIterator() {
+        public Iterator<E> descendingIterator() {
             if (m instanceof TreeMap)
                 return ((TreeMap<E,Object>)m).descendingKeyIterator();
             else
-                return ( java.util.Iterator<E> )(((TreeMap.NavigableSubMap)m).descendingKeyIterator());
+                return ( Iterator<E> )(((TreeMap.NavigableSubMap)m).descendingKeyIterator());
         }
 
         public int size() { return m.size(); }
@@ -1051,11 +1082,11 @@ public class TreeMap<K,V>
         public E last() { return m.lastKey(); }
         public Comparator<? super E> comparator() { return m.comparator(); }
         public E pollFirst() {
-            java.util.Map.Entry<E,Object> e = m.pollFirstEntry();
+            Map.Entry<E,Object> e = m.pollFirstEntry();
             return (e == null) ? null : e.getKey();
         }
         public E pollLast() {
-            java.util.Map.Entry<E,Object> e = m.pollLastEntry();
+            Map.Entry<E,Object> e = m.pollLastEntry();
             return (e == null) ? null : e.getKey();
         }
         public boolean remove(Object o) {
@@ -1063,27 +1094,27 @@ public class TreeMap<K,V>
             m.remove(o);
             return size() != oldSize;
         }
-        public java.util.NavigableSet<E> subSet( E fromElement, boolean fromInclusive,
+        public NavigableSet<E> subSet( E fromElement, boolean fromInclusive,
                                                  E toElement, boolean toInclusive) {
             return new KeySet<>(m.subMap(fromElement, fromInclusive,
                                          toElement,   toInclusive));
         }
-        public java.util.NavigableSet<E> headSet( E toElement, boolean inclusive) {
+        public NavigableSet<E> headSet( E toElement, boolean inclusive) {
             return new KeySet<>(m.headMap(toElement, inclusive));
         }
-        public java.util.NavigableSet<E> tailSet( E fromElement, boolean inclusive) {
+        public NavigableSet<E> tailSet( E fromElement, boolean inclusive) {
             return new KeySet<>(m.tailMap(fromElement, inclusive));
         }
-        public java.util.SortedSet<E> subSet( E fromElement, E toElement) {
+        public SortedSet<E> subSet( E fromElement, E toElement) {
             return subSet(fromElement, true, toElement, false);
         }
-        public java.util.SortedSet<E> headSet( E toElement) {
+        public SortedSet<E> headSet( E toElement) {
             return headSet(toElement, false);
         }
-        public java.util.SortedSet<E> tailSet( E fromElement) {
+        public SortedSet<E> tailSet( E fromElement) {
             return tailSet(fromElement, true);
         }
-        public java.util.NavigableSet<E> descendingSet() {
+        public NavigableSet<E> descendingSet() {
             return new KeySet(m.descendingMap());
         }
     }
@@ -1091,7 +1122,7 @@ public class TreeMap<K,V>
     /**
      * Base class for TreeMap Iterators
      */
-    abstract class PrivateEntryIterator<T> implements java.util.Iterator<T>
+    abstract class PrivateEntryIterator<T> implements Iterator<T>
     {
         Entry<K,V> next;
         Entry<K,V> lastReturned;
@@ -1143,11 +1174,11 @@ public class TreeMap<K,V>
         }
     }
 
-    final class EntryIterator extends PrivateEntryIterator< java.util.Map.Entry<K,V>> {
+    final class EntryIterator extends PrivateEntryIterator< Map.Entry<K,V>> {
         EntryIterator(Entry<K,V> first) {
             super(first);
         }
-        public java.util.Map.Entry<K,V> next() {
+        public Map.Entry<K,V> next() {
             return nextEntry();
         }
     }
@@ -1183,6 +1214,7 @@ public class TreeMap<K,V>
 
     /**
      * Compares two keys using the correct comparison method for this TreeMap.
+     * 比較key
      */
     final int compare(Object k1, Object k2) {
         return comparator==null ? ((Comparable<? super K>)k1).compareTo((K)k2)
@@ -1200,9 +1232,9 @@ public class TreeMap<K,V>
     /**
      * Return SimpleImmutableEntry for entry, or null if null
      */
-    static <K,V> java.util.Map.Entry<K,V> exportEntry( TreeMap.Entry<K,V> e) {
+    static <K,V> Map.Entry<K,V> exportEntry( TreeMap.Entry<K,V> e) {
         return (e == null) ? null :
-               new java.util.AbstractMap.SimpleImmutableEntry<>( e);
+               new AbstractMap.SimpleImmutableEntry<>( e);
     }
 
     /**
@@ -1227,6 +1259,7 @@ public class TreeMap<K,V>
 
     /**
      * Dummy value serving as unmatchable fence key for unbounded
+     * 假設
      * SubMapIterators
      */
     private static final Object UNBOUNDED = new Object();
@@ -1234,8 +1267,8 @@ public class TreeMap<K,V>
     /**
      * @serial include
      */
-    abstract static class NavigableSubMap<K,V> extends java.util.AbstractMap<K,V>
-            implements java.util.NavigableMap<K,V>, java.io.Serializable {
+    abstract static class NavigableSubMap<K,V> extends AbstractMap<K,V>
+            implements NavigableMap<K,V>, java.io.Serializable {
         /**
          * The backing map.
          */
@@ -1383,10 +1416,10 @@ public class TreeMap<K,V>
         abstract TreeMap.Entry<K,V> subLower(K key);
 
         /** Returns ascending iterator from the perspective of this submap */
-        abstract java.util.Iterator<K> keyIterator();
+        abstract Iterator<K> keyIterator();
 
         /** Returns descending iterator from the perspective of this submap */
-        abstract java.util.Iterator<K> descendingKeyIterator();
+        abstract Iterator<K> descendingKeyIterator();
 
         // public methods
 
@@ -1416,7 +1449,7 @@ public class TreeMap<K,V>
             return !inRange(key) ? null : m.remove(key);
         }
 
-        public final java.util.Map.Entry<K,V> ceilingEntry( K key) {
+        public final Map.Entry<K,V> ceilingEntry( K key) {
             return exportEntry(subCeiling(key));
         }
 
@@ -1424,7 +1457,7 @@ public class TreeMap<K,V>
             return keyOrNull(subCeiling(key));
         }
 
-        public final java.util.Map.Entry<K,V> higherEntry( K key) {
+        public final Map.Entry<K,V> higherEntry( K key) {
             return exportEntry(subHigher(key));
         }
 
@@ -1432,7 +1465,7 @@ public class TreeMap<K,V>
             return keyOrNull(subHigher(key));
         }
 
-        public final java.util.Map.Entry<K,V> floorEntry( K key) {
+        public final Map.Entry<K,V> floorEntry( K key) {
             return exportEntry(subFloor(key));
         }
 
@@ -1440,7 +1473,7 @@ public class TreeMap<K,V>
             return keyOrNull(subFloor(key));
         }
 
-        public final java.util.Map.Entry<K,V> lowerEntry( K key) {
+        public final Map.Entry<K,V> lowerEntry( K key) {
             return exportEntry(subLower(key));
         }
 
@@ -1456,42 +1489,42 @@ public class TreeMap<K,V>
             return key(subHighest());
         }
 
-        public final java.util.Map.Entry<K,V> firstEntry() {
+        public final Map.Entry<K,V> firstEntry() {
             return exportEntry(subLowest());
         }
 
-        public final java.util.Map.Entry<K,V> lastEntry() {
+        public final Map.Entry<K,V> lastEntry() {
             return exportEntry(subHighest());
         }
 
-        public final java.util.Map.Entry<K,V> pollFirstEntry() {
+        public final Map.Entry<K,V> pollFirstEntry() {
             TreeMap.Entry<K,V>       e      = subLowest();
-            java.util.Map.Entry<K,V> result = exportEntry( e);
+            Map.Entry<K,V> result = exportEntry( e);
             if (e != null)
                 m.deleteEntry(e);
             return result;
         }
 
-        public final java.util.Map.Entry<K,V> pollLastEntry() {
+        public final Map.Entry<K,V> pollLastEntry() {
             TreeMap.Entry<K,V>       e      = subHighest();
-            java.util.Map.Entry<K,V> result = exportEntry( e);
+            Map.Entry<K,V> result = exportEntry( e);
             if (e != null)
                 m.deleteEntry(e);
             return result;
         }
 
         // Views
-        transient java.util.NavigableMap<K,V> descendingMapView   = null;
+        transient NavigableMap<K,V> descendingMapView   = null;
         transient EntrySetView                entrySetView        = null;
         transient KeySet<K>                   navigableKeySetView = null;
 
-        public final java.util.NavigableSet<K> navigableKeySet() {
+        public final NavigableSet<K> navigableKeySet() {
             KeySet<K> nksv = navigableKeySetView;
             return (nksv != null) ? nksv :
                    (navigableKeySetView = new TreeMap.KeySet(this));
         }
 
-        public final java.util.Set<K> keySet() {
+        public final Set<K> keySet() {
             return navigableKeySet();
         }
 
@@ -1499,15 +1532,15 @@ public class TreeMap<K,V>
             return descendingMap().navigableKeySet();
         }
 
-        public final java.util.SortedMap<K,V> subMap( K fromKey, K toKey) {
+        public final SortedMap<K,V> subMap( K fromKey, K toKey) {
             return subMap(fromKey, true, toKey, false);
         }
 
-        public final java.util.SortedMap<K,V> headMap( K toKey) {
+        public final SortedMap<K,V> headMap( K toKey) {
             return headMap(toKey, false);
         }
 
-        public final java.util.SortedMap<K,V> tailMap( K fromKey) {
+        public final SortedMap<K,V> tailMap( K fromKey) {
             return tailMap(fromKey, true);
         }
 
@@ -1523,7 +1556,7 @@ public class TreeMap<K,V>
                 if (size == -1 || sizeModCount != m.modCount) {
                     sizeModCount = m.modCount;
                     size = 0;
-                    java.util.Iterator i = iterator();
+                    Iterator i = iterator();
                     while (i.hasNext()) {
                         size++;
                         i.next();
@@ -1538,9 +1571,9 @@ public class TreeMap<K,V>
             }
 
             public boolean contains(Object o) {
-                if (!(o instanceof java.util.Map.Entry))
+                if (!(o instanceof Map.Entry))
                     return false;
-                java.util.Map.Entry<K,V> entry = ( java.util.Map.Entry<K,V>) o;
+                Map.Entry<K,V> entry = ( Map.Entry<K,V>) o;
                 K                        key   = entry.getKey();
                 if (!inRange(key))
                     return false;
@@ -1550,9 +1583,9 @@ public class TreeMap<K,V>
             }
 
             public boolean remove(Object o) {
-                if (!(o instanceof java.util.Map.Entry))
+                if (!(o instanceof Map.Entry))
                     return false;
-                java.util.Map.Entry<K,V> entry = ( java.util.Map.Entry<K,V>) o;
+                Map.Entry<K,V> entry = ( Map.Entry<K,V>) o;
                 K                        key   = entry.getKey();
                 if (!inRange(key))
                     return false;
@@ -1569,7 +1602,7 @@ public class TreeMap<K,V>
         /**
          * Iterators for SubMaps
          */
-        abstract class SubMapIterator<T> implements java.util.Iterator<T>
+        abstract class SubMapIterator<T> implements Iterator<T>
         {
             TreeMap.Entry<K,V> lastReturned;
             TreeMap.Entry<K,V> next;
@@ -1635,12 +1668,12 @@ public class TreeMap<K,V>
 
         }
 
-        final class SubMapEntryIterator extends SubMapIterator< java.util.Map.Entry<K,V>> {
+        final class SubMapEntryIterator extends SubMapIterator< Map.Entry<K,V>> {
             SubMapEntryIterator(TreeMap.Entry<K,V> first,
                                 TreeMap.Entry<K,V> fence) {
                 super(first, fence);
             }
-            public java.util.Map.Entry<K,V> next() {
+            public Map.Entry<K,V> next() {
                 return nextEntry();
             }
             public void remove() {
@@ -1661,13 +1694,13 @@ public class TreeMap<K,V>
             }
         }
 
-        final class DescendingSubMapEntryIterator extends SubMapIterator< java.util.Map.Entry<K,V>> {
+        final class DescendingSubMapEntryIterator extends SubMapIterator< Map.Entry<K,V>> {
             DescendingSubMapEntryIterator(TreeMap.Entry<K,V> last,
                                           TreeMap.Entry<K,V> fence) {
                 super(last, fence);
             }
 
-            public java.util.Map.Entry<K,V> next() {
+            public Map.Entry<K,V> next() {
                 return prevEntry();
             }
             public void remove() {
@@ -1705,7 +1738,7 @@ public class TreeMap<K,V>
             return m.comparator();
         }
 
-        public java.util.NavigableMap<K,V> subMap( K fromKey, boolean fromInclusive,
+        public NavigableMap<K,V> subMap( K fromKey, boolean fromInclusive,
                                                    K toKey, boolean toInclusive) {
             if (!inRange(fromKey, fromInclusive))
                 throw new IllegalArgumentException("fromKey out of range");
@@ -1716,7 +1749,7 @@ public class TreeMap<K,V>
                                        false, toKey,   toInclusive);
         }
 
-        public java.util.NavigableMap<K,V> headMap( K toKey, boolean inclusive) {
+        public NavigableMap<K,V> headMap( K toKey, boolean inclusive) {
             if (!inRange(toKey, inclusive))
                 throw new IllegalArgumentException("toKey out of range");
             return new AscendingSubMap(m,
@@ -1724,7 +1757,7 @@ public class TreeMap<K,V>
                                        false,     toKey, inclusive);
         }
 
-        public java.util.NavigableMap<K,V> tailMap( K fromKey, boolean inclusive) {
+        public NavigableMap<K,V> tailMap( K fromKey, boolean inclusive) {
             if (!inRange(fromKey, inclusive))
                 throw new IllegalArgumentException("fromKey out of range");
             return new AscendingSubMap(m,
@@ -1732,8 +1765,8 @@ public class TreeMap<K,V>
                                        toEnd, hi,      hiInclusive);
         }
 
-        public java.util.NavigableMap<K,V> descendingMap() {
-            java.util.NavigableMap<K,V> mv = descendingMapView;
+        public NavigableMap<K,V> descendingMap() {
+            NavigableMap<K,V> mv = descendingMapView;
             return (mv != null) ? mv :
                    (descendingMapView =
                            new DescendingSubMap(m,
@@ -1741,23 +1774,23 @@ public class TreeMap<K,V>
                                                 toEnd,     hi, hiInclusive));
         }
 
-        java.util.Iterator<K> keyIterator() {
-            return new java.util.TreeMap.NavigableSubMap.SubMapKeyIterator( absLowest(), absHighFence());
+        Iterator<K> keyIterator() {
+            return new TreeMap.NavigableSubMap.SubMapKeyIterator( absLowest(), absHighFence());
         }
 
-        java.util.Iterator<K> descendingKeyIterator() {
-            return new java.util.TreeMap.NavigableSubMap.DescendingSubMapKeyIterator( absHighest(), absLowFence());
+        Iterator<K> descendingKeyIterator() {
+            return new TreeMap.NavigableSubMap.DescendingSubMapKeyIterator( absHighest(), absLowFence());
         }
 
-        final class AscendingEntrySetView extends java.util.TreeMap.NavigableSubMap.EntrySetView
+        final class AscendingEntrySetView extends TreeMap.NavigableSubMap.EntrySetView
         {
-            public java.util.Iterator<Entry<K,V>> iterator() {
-                return new java.util.TreeMap.NavigableSubMap.SubMapEntryIterator( absLowest(), absHighFence());
+            public Iterator<Entry<K,V>> iterator() {
+                return new TreeMap.NavigableSubMap.SubMapEntryIterator( absLowest(), absHighFence());
             }
         }
 
-        public java.util.Set<Entry<K,V>> entrySet() {
-            java.util.TreeMap.NavigableSubMap.EntrySetView es = entrySetView;
+        public Set<Entry<K,V>> entrySet() {
+            TreeMap.NavigableSubMap.EntrySetView es = entrySetView;
             return (es != null) ? es : new AscendingEntrySetView();
         }
 
@@ -1787,7 +1820,7 @@ public class TreeMap<K,V>
             return reverseComparator;
         }
 
-        public java.util.NavigableMap<K,V> subMap( K fromKey, boolean fromInclusive,
+        public NavigableMap<K,V> subMap( K fromKey, boolean fromInclusive,
                                                    K toKey, boolean toInclusive) {
             if (!inRange(fromKey, fromInclusive))
                 throw new IllegalArgumentException("fromKey out of range");
@@ -1798,7 +1831,7 @@ public class TreeMap<K,V>
                                         false, fromKey, fromInclusive);
         }
 
-        public java.util.NavigableMap<K,V> headMap( K toKey, boolean inclusive) {
+        public NavigableMap<K,V> headMap( K toKey, boolean inclusive) {
             if (!inRange(toKey, inclusive))
                 throw new IllegalArgumentException("toKey out of range");
             return new DescendingSubMap(m,
@@ -1806,7 +1839,7 @@ public class TreeMap<K,V>
                                         toEnd, hi,    hiInclusive);
         }
 
-        public java.util.NavigableMap<K,V> tailMap( K fromKey, boolean inclusive) {
+        public NavigableMap<K,V> tailMap( K fromKey, boolean inclusive) {
             if (!inRange(fromKey, inclusive))
                 throw new IllegalArgumentException("fromKey out of range");
             return new DescendingSubMap(m,
@@ -1814,7 +1847,7 @@ public class TreeMap<K,V>
                                         false, fromKey, inclusive);
         }
 
-        public java.util.NavigableMap<K,V> descendingMap() {
+        public NavigableMap<K,V> descendingMap() {
             NavigableMap<K,V> mv = descendingMapView;
             return (mv != null) ? mv :
                    (descendingMapView =
@@ -1823,23 +1856,23 @@ public class TreeMap<K,V>
                                                toEnd,     hi, hiInclusive));
         }
 
-        java.util.Iterator<K> keyIterator() {
-            return new java.util.TreeMap.NavigableSubMap.DescendingSubMapKeyIterator( absHighest(), absLowFence());
+        Iterator<K> keyIterator() {
+            return new TreeMap.NavigableSubMap.DescendingSubMapKeyIterator( absHighest(), absLowFence());
         }
 
-        java.util.Iterator<K> descendingKeyIterator() {
-            return new java.util.TreeMap.NavigableSubMap.SubMapKeyIterator( absLowest(), absHighFence());
+        Iterator<K> descendingKeyIterator() {
+            return new TreeMap.NavigableSubMap.SubMapKeyIterator( absLowest(), absHighFence());
         }
 
-        final class DescendingEntrySetView extends java.util.TreeMap.NavigableSubMap.EntrySetView
+        final class DescendingEntrySetView extends TreeMap.NavigableSubMap.EntrySetView
         {
-            public java.util.Iterator<Entry<K,V>> iterator() {
-                return new java.util.TreeMap.NavigableSubMap.DescendingSubMapEntryIterator( absHighest(), absLowFence());
+            public Iterator<Entry<K,V>> iterator() {
+                return new TreeMap.NavigableSubMap.DescendingSubMapEntryIterator( absHighest(), absLowFence());
             }
         }
 
-        public java.util.Set<Entry<K,V>> entrySet() {
-            java.util.TreeMap.NavigableSubMap.EntrySetView es = entrySetView;
+        public Set<Entry<K,V>> entrySet() {
+            TreeMap.NavigableSubMap.EntrySetView es = entrySetView;
             return (es != null) ? es : new DescendingEntrySetView();
         }
 
@@ -1861,7 +1894,7 @@ public class TreeMap<K,V>
      * @serial include
      */
     private class SubMap extends AbstractMap<K,V>
-            implements java.util.SortedMap<K,V>, java.io.Serializable {
+            implements SortedMap<K,V>, java.io.Serializable {
         private static final long serialVersionUID = -6520786458950516097L;
         private boolean fromStart = false, toEnd = false;
         private K fromKey, toKey;
@@ -1873,8 +1906,8 @@ public class TreeMap<K,V>
         public Set<Entry<K,V>> entrySet() { throw new InternalError(); }
         public K lastKey() { throw new InternalError(); }
         public K firstKey() { throw new InternalError(); }
-        public java.util.SortedMap<K,V> subMap( K fromKey, K toKey) { throw new InternalError(); }
-        public java.util.SortedMap<K,V> headMap( K toKey) { throw new InternalError(); }
+        public SortedMap<K,V> subMap( K fromKey, K toKey) { throw new InternalError(); }
+        public SortedMap<K,V> headMap( K toKey) { throw new InternalError(); }
         public SortedMap<K,V> tailMap( K fromKey) { throw new InternalError(); }
         public Comparator<? super K> comparator() { throw new InternalError(); }
     }
@@ -1890,7 +1923,7 @@ public class TreeMap<K,V>
      * user (see Map.Entry).
      */
 
-    static final class Entry<K,V> implements java.util.Map.Entry<K,V> {
+    static final class Entry<K,V> implements Map.Entry<K,V> {
         K key;
         V value;
         Entry<K,V> left = null;
@@ -1940,9 +1973,9 @@ public class TreeMap<K,V>
         }
 
         public boolean equals(Object o) {
-            if (!(o instanceof java.util.Map.Entry))
+            if (!(o instanceof Map.Entry))
                 return false;
-            java.util.Map.Entry<?,?> e = ( java.util.Map.Entry<?,?>)o;
+            Map.Entry<?,?> e = ( Map.Entry<?,?>)o;
 
             return valEquals(key,e.getKey()) && valEquals(value,e.getValue());
         }
@@ -2272,8 +2305,8 @@ public class TreeMap<K,V>
         s.writeInt(size);
 
         // Write out keys and values (alternating)
-        for ( java.util.Iterator<java.util.Map.Entry<K,V>> i = entrySet().iterator(); i.hasNext(); ) {
-            java.util.Map.Entry<K,V> e = i.next();
+        for ( Iterator<Map.Entry<K,V>> i = entrySet().iterator(); i.hasNext(); ) {
+            Map.Entry<K,V> e = i.next();
             s.writeObject(e.getKey());
             s.writeObject(e.getValue());
         }
@@ -2312,9 +2345,13 @@ public class TreeMap<K,V>
 
     /**
      * Linear time tree building algorithm from sorted data.  Can accept keys
+     * 排序數據構建線性的算法
      * and/or values from iterator or stream. This leads to too many
+     * 可以接受key或者value從迭代器或者流中
      * parameters, but seems better than alternatives.  The four formats
+     * 這里有太多的參數，但是比起備選方案更好
      * that this method accepts are:
+     * 這個方法接受的四個方式為
      *
      *    1) An iterator of Map.Entries.  (it != null, defaultVal == null).
      *    2) An iterator of keys.         (it != null, defaultVal != null).
@@ -2323,6 +2360,7 @@ public class TreeMap<K,V>
      *    4) A stream of serialized keys. (it == null, defaultVal != null).
      *
      * It is assumed that the comparator of the TreeMap is already set prior
+     * 嘉定treemap的迭代器已經在調用方法之前設置
      * to calling this method.
      *
      * @param size the number of keys (or key-value pairs) to be read from
@@ -2340,7 +2378,7 @@ public class TreeMap<K,V>
      * @throws ClassNotFoundException propagated from readObject.
      *         This cannot occur if str is null.
      */
-    private void buildFromSorted(int size, java.util.Iterator it,
+    private void buildFromSorted(int size, Iterator it,
                                  java.io.ObjectInputStream str,
                                  V defaultVal)
     throws  java.io.IOException, ClassNotFoundException {
@@ -2351,9 +2389,12 @@ public class TreeMap<K,V>
 
     /**
      * Recursive "helper method" that does the real work of the
+     * 遞歸的幫助方法這個前任方法真是的工作
      * previous method.  Identically named parameters have
      * identical definitions.  Additional parameters are documented below.
+     * 相同命名的參數有相同的定義。額外的參數在下面記錄
      * It is assumed that the comparator and size fields of the TreeMap are
+     * 嘉定比較器與treemap域大小已經在調用這個方法前設置
      * already set prior to calling this method.  (It ignores both fields.)
      *
      * @param level the current level of tree. Initial call should be 0.
@@ -2371,14 +2412,22 @@ public class TreeMap<K,V>
     throws  java.io.IOException, ClassNotFoundException {
         /*
          * Strategy: The root is the middlemost element. To get to it, we
+         * 策略:根為中間的元素
          * have to first recursively construct the entire left subtree,
+         * 得到她，首次遞歸構造梗著左子樹
          * so as to grab all of its elements. We can then proceed with right
+         * 獲取所有的元素
          * subtree.
+         * 之後我們繼續右子樹
          *
          * The lo and hi arguments are the minimum and maximum
+         * 底和高參數是最小和最大的放入迭代器或者流當前子樹的值
          * indices to pull out of the iterator or stream for current subtree.
          * They are not actually indexed, we just proceed sequentially,
+         * 不是真實的索引，我們僅僅獲取序列
          * ensuring that items are extracted in corresponding order.
+         * 確保條目提取相應的順序
+         *
          */
 
         if (hi < lo) return null;
@@ -2395,7 +2444,7 @@ public class TreeMap<K,V>
         V value;
         if (it != null) {
             if (defaultVal==null) {
-                java.util.Map.Entry<K,V> entry = (Map.Entry<K,V>)it.next();
+                Map.Entry<K,V> entry = (Map.Entry<K,V>)it.next();
                 key = entry.getKey();
                 value = entry.getValue();
             } else {
@@ -2430,8 +2479,11 @@ public class TreeMap<K,V>
 
     /**
      * Find the level down to which to assign all nodes BLACK.  This is the
+     * 從black節點找尋分配的所有低節點
      * last `full' level of the complete binary tree produced by
+     * 這個最滿的層次由buildTree完成二叉樹構建
      * buildTree. The remaining nodes are colored RED. (This makes a `nice'
+     * 剩餘的節點為紅
      * set of color assignments wrt future insertions.) This level number is
      * computed by finding the number of splits needed to reach the zeroeth
      * node.  (The answer is ~lg(N), but in any case must be computed by same
