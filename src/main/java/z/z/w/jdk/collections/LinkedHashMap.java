@@ -261,7 +261,7 @@ public class LinkedHashMap<K,V>
      * @param  m the map whose mappings are to be placed in this map
      * @throws NullPointerException if the specified map is null
      */
-    public LinkedHashMap( java.util.Map<? extends K, ? extends V> m) {
+    public LinkedHashMap( Map<? extends K, ? extends V> m) {
         super(m);
         accessOrder = false;
     }
@@ -297,16 +297,19 @@ public class LinkedHashMap<K,V>
 
     /**
      * Transfers all entries to new table array.  This method is called
+     * 轉換所有的entries到新的數組中
      * by superclass resize.  It is overridden for performance, as it is
+     * 這個方法在子類重新size的時候調用
      * faster to iterate using our linked list.
+     * 為性能而複寫，用這個鏈錶迭代器更快速
      */
     @Override
-    void transfer( java.util.HashMap.Entry[] newTable, boolean rehash) {
+    void transfer( HashMap.Entry[] newTable, boolean rehash) {
         int newCapacity = newTable.length;
         for (Entry<K,V> e = header.after; e != header; e = e.after) {
             if (rehash)
                 e.hash = (e.key == null) ? 0 : hash(e.key);
-            int index = indexFor(e.hash, newCapacity);
+            int index = indexFor(e.hash, newCapacity); // 取索引 hash & (length - 1)
             e.next = newTable[index];
             newTable[index] = e;
         }
@@ -347,6 +350,7 @@ public class LinkedHashMap<K,V>
      * <p>A return value of {@code null} does not <i>necessarily</i>
      * indicate that the map contains no mapping for the key; it's also
      * possible that the map explicitly maps the key to {@code null}.
+     *                       明確的
      * The {@link #containsKey containsKey} operation may be used to
      * distinguish these two cases.
      */
@@ -370,11 +374,11 @@ public class LinkedHashMap<K,V>
     /**
      * LinkedHashMap entry.
      */
-    private static class Entry<K,V> extends java.util.HashMap.Entry<K,V> {
+    private static class Entry<K,V> extends HashMap.Entry<K,V> {
         // These fields comprise the doubly linked list used for iteration.
         Entry<K,V> before, after;
 
-        Entry(int hash, K key, V value, java.util.HashMap.Entry<K,V> next) {
+        Entry(int hash, K key, V value,HashMap.Entry<K,V> next) {
             super(hash, key, value, next);
         }
 
@@ -402,7 +406,7 @@ public class LinkedHashMap<K,V>
          * If the enclosing Map is access-ordered, it moves the entry
          * to the end of the list; otherwise, it does nothing.
          */
-        void recordAccess( java.util.HashMap<K,V> m) {
+        void recordAccess( HashMap<K,V> m) {
             LinkedHashMap<K,V> lm = (LinkedHashMap<K,V>)m;
             if (lm.accessOrder) {
                 lm.modCount++;
@@ -411,12 +415,12 @@ public class LinkedHashMap<K,V>
             }
         }
 
-        void recordRemoval( java.util.HashMap<K,V> m) {
+        void recordRemoval( HashMap<K,V> m) {
             remove();
         }
     }
 
-    private abstract class LinkedHashIterator<T> implements java.util.Iterator<T>
+    private abstract class LinkedHashIterator<T> implements Iterator<T>
     {
         Entry<K,V> nextEntry    = header.after;
         Entry<K,V> lastReturned = null;
@@ -424,7 +428,9 @@ public class LinkedHashMap<K,V>
         /**
          * The modCount value that the iterator believes that the backing
          * List should have.  If this expectation is violated, the iterator
+         *                       違反了這個期望
          * has detected concurrent modification.
+         *    檢查
          */
         int expectedModCount = modCount;
 
@@ -463,14 +469,14 @@ public class LinkedHashMap<K,V>
         public V next() { return nextEntry().value; }
     }
 
-    private class EntryIterator extends LinkedHashIterator< java.util.Map.Entry<K,V>> {
-        public java.util.Map.Entry<K,V> next() { return nextEntry(); }
+    private class EntryIterator extends LinkedHashIterator< Map.Entry<K,V>> {
+        public Map.Entry<K,V> next() { return nextEntry(); }
     }
 
     // These Overrides alter the behavior of superclass view iterator() methods
-    java.util.Iterator<K> newKeyIterator()   { return new KeyIterator();   }
-    java.util.Iterator<V> newValueIterator() { return new ValueIterator(); }
-    Iterator<java.util.Map.Entry<K,V>> newEntryIterator() { return new EntryIterator(); }
+   Iterator<K> newKeyIterator()   { return new KeyIterator();   }
+    Iterator<V> newValueIterator() { return new ValueIterator(); }
+    Iterator<Map.Entry<K,V>> newEntryIterator() { return new EntryIterator(); }
 
     /**
      * This override alters behavior of superclass put method. It causes newly
@@ -504,12 +510,16 @@ public class LinkedHashMap<K,V>
      * This method is invoked by <tt>put</tt> and <tt>putAll</tt> after
      * inserting a new entry into the map.  It provides the implementor
      * with the opportunity to remove the eldest entry each time a new one
+     *          機會
      * is added.  This is useful if the map represents a cache: it allows
+     *                                      代表
      * the map to reduce memory consumption by deleting stale entries.
+     *            減少            消費                     陳舊的
      *
      * <p>Sample use: this override will allow the map to grow up to 100
      * entries and then delete the eldest entry each time a new entry is
      * added, maintaining a steady state of 100 entries.
+     *                      穩定
      * <pre>
      *     private static final int MAX_ENTRIES = 100;
      *
@@ -520,10 +530,12 @@ public class LinkedHashMap<K,V>
      *
      * <p>This method typically does not modify the map in any way,
      * instead allowing the map to modify itself as directed by its
+     *                                              針對
      * return value.  It <i>is</i> permitted for this method to modify
      * the map directly, but if it does so, it <i>must</i> return
      * <tt>false</tt> (indicating that the map should not attempt any
      * further modification).  The effects of returning <tt>true</tt>
+     *                             效果
      * after modifying the map from within this method are unspecified.
      *
      * <p>This implementation merely returns <tt>false</tt> (so that this
