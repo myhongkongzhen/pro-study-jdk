@@ -30,7 +30,7 @@ package z.z.w.jdk.collections;
 public class MainClass //
         extends //
 //        java.util.LinkedHashSet
-        java.util.TreeSet
+        java.util.HashSet
 //        java.util.EnumSet
 
 //        implements //
