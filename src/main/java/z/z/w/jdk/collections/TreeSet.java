@@ -125,6 +125,7 @@ public class TreeSet<E> extends AbstractSet<E>
     private transient NavigableMap<E,Object> m;
 
     // Dummy value to associate with an Object in the backing Map
+    //                 關聯
     private static final Object PRESENT = new Object();
 
     /**
@@ -139,6 +140,7 @@ public class TreeSet<E> extends AbstractSet<E>
      * natural ordering of its elements.  All elements inserted into
      * the set must implement the {@link Comparable} interface.
      * Furthermore, all such elements must be <i>mutually
+     * 此外
      * comparable</i>: {@code e1.compareTo(e2)} must not throw a
      * {@code ClassCastException} for any elements {@code e1} and
      * {@code e2} in the set.  If the user attempts to add an element
