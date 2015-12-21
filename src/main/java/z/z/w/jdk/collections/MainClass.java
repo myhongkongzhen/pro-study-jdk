@@ -29,8 +29,7 @@ package z.z.w.jdk.collections;
  */
 public class MainClass //
         extends //
-//        java.util.LinkedHashSet
-        java.util.HashSet
+        java.util.LinkedHashSet
 //        java.util.EnumSet
 
 //        implements //
