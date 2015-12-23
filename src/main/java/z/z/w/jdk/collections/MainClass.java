@@ -22,7 +22,7 @@ package z.z.w.jdk.collections;
 //import java.util.ArrayList;
 
 
-import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Map<K,V>
@@ -34,9 +34,8 @@ public class MainClass //
 //		java.util.concurrent.ArrayBlockingQueue
 //		ConcurrentLinkedDeque
 
-//		        ConcurrentHashMap
+		ConcurrentHashMap
 //				ConcurrentLinkedQueue
-		ConcurrentMap
 //				CopyOnWriteArrayList
 //				CopyOnWriteArraySet
 
