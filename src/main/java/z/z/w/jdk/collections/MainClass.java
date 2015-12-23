@@ -22,6 +22,8 @@ package z.z.w.jdk.collections;
 //import java.util.ArrayList;
 
 
+import java.util.concurrent.ConcurrentMap;
+
 /**
  * Map<K,V>
  * K - the type of keys maintained by this map
@@ -29,11 +31,39 @@ package z.z.w.jdk.collections;
  */
 public class MainClass //
         extends //
-        java.util.LinkedHashSet
-//        java.util.EnumSet
+//		java.util.concurrent.ArrayBlockingQueue
+//		ConcurrentLinkedDeque
+
+//		        ConcurrentHashMap
+//				ConcurrentLinkedQueue
+		ConcurrentMap
+//				CopyOnWriteArrayList
+//				CopyOnWriteArraySet
+
+//				LinkedBlockingQueue
+
+//				CountDownLatch
+//				CyclicBarrier
+//				Exchanger
+
+//				Phaser
+//				Semaphore
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //        implements //
-//		java.util.NavigableSet, java.util.concurrent.TransferQueue, java.util.List, BlockingDeque, java.util.concurrent.ConcurrentNavigableMap
+		java.util.NavigableSet, java.util.concurrent.TransferQueue, java.util.List, BlockingDeque, java.util.concurrent.ConcurrentNavigableMap
 //        java.util.NavigableMap
 {
 
