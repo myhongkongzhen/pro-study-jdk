@@ -8,6 +8,7 @@
 
 package z.z.w.test.service.notify.check;
 
+import z.z.w.test.facade.notify.INotifyFacade;
 import z.z.w.test.facade.notify.check.IDataCheckFacade;
 
 /**************************************************************************
@@ -21,4 +22,13 @@ import z.z.w.test.facade.notify.check.IDataCheckFacade;
  * </pre>
  **************************************************************************/
 public class MailDataCheckService< T > implements IDataCheckFacade< T >
-{}
+{
+    // 實現單發，群發
+    INotifyFacade notifyFacade;
+
+    public String notifyDataCheck( T t )
+    {
+
+        return null;
+    }
+}

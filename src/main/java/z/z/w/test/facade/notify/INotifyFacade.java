@@ -13,7 +13,7 @@ import z.z.w.jdk.collections.Collection;
 /**************************************************************************
  * <pre>
  *     FileName: INotifyFacade
- *         Desc:
+ *         Desc: 單發群發功能
  *       author: Z_Z.W - myhongkongzhen@gmail.com
  *      version: 2015-12-28 23:34
  *   LastChange: 2015-12-28 23:34

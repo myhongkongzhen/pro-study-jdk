@@ -6,19 +6,19 @@
  * Vestibulum commodo. Ut rhoncus gravida arcu.                                                                       *
  **********************************************************************************************************************/
 
-package z.z.w.test.facade.notify.check;
+package z.z.w.test.common.core.notify;
 
 /**************************************************************************
  * <pre>
- *     FileName: z.z.w.test.facade.notify.check.IDataCheckFacade
- *         Desc: 數據校驗服務接口
+ *     FileName: z.z.w.test.common.core.notify.INotifySender
+ *         Desc:
  *       author: Z_Z.W - myhongkongzhen@gmail.com
- *      version: 2015-12-29 00:10
- *   LastChange: 2015-12-29 00:10
+ *      version: 2015-12-29 00:27
+ *   LastChange: 2015-12-29 00:27
  *      History:
  * </pre>
  **************************************************************************/
-public interface IDataCheckFacade< T >
+public interface INotifySender< T >
 {
-    public String notifyDataCheck( T t );
+    public String send( T t );
 }

@@ -22,7 +22,7 @@ import z.z.w.test.common.core.notify.exception.HttpRequestException;
  **************************************************************************/
 public interface IHttpRequest< T >
 {
-    String send() throws HttpRequestException;
+    String httpReq() throws HttpRequestException;
 
     String httpUrl();
 

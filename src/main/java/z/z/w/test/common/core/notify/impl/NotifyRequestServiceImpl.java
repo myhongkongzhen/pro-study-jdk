@@ -9,11 +9,12 @@
 package z.z.w.test.common.core.notify.impl;
 
 import z.z.w.test.common.core.notify.IDataManipulation;
+import z.z.w.test.common.core.notify.INotifySender;
 import z.z.w.test.common.core.notify.entity.NotifyEntity;
 
 /**************************************************************************
  * <pre>
- *     FileName: z.z.w.test.common.core.notify.impl.HttpDataManipulationImpl
+ *     FileName: z.z.w.test.common.core.notify.impl.NotifyRequestServiceImpl
  *         Desc:
  *       author: Z_Z.W - myhongkongzhen@gmail.com
  *      version: 2015-12-29 00:04
@@ -21,14 +22,14 @@ import z.z.w.test.common.core.notify.entity.NotifyEntity;
  *      History:
  * </pre>
  **************************************************************************/
-public abstract class HttpDataManipulationImpl extends HttpServiceFactory implements IDataManipulation< NotifyEntity >
+public abstract class NotifyRequestServiceImpl extends HttpServiceFactory implements INotifySender< NotifyEntity >
 {
 
     IDataManipulation< NotifyEntity > reSendDataManipulation = null;
     IDataManipulation< NotifyEntity > succDataManipulation   = null;
 
-    public void operating( NotifyEntity notifyEntity )
+    public String send( NotifyEntity notifyEntity )
     {
-
+        return null;
     }
 }

@@ -30,7 +30,7 @@ public abstract class HttpServiceFactory implements IHttpRequest< NotifyEntity >
     protected Map< String, String > param  = null;
     protected Map< String, String > header = null;
 
-    public String send() throws HttpRequestException
+    public String httpReq() throws HttpRequestException
     {
 //        HttpClientUtil.INSTANCE.httpPost( httpUrl(), param, header );
         return null;

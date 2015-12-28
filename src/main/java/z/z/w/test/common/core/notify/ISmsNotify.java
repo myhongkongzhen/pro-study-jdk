@@ -13,7 +13,7 @@ import z.z.w.test.facade.notify.INotifyFacade;
 /**************************************************************************
  * <pre>
  *     FileName: ISmsNotify
- *         Desc:
+ *         Desc: 單發群發功能
  *       author: Z_Z.W - myhongkongzhen@gmail.com
  *      version: 2015-12-28 23:35
  *   LastChange: 2015-12-28 23:35
