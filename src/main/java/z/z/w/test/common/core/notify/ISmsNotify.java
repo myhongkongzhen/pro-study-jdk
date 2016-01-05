@@ -8,8 +8,6 @@
 
 package z.z.w.test.common.core.notify;
 
-import z.z.w.test.facade.notify.INotifyFacade;
-
 /**************************************************************************
  * <pre>
  *     FileName: ISmsNotify
@@ -20,5 +18,5 @@ import z.z.w.test.facade.notify.INotifyFacade;
  *      History:
  * </pre>
  **************************************************************************/
-public interface ISmsNotify< T > extends INotifyFacade< T >
+public interface ISmsNotify< T > extends INotifySender< T >
 {}

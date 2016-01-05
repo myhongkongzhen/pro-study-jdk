@@ -8,8 +8,6 @@
 
 package z.z.w.test.common.core.notify;
 
-import z.z.w.test.facade.notify.INotifyFacade;
-
 /**************************************************************************
  * <pre>
  *     FileName: IMailNotify
@@ -20,5 +18,5 @@ import z.z.w.test.facade.notify.INotifyFacade;
  *      History:
  * </pre>
  **************************************************************************/
-public interface IMailNotify< T > extends INotifyFacade< T >
+public interface IMailNotify< T > extends INotifySender< T >
 {}

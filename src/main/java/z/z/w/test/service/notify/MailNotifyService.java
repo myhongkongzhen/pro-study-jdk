@@ -9,8 +9,8 @@
 package z.z.w.test.service.notify;
 
 import z.z.w.jdk.collections.Collection;
-import z.z.w.test.common.core.notify.IMailNotify;
 import z.z.w.test.common.core.notify.entity.NotifyEntity;
+import z.z.w.test.facade.notify.INotifyFacade;
 import z.z.w.test.facade.notify.check.IDataCheckFacade;
 
 /**************************************************************************
@@ -23,7 +23,7 @@ import z.z.w.test.facade.notify.check.IDataCheckFacade;
  *      History:
  * </pre>
  **************************************************************************/
-public class MailNotifyService implements IMailNotify< NotifyEntity >
+public class MailNotifyService implements INotifyFacade< NotifyEntity >
 {
     // 郵件數據校驗
     IDataCheckFacade dataCheckFacade;
